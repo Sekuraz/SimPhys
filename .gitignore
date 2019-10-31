@@ -1,0 +1,15 @@
+user.json
+*/__pycache__
+*.swp
+*.log
+*.pyc
+*.png
+session_*.json
+*.rrd
+*.pickle
+*.xml
+*.sqlite3
+
+#pycharm
+.idea/*
+docker/dockerhome/*
