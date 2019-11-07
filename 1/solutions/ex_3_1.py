@@ -11,7 +11,35 @@ def force(r_ij, m_i, m_j, g):
 def step_euler(x, v, dt, mass, g):
     f = forces(x, mass, g)
     x += v * dt
-    v += f / mass * dt
+    f[:, 0] /= mass
+    f[:, 1] /= mass
+    v += f * dt
+    return x, v
+
+
+def step_euler_symplectic(x, v, dt, mass, g):
+    f = forces(x, mass, g)
+    f[:, 0] /= mass
+    f[:, 1] /= mass
+    v += f * dt
+    x += v * dt
+    return x, v
+
+
+def velocity_verlet(x, v, dt, mass, g):
+    f = forces(x, mass, g)
+    f[:, 0] /= mass
+    f[:, 1] /= mass  # now it's acceleration
+
+    x += v * dt + f / 2 * dt * dt
+
+    # a( t + dt )
+    f_t = forces(x, mass, g)
+    f_t[:, 0] /= mass
+    f_t[:, 1] /= mass  # now it's acceleration
+
+    v += (f + f_t) / 2 * dt
+
     return x, v
 
 
@@ -21,10 +49,53 @@ def forces(x, masses, g):
     for i in range(len(x)):
         for j in range(i + 1, len(x)):
             f = force(x[j] - x[i], masses[i], masses[j], g)
-            ret[i] += f
-            ret[j] -= f
+            ret[i] -= f
+            ret[j] += f
 
     return ret
+
+
+def generate_trajectories(steps, dt, x, v, masses, g, integrator):
+    x = x.copy()
+    v = v.copy()
+
+    trajectories = [{'x': [x[i][0]], 'y': [x[i][1]]} for i in range(len(names))]
+    for s in range(steps):
+        integrator(x, v, dt, masses, g)
+        for i in range(len(names)):
+            trajectories[i]['x'].append(x[i][0])
+            trajectories[i]['y'].append(x[i][1])
+
+    return trajectories
+
+
+def plot_all(trajectories, names):
+    for i in range(len(names)):
+        plt.plot(trajectories[i]['x'], trajectories[i]['y'], "-", label=names[i])
+    plt.legend()
+    plt.show()
+
+
+def plot_ref(trajectories, reference, moving, label, do_plot=True):
+    mov_x = [ref - mov for ref, mov in zip(trajectories[reference]['x'], trajectories[moving]['x'])]
+    mov_y = [ref - mov for ref, mov in zip(trajectories[reference]['y'], trajectories[moving]['y'])]
+
+    plt.plot(mov_x, mov_y, label=label)
+    if do_plot:
+        plt.legend()
+        plt.show()
+
+
+def plot_dist(trajectories, b1, b2, dt, label, do_plot=True):
+    dist_x = [ref - mov for ref, mov in zip(trajectories[b1]['x'], trajectories[b2]['x'])]
+    dist_y = [ref - mov for ref, mov in zip(trajectories[b1]['y'], trajectories[b2]['y'])]
+
+    time = np.array(range(len(dist_x)), dtype=np.float) * dt
+    dist = [np.sqrt(x * x + y * y) for x, y in zip(dist_x, dist_y)]
+    plt.semilogy(time, dist, label=label)
+    if do_plot:
+        plt.legend()
+        plt.show()
 
 
 if __name__ == "__main__":
@@ -44,13 +115,42 @@ if __name__ == "__main__":
     v = np.array([np.array(p) for p in zip(v_init[0], v_init[1])])
 
 
-    dt = 0.0001
-    trajectories = []
-    for s in range(10000):
+    # # 3.1
+    # integrator = step_euler
+    # trajectories = generate_trajectories(10000, 0.0001, x, v, masses, g, integrator)
+    # # 3.1 full
+    # plot_all(trajectories, names)
+    # # 3.1 small step moon
+    # plot_ref(trajectories, names, 1, 2)
+    #
+    # # large step euler
+    # trajectories = generate_trajectories(1000, 0.001, x, v, masses, g, integrator)
+    # # 3.1 large step moon
+    # plot_ref(trajectories, names, 1, 2)
+
+
+    # # 3.2
+    # trajectories = generate_trajectories(100, 0.01, x, v, masses, g, step_euler)
+    # plot_ref(trajectories, 1, 2, "Euler", False)
+    #
+    # trajectories = generate_trajectories(100, 0.01, x, v, masses, g, step_euler_symplectic)
+    # plot_ref(trajectories, 1, 2, "Symplectic euler", False)
+    #
+    # trajectories = generate_trajectories(100, 0.01, x, v, masses, g, velocity_verlet)
+    # plot_ref(trajectories, 1, 2, "Velocity verlet")
+
+
+    # # 3.3
+    # trajectories = generate_trajectories(1000, 0.01, x, v, masses, g, step_euler)
+    # plot_dist(trajectories, 1, 2, 0.01, "Euler", False)
+    #
+    # trajectories = generate_trajectories(1000, 0.01, x, v, masses, g, step_euler_symplectic)
+    # plot_dist(trajectories, 1, 2, 0.01, "Symplectic Euler", False)
+    #
+    # trajectories = generate_trajectories(1000, 0.01, x, v, masses, g, velocity_verlet)
+    # plot_dist(trajectories, 1, 2, 0.01, "Velocity Verlet")
 
 
 
 
-    print(names)
-    print(x)
-    print(v)
+
