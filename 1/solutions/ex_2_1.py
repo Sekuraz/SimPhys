@@ -3,13 +3,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def force(mass, gravity):
     return np.array([0.0, -mass * gravity])
+
 
 def step_euler(x, v, dt, mass, gravity, f):
     x += v * dt
     v += f / mass * dt
     return x, v
+
 
 if __name__ == "__main__":
     gravity = 9.81
@@ -18,7 +21,7 @@ if __name__ == "__main__":
     v = np.array([50.0, 50.0])
     dt = 0.1
 
-    f = force(mass, gravity) # constant
+    f = force(mass, gravity)  # constant
 
     pos_x = []
     pos_y = []

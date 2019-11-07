@@ -8,6 +8,7 @@ import ex_2_1
 
 
 def force(mass, gravity, v, gamma, v_0):
+    # gravity only pulls down
     ret = np.array([0.0, -mass * gravity])
     ret -= gamma * (v - v_0)
     return ret

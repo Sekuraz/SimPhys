@@ -11,6 +11,7 @@ def force(r_ij, m_i, m_j, g):
 def step_euler(x, v, dt, mass, g):
     f = forces(x, mass, g)
     x += v * dt
+    # calculate acceleration per coordinate dimension
     f[:, 0] /= mass
     f[:, 1] /= mass
     v += f * dt
@@ -47,6 +48,7 @@ def forces(x, masses, g):
     ret = np.zeros(x.shape)
 
     for i in range(len(x)):
+        # Forces are opposite equal, so we only need this shortened loop
         for j in range(i + 1, len(x)):
             f = force(x[j] - x[i], masses[i], masses[j], g)
             ret[i] -= f
@@ -56,6 +58,7 @@ def forces(x, masses, g):
 
 
 def generate_trajectories(steps, dt, x, v, masses, g, integrator):
+    # in order not to mess with the original data
     x = x.copy()
     v = v.copy()
 
@@ -77,6 +80,15 @@ def plot_all(trajectories, names):
 
 
 def plot_ref(trajectories, reference, moving, label, do_plot=True):
+    """
+    Plot the moving object in the frame of reference
+    :param trajectories: Trajectories object
+    :param reference: index of the reference object
+    :param moving: index of the moving object
+    :param label: The label for the resulting curve
+    :param do_plot: show the plot or just add the generated curve to the current plot
+    """
+
     mov_x = [ref - mov for ref, mov in zip(trajectories[reference]['x'], trajectories[moving]['x'])]
     mov_y = [ref - mov for ref, mov in zip(trajectories[reference]['y'], trajectories[moving]['y'])]
 
@@ -87,6 +99,15 @@ def plot_ref(trajectories, reference, moving, label, do_plot=True):
 
 
 def plot_dist(trajectories, b1, b2, dt, label, do_plot=True):
+    """
+    Plot the distance between b1 and b2 over time
+    :param trajectories: Trajectories object
+    :param b1: Index of first body
+    :param b2: Index of second body
+    :param dt: The timestep, this is used for scaling of the axis
+    :param label: The label for the resulting curve
+    :param do_plot: show the plot or just add the generated curve to the current plot
+    """
     dist_x = [ref - mov for ref, mov in zip(trajectories[b1]['x'], trajectories[b2]['x'])]
     dist_y = [ref - mov for ref, mov in zip(trajectories[b1]['y'], trajectories[b2]['y'])]
 
@@ -111,6 +132,7 @@ if __name__ == "__main__":
     masses = data['m']
     g = data['g']
 
+    # convert to list of position and velocity vectors
     x = np.array([np.array(p) for p in zip(x_init[0], x_init[1])])
     v = np.array([np.array(p) for p in zip(v_init[0], v_init[1])])
 
