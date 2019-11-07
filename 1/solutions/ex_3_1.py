@@ -9,8 +9,8 @@ def force(r_ij, m_i, m_j, g):
 
 
 def step_euler(x, v, dt, mass, g):
-    f = forces(x, mass, g)
     x += v * dt
+    f = forces(x, mass, g)
     # calculate acceleration per coordinate dimension
     f[:, 0] /= mass
     f[:, 1] /= mass
