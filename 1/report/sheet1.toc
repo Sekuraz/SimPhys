@@ -1,0 +1,11 @@
+\contentsline {section}{\numberline {1}Cannonball}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}Simulating a cannonball}{1}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Influence of friction and wind}{1}{subsection.1.2}
+\contentsline {section}{\numberline {2}Solar system}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}Simulating the solar system with the Euler scheme}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Integrators}{5}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}Velocity Verlet algorithm}{5}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}Verlet algorithm}{6}{subsubsection.2.2.2}
+\contentsline {subsubsection}{\numberline {2.2.3}Implementation of the symplectic Euler algorithm}{6}{subsubsection.2.2.3}
+\contentsline {subsubsection}{\numberline {2.2.4}Implementation of the Velocity Verlet algorithm}{6}{subsubsection.2.2.4}
+\contentsline {subsection}{\numberline {2.3}Long-term stability}{6}{subsection.2.3}
