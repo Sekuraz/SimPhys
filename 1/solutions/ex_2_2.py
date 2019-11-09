@@ -15,8 +15,8 @@ def force(mass, gravity, v, gamma, v_0):
 
 
 def step(x, v, dt, mass, gravity, gamma, v_0):
-    f = force(mass, gravity, v, gamma, v_0)
     x += v * dt
+    f = force(mass, gravity, v, gamma, v_0)
     v += f / mass * dt
 
     return x, v
