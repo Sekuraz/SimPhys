@@ -10,6 +10,13 @@ session_*.json
 *.xml
 *.sqlite3
 
+# latex
+*.aux
+*.out
+*.synctex.gz
+*.toc
+
+
 #pycharm
 .idea/*
 docker/dockerhome/*
