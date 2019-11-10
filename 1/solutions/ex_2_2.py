@@ -45,17 +45,21 @@ def trajectory(v_w, friction):
 
 if __name__ == "__main__":
     # x, y = trajectory(0, False)
-    # plt.plot(x, y, "-", label="y = 0")
-    # x, y = trajectory(0, True)
-    # plt.plot(x, y, "-", label="y = 0.1")
-    # x, y = trajectory(-50, True)
-    # plt.plot(x, y, "-", label="y = 0.1, v_w = -50")
+    #plt.plot(x, y, "-", label=r'$\gamma = 0$')
+    #x, y = trajectory(0, True)
+    #plt.plot(x, y, "--", label=r'$\gamma = 0.1$')
+    #x, y = trajectory(-50, True)
+    #plt.plot(x, y, ":", label=r'$\gamma = 0.1, v_w = -50.0$')
     # plt.legend()
+    #plt.xlabel(r'$x$')
+    #plt.ylabel(r'$y(x)$')
     # plt.show()
 
-    for v_w in range(0, 201, 25):
-        x, y = trajectory(-v_w, True)
-        plt.plot(x, y, "-", label="v_w = -%d" % v_w)
+    for v_w in range(-200, 1, 25):
+        x, y = trajectory(v_w, True)
+        plt.plot(x, y, "-", label=r'$v_w = {{{}}}$'.format(v_w))
 
     plt.legend()
+    plt.xlabel(r'$x$')
+    plt.ylabel(r'$y(x)$')
     plt.show()
