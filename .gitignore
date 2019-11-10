@@ -15,6 +15,7 @@ session_*.json
 *.out
 *.synctex.gz
 *.toc
+*.pdf
 
 
 #pycharm

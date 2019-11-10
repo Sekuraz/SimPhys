@@ -277,5 +277,15 @@ As we can see in ..., the Verlet algorithm needs the positions $\mathbf{x}(t)$ a
 
 
 \subsection{Long-term stability}
+The distance between earth and moon diverges after a certain number of timesteps due to the error introduced with only a hundered force recalculations per year.
+This leads to breaking the gravitational bonds between them after a certain number of steps which depend on the order of the integration algorithm.
+This is demonstrated by the symplectic Euler diverging much later than the standard Euler and the Velocity Verlet not showing divergence
+after a ten year simulation period of thousand steps in total, see \ref{fig:stability_distance}.
 
+\begin{figure}[h]
+\centering
+ \includegraphics[width=\textwidth]{stability_distance.eps}
+ \caption{Distance between earth and moon over a simulation time of 10 years with 100 steps per year using different integrators.}
+ \label{fig:stability_distance}
+\end{figure}
 \end{document}
