@@ -27,7 +27,7 @@ def step_euler_symplectic(x, v, dt, mass, g):
     return x, v
 
 
-def velocity_verlet(x, v, dt, mass, g):
+def step_velocity_verlet(x, v, dt, mass, g):
     f = forces(x, mass, g)
     f[:, 0] /= mass
     f[:, 1] /= mass  # now it's acceleration
@@ -90,7 +90,6 @@ def plot_ref(trajectories, reference, moving, label, do_plot=True):
     :param label: The label for the resulting curve
     :param do_plot: show the plot or just add the generated curve to the current plot
     """
-
     mov_x = [ref - mov for ref, mov in zip(trajectories[reference]['x'], trajectories[moving]['x'])]
     mov_y = [ref - mov for ref, mov in zip(trajectories[reference]['y'], trajectories[moving]['y'])]
 
@@ -142,17 +141,19 @@ if __name__ == "__main__":
 
 
     # # 3.1
+    # plt.xlabel(r"$x$ (AU)")
+    # plt.ylabel(r"$y$ (AU)")
     # integrator = step_euler
     # trajectories = generate_trajectories(10000, 0.0001, x, v, masses, g, integrator)
     # # 3.1 full
     # plot_all(trajectories, names)
     # # 3.1 small step moon
-    # plot_ref(trajectories, names, 1, 2)
+    # plot_ref(trajectories, 1, 2, r"$\Delta t = 1e^{-4}$", False)
     #
     # # large step euler
     # trajectories = generate_trajectories(1000, 0.001, x, v, masses, g, integrator)
     # # 3.1 large step moon
-    # plot_ref(trajectories, names, 1, 2)
+    # plot_ref(trajectories, 1, 2, r"$\Delta t = 1e^{-3}$")
 
 
     # # 3.2
@@ -164,7 +165,7 @@ if __name__ == "__main__":
     # trajectories = generate_trajectories(100, 0.01, x, v, masses, g, step_euler_symplectic)
     # plot_ref(trajectories, 1, 2, "Symplectic euler", False)
     #
-    # trajectories = generate_trajectories(100, 0.01, x, v, masses, g, velocity_verlet)
+    # trajectories = generate_trajectories(100, 0.01, x, v, masses, g, step_velocity_verlet)
     # plot_ref(trajectories, 1, 2, "Velocity verlet")
 
 
@@ -177,7 +178,7 @@ if __name__ == "__main__":
     # trajectories = generate_trajectories(1000, 0.01, x, v, masses, g, step_euler_symplectic)
     # plot_dist(trajectories, 1, 2, 0.01, "Symplectic Euler", False)
     #
-    # trajectories = generate_trajectories(1000, 0.01, x, v, masses, g, velocity_verlet)
+    # trajectories = generate_trajectories(1000, 0.01, x, v, masses, g, step_velocity_verlet)
     # plot_dist(trajectories, 1, 2, 0.01, "Velocity Verlet")
 
 
