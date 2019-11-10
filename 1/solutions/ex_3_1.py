@@ -3,6 +3,7 @@
 import numpy as np
 import scipy.constants
 
+plt.rc('text', usetex=True)
 
 def force(r_ij, m_i, m_j, g):
     return - g * m_i * m_j * r_ij / np.linalg.norm(r_ij) ** 3
@@ -74,8 +75,10 @@ def generate_trajectories(steps, dt, x, v, masses, g, integrator):
 
 def plot_all(trajectories, names):
     for i in range(len(names)):
-        plt.plot(trajectories[i]['x'], trajectories[i]['y'], "-", label=names[i])
-    plt.legend()
+        plt.plot(trajectories[i]['x'], trajectories[i]['y'], "-", label=names[i].decode("utf-8"))
+    plt.legend(loc="upper left", ncol=2)
+    plt.xlabel(r'$x$')
+    plt.ylabel(r'$y$')
     plt.show()
 
 
