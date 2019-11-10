@@ -219,7 +219,10 @@ def step_euler(x, v, dt, mass, g):
     v += f * dt
     return x, v
 \end{lstlisting}
-
+\autoref{Figure_4} shows the numerically calculated trajectories of the celestial bodies over a time of one year for a time step of $\Delta t = 10^{-4}$. 
+We can see that the earth performs almost one orbit around the sun.
+\autoref{fig:moon_trajectory} shows the trajectory of the moon in the rest frame of the earth for different time steps. 
+The trajectories are not closed, for the smaller time step the orbits are closer together, but still not identical.
 
 
 
@@ -330,6 +333,12 @@ def step_velocity_verlet(x, v, dt, mass, g):
 
     return x, v
 \end{lstlisting}
+
+\autoref{fig:stability_position} shows the trajectory of the moon for different integrators with a large time step of $\Delta t = 0.01$. 
+We can see that the trajectory for Euler scheme is unstable and the distance grows rapidly. 
+The other two integrators seem to do fine for this simulation time.
+The trajectory obtained with the velocity Verlet algorithm is closer together which indicates that the integration error is smaller.
+
 
 \begin{figure}[h]
 \centering
