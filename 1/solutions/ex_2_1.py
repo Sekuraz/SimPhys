@@ -30,6 +30,9 @@ if __name__ == "__main__":
         pos_y.append(x[1])
 
         step_euler(x, v, dt, mass, gravity, f)
-
+    
+    plt.rc('text', usetex=True)
     plt.plot(pos_x, pos_y, "b-")
+    plt.xlabel(r'$x$')
+    plt.ylabel(r'$y(x)$')
     plt.show()
