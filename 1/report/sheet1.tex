@@ -258,18 +258,37 @@ We can solve this expression for $\ddot{\mathbf{v}}(t)$:
 \end{align}
 Plugging $\ddot{\mathbf{v}}(t)$ into \autoref{eq:v}, we get
 \begin{align}
- \mathbf{v}(t + \Delta t) &=\mathbf{v}(t) + \mathbf{a}(t)\cdot \Delta t + \frac{\mathbf{a}(t+\Delta t) + \mathbf{a}(t)}{2} \cdot\Delta t^2 + \mathcal{O}(\Delta t^3)
+ \mathbf{v}(t + \Delta t) &=\mathbf{v}(t) + \frac{\mathbf{a}(t+\Delta t) + \mathbf{a}(t)}{2} \cdot\Delta t^2 + \mathcal{O}(\Delta t^3)
  \label{eq:v2}
 \end{align}
 \autoref{eq:x} and \autoref{eq:v2} define the Velocity Verlet algorithm.
 \subsubsection{Verlet algorithm}
-The Verlet algorithm which was presented in the lecture can also be derived from the Velocity Verlet algorithm. Using \autoref{eq:x}, we can write $\mathbf{x}(t)$ as
+The Verlet algorithm which was presented in the lecture can also be derived from the Velocity Verlet algorithm. Using \autoref{eq:x}, we can write $\mathbf{x}(t+2\Delta t)$ as
 \begin{align}
-...
+\mathbf{x}(t+2\Delta t) = \mathbf{x}(t+\Delta t) + \mathbf{v}(t+\Delta t) \cdot \Delta t + \frac{\mathbf{a}(t+\Delta t)}{2}\cdot\Delta t^2 +\mathcal{O}(\Delta t^3)
+\end{align}
+and $\mathbf{x}(t)$ as
+\begin{align}
+ \mathbf{x}(t) = \mathbf{x}(t+\Delta t) - \mathbf{v}(t) \cdot \Delta t - \frac{\mathbf{a}(t)}{2}\cdot\Delta t^2 +\mathcal{O}(\Delta t^3).
+\end{align}
+Adding these equations results in 
+\begin{align}
+\begin{split}
+\mathbf{x}(t+2\Delta t) + \mathbf{x}(t)&= \mathbf{x}(t+\Delta t) + \mathbf{v}(t+\Delta t) \cdot \Delta t + \frac{\mathbf{a}(t+\Delta t)}{2}\cdot\Delta t^2\\ &+ \mathbf{x}(t+\Delta t) - \mathbf{v}(t) \cdot \Delta t - \frac{\mathbf{a}(t)}{2}\cdot\Delta t^2 + \mathcal{O}(\Delta t^3)
+\end{split}\\
+&= 2\mathbf{x}(t+\Delta t) + \mathbf{a}(t+\Delta t)\cdot \Delta t^2 + \mathcal{O}(\Delta t^3).
+\end{align}
+where we used the relation
+\begin{align}
+ \mathbf{v}(t+\Delta t) -\mathbf{v}(t) = \frac{\mathbf{a}(t) + \mathbf{a}(t+\Delta t)}{2} \cdot \Delta t
+\end{align}
+which can be derived from \autoref{eq:v2}. Isolating $\mathbf{x}(t+\Delta t)$ and shifting $t$ by $-\Delta t$ results in the Verlet algorithm
+\begin{align}
+ \mathbf{x} (t+\Delta t) = 2\mathbf{x} (t) - \mathbf{x}(t-\Delta t) + \mathbf{a}(t+\Delta t)\cdot \Delta t^2
+ \label{eq:verlet}
 \end{align}
 
-
-As we can see in ..., the Verlet algorithm needs the positions $\mathbf{x}(t)$ and $\mathbf{x}(t-\Delta t)$ to calculate the position $\mathbf{x}(t+\Delta t)$. However, the inital conditions only include the position at exactly one point in time $t_0$, this means that the initial conditions are not sufficient to solve the problem with the Verlet algorithm. To get the value of $\mathbf{x}(t_0-\Delta t)$ we have to use another integrator like the Euler scheme, this results in a bigger error.
+\noindent As we can see in \autoref{eq:verlet}, the Verlet algorithm needs the positions $\mathbf{x}(t)$ and $\mathbf{x}(t-\Delta t)$ to calculate the position $\mathbf{x}(t+\Delta t)$. However, the inital conditions only include the position at exactly one point in time $t_0$, this means that the initial conditions are not sufficient to solve the problem with the Verlet algorithm.
 
 \subsubsection{Implementation of the symplectic Euler algorithm}
 
