@@ -3,7 +3,6 @@
 import numpy as np
 import scipy.constants
 
-plt.rc('text', usetex=True)
 
 def force(r_ij, m_i, m_j, g):
     return - g * m_i * m_j * r_ij / np.linalg.norm(r_ij) ** 3
@@ -126,6 +125,8 @@ if __name__ == "__main__":
     import pathlib
     import matplotlib.pyplot as plt
 
+    plt.rc('text', usetex=True)
+
     current_dir = pathlib.Path(__file__).resolve()
     data = np.load(current_dir.parent.parent.joinpath(
         'files/solar_system.npz'))
@@ -166,6 +167,8 @@ if __name__ == "__main__":
 
 
     # # 3.3
+    # plt.xlabel(r"time (years)")
+    # plt.ylabel(r"distance (AU)")
     # trajectories = generate_trajectories(1000, 0.01, x, v, masses, g, step_euler)
     # plot_dist(trajectories, 1, 2, 0.01, "Euler", False)
     #
