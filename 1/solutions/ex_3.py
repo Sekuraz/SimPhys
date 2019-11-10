@@ -156,6 +156,8 @@ if __name__ == "__main__":
 
 
     # # 3.2
+    # plt.xlabel(r"$x$ (AU)")
+    # plt.ylabel(r"$y$ (AU)")
     # trajectories = generate_trajectories(100, 0.01, x, v, masses, g, step_euler)
     # plot_ref(trajectories, 1, 2, "Euler", False)
     #
