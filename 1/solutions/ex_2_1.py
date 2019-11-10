@@ -3,6 +3,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.rc('text', usetex=True)
+
 
 def force(mass, gravity):
     return np.array([0.0, -mass * gravity])
@@ -31,7 +33,6 @@ if __name__ == "__main__":
 
         step_euler(x, v, dt, mass, gravity, f)
     
-    plt.rc('text', usetex=True)
     plt.plot(pos_x, pos_y, "b-")
     plt.xlabel(r'$x$')
     plt.ylabel(r'$y(x)$')
