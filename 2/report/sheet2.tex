@@ -29,7 +29,7 @@
 \RequirePackage[l2tabu,orthodox]{nag} % turn on warnings because of bad style
 \documentclass[a4paper,10pt,bibtotoc]{scrartcl}
 %
-\usepackage[bottom=3.5cm, top=1cm]{geometry}
+\usepackage[bottom=3.5cm, top=3cm]{geometry}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % KOMA CLASSES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -86,6 +86,8 @@
 \usepackage{xspace}             % Use \xpsace in macros to automatically insert space based on context. Usage: \newcommand{\es}{ESPResSo\xspace}
 \usepackage{xcolor}             % Obviously colors. Usage: \color{red} Red text
 \usepackage{booktabs}           % Nice rules for tables. Usage \begin{tabular}\toprule ... \midrule ... \bottomrule
+\usepackage{siunitx}
+
 
 % Source code listings
 \usepackage{listings}           % Source Code Listings. Usage: \begin{lstlisting}...\end{lstlisting}
@@ -119,5 +121,101 @@ backgroundcolor=\color{black!5}}
 \tableofcontents
 
 \section{Statistical Mechanics}
+\subsection{Entropy}
+To calculate the entropy of the combined system, we make use of the statistical mechanical assumption that the number of available states is multiplicative for large enough systems. 
+This leads to a total number of
+\begin{align}
+ \Omega = \Omega_1\cdot\Omega_2 = 10^{31}\cdot 10^{28}= 10^{59}
+\end{align}
+configurations. 
+The entropies are given by
+\begin{align*}
+S_1 &= k_\mathrm{B}\cdot \mathrm{ln}\left(\Omega_1\right) \approx \SI[per-mode=reciprocal]{6.15e-3}{\electronvolt\per\kelvin}\\
+S_2 &= k_\mathrm{B}\cdot \mathrm{ln}\left(\Omega_2\right) \approx\\
+S &= k_\mathrm{B}\cdot \mathrm{ln}\left(\Omega\right) = k_\mathrm{B}\cdot \mathrm{ln}\left(\Omega_1\right) + k_\mathrm{B}\cdot \mathrm{ln}\left(\Omega_2\right) = S_1 + S_2\approx 
+\end{align*}
+The increase in the number of configurations can be calculated using the increase of the entropy.
+To calculate entropy differences, we make use of the fundamental thermodynamic relation
+\begin{align}
+\mathrm{d}S = \frac{1}{T}\mathrm{d}U + \frac{p}{T}\mathrm{d}V - \frac{\mu}{T}\mathrm{d}N.
+\end{align}
+Treating neon as a monatomic, ideal gas we have
+\begin{align}
+ pV &= Nk_\mathrm{B}T\\
+ U &= \frac{3N}{2}k_\mathrm{B} T.
+\end{align}
+For the expansion at constant temperature and particle number we have
+\begin{align}
+ \mathrm{d}S = \frac{1}{T}\underbrace{\mathrm{d}U}_{=0} + \frac{p}{T}\mathrm{d}V - \frac{\mu}{T}\underbrace{\mathrm{d}N}_{=0} = \frac{Nk_\mathrm{B}}{V}\mathrm{d}V = \frac{p_\mathrm{i} V_\mathrm{i}}{T}\cdot\frac{\mathrm{d}V}{V}
+\end{align}
+which can be integrated to give the entropy difference $\Delta S$:
+\begin{align}
+ \Delta S = \int_{S_\mathrm{i}}^{S_\mathrm{f}}\,\mathrm{d}S = \frac{p_\mathrm{i} V_\mathrm{i}}{T}\int_{V_\mathrm{i}}^{V_\mathrm{f}}\,\frac{\mathrm{d} V}{V} = \frac{p_\mathrm{i} V_\mathrm{i}}{T}\ln\left(\frac{V_\mathrm{f}}{V_\mathrm{i}}\right)
+\end{align}
+
+
+
+
+
+\subsection{Thermodynamic Variables in the Canonical Ensemble}
+From the perspective of equilibrium statistical mechanics, all information about the system is contained in the partition function 
+\begin{align}
+ Z = \int\frac{\mathrm{d}\Gamma}{h^{3N}N!}\cdot e^{-\beta H}.
+\end{align}
+The internal energy $U$ is the expectation value of the Hamiltonian $H$, given by
+\begin{align}
+ U = \langle H\rangle = \int\frac{\mathrm{d}\Gamma}{Zh^{3N}N!}\cdot H\cdot e^{-\beta H}.
+\end{align}
+This can also be written as a derivative:
+\begin{align}
+ U = -\frac{\partial_\beta Z}{Z} =-\partial_\beta\ln\left(Z\right) = \partial_\beta\left(\beta F\right).
+\end{align}
+To calculate the pressure, we make use of the fundamental thermodynamic relation
+\begin{align}
+ \mathrm{d}F = -S\mathrm{d}T - p\mathrm{d}V + \mu\mathrm{d}N,
+\end{align}
+giving us
+\begin{align}
+p = -\partial_V F = \partial_V\left(\frac{Z}{\beta}\right).
+\end{align}
+Similarly, the entropy can be calculated as
+\begin{align}
+ S = -\partial_T F = k_\mathrm{B}\ln\left( Z\right) + k_\mathrm{B}T \frac{\partial_T Z}{Z} = k_\mathrm{B}\left(\ln\left( Z\right)  -\beta \partial_\beta \ln\left(Z\right)\right)
+\end{align}
+
+
+
+\subsection{Ideal Gas}
+The free energy of the ideal gas is given by
+\begin{align}
+\begin{split}
+ F &= -\frac{1}{\beta}\ln\left(Z\right) = -\frac{1}{\beta}\ln\left(\frac{V^N}{\lambda^{3N}N!} \right) \approx  -\frac{1}{\beta}\left(\ln\left(\frac{V^N}{\lambda^{3N}}\right) -N\ln\left(N\right) + N\right)\\
+ &= -\frac{N}{\beta}\left(\ln\left(\frac{V}{\lambda^{3}N}\right) + 1\right).
+\end{split}
+\end{align}
+The use of the Stirling approximation is valid in the thermodynamic limit $N\rightarrow \infty$.
+The heat capacity at constant volume is defined as
+\begin{align}
+C_V = \left( \frac{\partial U}{\partial T}\right)_V.
+\end{align}
+We can calculate the internal energy using the result of the previous problem:
+\begin{align}
+ U = -\partial_\beta \ln\left(Z\right) =\frac{3N}{2}\cdot\frac{\partial_\beta \beta}{\beta} = \frac{3N}{2} k_\mathrm{B}T.
+\end{align}
+This leads to
+\begin{align}
+C_V = \frac{3N}{2} k_\mathrm{B}.
+\end{align}
+The pressure is given by
+\begin{align}
+p = -\partial_V F = \frac{N}{\beta}\partial_V\left(\ln\left(\frac{V}{\lambda^{3}N}\right) + 1\right) = \frac{N}{\beta V} = \frac{Nk_\mathrm{B}T}{V}.
+\end{align}
+
+\section{Molecular Dynamics: Lennard-Jones Fluid}
+\subsection{Lennard-Jones Potential}
+\subsection{Lennard-Jones Billiards}
+\subsection{Periodic Boundary Conditions}
+\subsection{Lennard-Jones Fluid}
+\subsection{Verlet Lists}
 
 \end{document}
