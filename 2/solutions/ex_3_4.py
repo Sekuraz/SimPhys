@@ -8,31 +8,28 @@ import ex_3_2
 LENGTH = 10.0
 
 
-def lj_force(r_ij):
-    if np.linalg.norm(r_ij) > 2.5:
+def lj_force(r_ij, R_CUT):
+    if np.linalg.norm(r_ij) > R_CUT:
         return 0
     else:
         return ex_3_2.lj_force(r_ij)
 
 
-_VLJ_cut = ex_3_2.lj_potential(2.5)
-
-
-def lj_potential(r_ij):
-    if np.linalg.norm(r_ij) > 2.5:
+def lj_potential(r_ij, R_CUT, SHIFT):
+    if np.linalg.norm(r_ij) > R_CUT:
         return 0
     else:
-        return ex_3_2.lj_potential(r_ij) - _VLJ_cut
+        return ex_3_2.lj_potential(r_ij) - SHIFT
 
 
-def get_r_ij(x, y):
+def pbc(x, BOX):
     ret = np.zeros_like(x)
     for dim in range(len(ret)):
-        ret[dim] = x[dim] - y[dim] - LENGTH * (int(x[dim] - y[dim]) // LENGTH)
+        ret[dim] = x[dim] - BOX[dim] * (int(x[dim]) // BOX[dim])
     return ret
 
 
-def forces(x: np.ndarray) -> np.ndarray:
+def forces(x: np.ndarray, R_CUT, BOX) -> np.ndarray:
     """Compute and return the forces acting onto the particles,
     depending on the positions x."""
     N = x.shape[1]
@@ -40,14 +37,14 @@ def forces(x: np.ndarray) -> np.ndarray:
     for i in range(1, N):
         for j in range(i):
             # distance vector
-            r_ij = get_r_ij(x[:, j], x[:, i])
-            f_ij = lj_force(r_ij)
+            r_ij = x[:, j] - x[:, i]
+            f_ij = lj_force(pbc(r_ij, BOX), R_CUT)
             f[:, i] -= f_ij
             f[:, j] += f_ij
     return f
 
 
-def total_energy(x: np.ndarray, v: np.ndarray) -> float:
+def total_energy(x: np.ndarray, v: np.ndarray, R_CUT, SHIFT, BOX) -> float:
     """Compute and return the total energy of the system with the
     particles at positions x and velocities v."""
     N = x.shape[1]
@@ -57,22 +54,22 @@ def total_energy(x: np.ndarray, v: np.ndarray) -> float:
     for i in range(1, N):
         for j in range(i):
             # distance vector
-            r_ij = get_r_ij(x[:, j], x[:, i])
-            E_pot += lj_potential(r_ij)
+            r_ij = x[:, j] - x[:, i]
+            E_pot += lj_potential(pbc(r_ij, BOX), R_CUT, SHIFT)
     # sum up kinetic energy
     for i in range(N):
         E_kin += 0.5 * np.dot(v[:, i], v[:, i])
     return E_pot + E_kin
 
 
-def step_vv(x: np.ndarray, v: np.ndarray, f: np.ndarray, dt: float):
+def step_vv(x: np.ndarray, v: np.ndarray, f: np.ndarray, dt: float, R_CUT, BOX):
     # update positions
     x += v * dt + 0.5 * f * dt * dt
     # half update of the velocity
     v += 0.5 * f * dt
 
     # compute new forces
-    f = forces(x)
+    f = forces(x, R_CUT, BOX)
     # we assume that all particles have a mass of unity
 
     # second half update of the velocity
@@ -106,7 +103,11 @@ if __name__ == "__main__":
     v[:, 3] = [0.0, 0.0]
     v[:, 4] = [0.0, 0.0]
 
-    f = forces(x)
+    R_CUT = 2.5
+    SHIFT = ex_3_2.lj_potential(R_CUT)
+    BOX = np.array((10.0, 10.0))
+
+    f = forces(x, R_CUT, BOX)
 
     N_PART = x.shape[1]
 
@@ -121,11 +122,11 @@ if __name__ == "__main__":
         vtffile.write(f'atom 0:{N_PART - 1} radius 0.5\n')
         vtffile.write(f'pbc {LENGTH} {LENGTH} {LENGTH}\n')
         for i in range(N_TIME_STEPS):
-            x, v, f = step_vv(x, v, f, DT)
+            x, v, f = step_vv(x, v, f, DT, R_CUT, BOX)
             time += DT
 
             positions[i, :2] = x
-            energies[i] = total_energy(x, v)
+            energies[i] = total_energy(x, v, R_CUT, BOX)
 
             # write out that a new timestep starts
             vtffile.write('timestep\n')
