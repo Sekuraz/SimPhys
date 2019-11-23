@@ -47,8 +47,11 @@ def get_verlet_list(x: np.ndarray, r_cut: float, skin: float, box: np.ndarray) -
     N = x.shape[1]
     verlet_list = []
 
-    # TODO: YOUR IMPLEMENTATION OF VERLET LISTS GOES HERE...
-
+    for i in range(N):
+        for j in range(i + 1, N):
+            r_ij = ex_3_4.minimum_image_vector(x[:, j], x[:, i], box)
+            if np.linalg.norm(r_ij) < r_cut + skin:
+                verlet_list.append((i, j))
     return np.copy(x), np.array(verlet_list)
 
 def step_vv(x: np.ndarray, v: np.ndarray, f: np.ndarray, dt: float, r_cut: float, skin: float, box: np.ndarray, x0: np.ndarray, verlet_list: np.ndarray):

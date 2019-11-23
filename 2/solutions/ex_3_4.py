@@ -22,6 +22,10 @@ def lj_potential(r_ij, R_CUT, SHIFT):
         return ex_3_2.lj_potential(r_ij) - SHIFT
 
 
+def minimum_image_vector(x, y, BOX):
+    return pbc(y - x, BOX)
+
+
 def pbc(x, BOX):
     ret = np.zeros_like(x)
     for dim in range(len(ret)):
