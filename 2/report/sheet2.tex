@@ -152,9 +152,26 @@ which can be integrated to give the entropy difference $\Delta S$:
 \begin{align}
  \Delta S = \int_{S_\mathrm{i}}^{S_\mathrm{f}}\,\mathrm{d}S = \frac{p_\mathrm{i} V_\mathrm{i}}{T}\int_{V_\mathrm{i}}^{V_\mathrm{f}}\,\frac{\mathrm{d} V}{V} = \frac{p_\mathrm{i} V_\mathrm{i}}{T}\ln\left(\frac{V_\mathrm{f}}{V_\mathrm{i}}\right) = \frac{p_\mathrm{i} V_\mathrm{i}}{T}\ln\left(1.01\right)
 \end{align}
-
-
-
+The entropy difference can also be expressed as a function of the inital and final number of configurations:
+\begin{align}
+\Delta S = k_\mathrm{B}\ln\left(\frac{\Omega_\mathrm{f}}{\Omega_\mathrm{i}}\right).
+\end{align}
+Using this relationship, we can express the $\Omega_\mathrm{f}$ in the following way:
+\begin{align}
+ \Omega_\mathrm{f} = \Omega_\mathrm{i}\cdot e^{\frac{\Delta S}{k_\mathrm{B}}} \approx 1.01\cdot \exp\left(2.463\cdot 10^{25}\right)\cdot \Omega_\mathrm{i}.
+\end{align}
+For the addition of energy at constant volume and particle number we have
+\begin{align}
+ \mathrm{d}S = \frac{1}{T}\mathrm{d}U + \frac{p}{T}\underbrace{\mathrm{d}V}_{=0} - \frac{\mu}{T}\underbrace{\mathrm{d}N}_{=0} = \frac{3Nk_\mathrm{B}}{2}\cdot\frac{\mathrm{d}U}{U}.
+\end{align}
+Integrating this relation results in
+\begin{align}
+ \Delta S = \int_{S_\mathrm{i}}^{S_\mathrm{f}}\,\mathrm{d}S = \frac{3Nk_\mathrm{B}}{2}\int_{U_\mathrm{i}}^{U_\mathrm{f}}\,\frac{\mathrm{d} U}{U} = \frac{3Nk_\mathrm{B}}{2}\ln\left(\frac{U_\mathrm{f}}{U_\mathrm{i}}\right) = \frac{3Nk_\mathrm{B}}{2}\ln\left(\frac{\frac{3Nk_\mathrm{B}}{2}T_\mathrm{i} + 100\,\mathrm{kJ}}{\frac{3Nk_\mathrm{B}}{2}T_\mathrm{i}}\right)
+\end{align}
+which gives us
+\begin{align}
+ \Omega_\mathrm{f} = \Omega_\mathrm{i}\cdot e^{\frac{\Delta S}{k_\mathrm{B}}} \approx 21\cdot \exp\left(9.03\cdot 10^{23}\right)\cdot \Omega_\mathrm{i}.
+\end{align}
 
 
 \subsection{Thermodynamic Variables in the Canonical Ensemble}
@@ -181,7 +198,7 @@ p = -\partial_V F = \partial_V\left(\frac{Z}{\beta}\right).
 Similarly, the entropy can be calculated as
 \begin{align}
  S = -\partial_T F = k_\mathrm{B}\ln\left( Z\right) + k_\mathrm{B}T \frac{\partial_T Z}{Z} = k_\mathrm{B}\left(\ln\left( Z\right)  -\beta \partial_\beta \ln\left(Z\right)\right)
-\end{align}
+\end{align}.
 
 
 
