@@ -30,6 +30,9 @@
 \documentclass[a4paper,10pt,bibtotoc]{scrartcl}
 %
 \usepackage[bottom=3.5cm, top=3cm]{geometry}
+\usepackage{subcaption}
+\captionsetup[subfigure]{list=true, position=top}
+\usepackage{float}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % KOMA CLASSES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -248,23 +251,63 @@ def lj_force(r_ij):
 \end{lstlisting}
 A plot is shown in \autoref{fig:fig2}.
 
-\begin{figure}[t]
- \includegraphics{lennard_jones_potential.eps}
+\begin{figure}[H]
+ \includegraphics[width=.8\linewidth]{lennard_jones_potential.eps}
  \caption{Plot of the Lennard-Jones potential as a function of the distance $d$.}
  \label{fig:fig1}
-\end{figure}
-\begin{figure}[t]
- \includegraphics{lennard_jones_force.eps}
+ \includegraphics[width=.8\linewidth]{lennard_jones_force.eps}
  \caption{Plot of the $x$-component of the Lennard-Jones force as a function of the distance $d$.}
  \label{fig:fig2}
 \end{figure}
 
 \subsection{Lennard-Jones Billiards}
-A plot of the simulated trajectories is shown in .... 
+A plot of the simulated trajectories is shown in \autoref{fig:fig3}.
 We can see that there already is a collision between the third and fifth particle. 
 In contrast to billiard balls, which can be modeled as hard spheres, the Lennard-Jones potential of the particles is not purely repulsive, but also has an attractive part. 
 This leads not only to collisions, but also to a situation where two particles circle each other.
 For the chosen initial conditions, this can be observed for the second and fourth particle.
+A visualisation is shown in \autoref{fig:fig4}.
+
+\begin{figure}[t]
+ \includegraphics{Figure_trajectories_no_PBC.eps}
+ \caption{Trajectory of the system with 5 particles.}
+ \label{fig:fig3}
+\end{figure}
+
+\begin{figure}
+    \begin{subfigure}[t]{.5\textwidth}
+        \centering
+        \caption{}
+        \includegraphics[width=.8\linewidth]{scene1.png}
+        \label{fig:sfig1}
+    \end{subfigure}\hfill %
+    \begin{subfigure}[t]{.5\textwidth}
+        \centering
+        \caption{}
+        \includegraphics[width=.8\linewidth]{scene2.png}
+        \label{fig:sfig1}
+    \end{subfigure}
+    \begin{subfigure}[t]{.5\textwidth}
+        \centering
+        \caption{}
+        \includegraphics[width=.8\linewidth]{scene3.png}
+        \label{fig:sfig1}
+    \end{subfigure}\hfill %
+    \begin{subfigure}[t]{.5\textwidth}
+        \centering
+        \caption{}
+        \includegraphics[width=.8\linewidth]{scene4.png}
+        \label{fig:sfig1}
+    \end{subfigure}
+    \begin{subfigure}[t]{.5\textwidth}
+        \centering
+        \caption{}
+        \includegraphics[width=.8\linewidth]{scene5.png}
+        \label{fig:sfig1}
+    \end{subfigure}\hfill %
+    \caption{(a) - (e): Visualisation of the system using VMD. It is visible that the particles 2 and 4 circle each other for a short time due to the attractive interaction.}
+    \label{fig:fig4}
+\end{figure}
 
 \subsection{Periodic Boundary Conditions}
 The functions for the truncated Lennard-Jones potential and force where implemented in the following way:
@@ -294,17 +337,96 @@ def pbc(x, BOX):
 This functions has the numpy arrays x and BOX as its input.
 x represents a vector like the difference vector $\mathbf{r}_{ij}$ between two particles. 
 BOX contains the dimensions of the domain with periodic boundary condition.
-The function returns the vector x according to the minimum image convention
+The function returns the vector x according to the minimum image convention.
+The functions which calculate the forces and the total energy are then modified using this function.
+\autoref{fig:fig5} shows the trajectories of the 2 particles. 
+The fact that the trajectories are not straight lines clearly indicates that the particles hit each other.
 
-\begin{lstlisting}
-def minimum_image_vector(x, y, BOX):
-    return pbc(y - x, BOX)
-\end{lstlisting}
-
-
-
+\begin{figure}[t]
+ \includegraphics{trajectory_pbc.pdf}
+ \caption{Trajectory of the system with 2 particles and periodic boundary conditions.}
+ \label{fig:fig5}
+\end{figure}
 
 \subsection{Lennard-Jones Fluid}
+Plots of the measured runtime $t$ as a function of the number of simulated particles $N$ are shown in \autoref{fig:fig6}.
+In the linear plot we can cleary see that $t(N)$ is a nonlinear function. 
+The loglog plot shows an almost straight line, this suggests that the dependence of $t$ and $n$ is approximately given by a power law.
+Because we expect a quadratic dependence of $t$ on $N$ (the computational complexity of calculating the forces is $\mathcal{O}(N^2)$) we fit the function
+\begin{align}
+ t(N) = \left(a\cdot N + b\cdot N^2\right)\cdot 1\,\mathrm{s}
+\end{align}
+to the measured data. 
+The parameters we obtained were
+\begin{align}
+ a &\approx 0.0148\\
+ b &\approx 0.002.
+\end{align}
+The fitted function is also shown in \autoref{fig:fig6}. 
+We can see that the data and the fit are in good agreement. 
+
+
+
+\begin{figure}
+    \begin{subfigure}[t]{.5\textwidth}
+        \centering
+        \caption{}
+        \includegraphics[width=1\linewidth]{Fit1.pdf}
+        \label{fig:sfig1}
+    \end{subfigure}\hfill %
+    \begin{subfigure}[t]{.5\textwidth}
+        \centering
+        \caption{}
+        \includegraphics[width=1\linewidth]{Fit2.pdf}
+        \label{fig:sfig1}
+    \end{subfigure}
+    \begin{subfigure}[t]{.5\textwidth}
+        \centering
+        \caption{}
+        \includegraphics[width=1\linewidth]{Fit3.pdf}
+        \label{fig:sfig1}
+    \end{subfigure}\hfill %
+    \caption{Plots of the measured runtime $t$ as a function of the number of particles $N$ as well as the fitted parabola. (a): Linear plot. (b): Loglog plot. (c): Semilogarithmic plot.}
+    \label{fig:fig6}
+\end{figure}
+
 \subsection{Verlet Lists}
+The function for the Verlet list is implemented in the following fashion:
+\begin{lstlisting}
+def get_verlet_list(x: np.ndarray, r_cut: float,\
+    skin: float, box: np.ndarray) -> (np.ndarray, np.ndarray):
+    """
+    Create a list of interaction partners.
+
+    """
+    N = x.shape[1]
+    verlet_list = []
+
+    for i in range(N):
+        for j in range(i + 1, N):
+            r_ij = ex_3_4.minimum_image_vector(x[:, j], x[:, i], box)
+            if np.linalg.norm(r_ij) < r_cut + skin:
+                verlet_list.append((i, j))
+    return np.copy(x), np.array(verlet_list)
+\end{lstlisting}
+In \autoref{fig:fig7}, the run time for different values of the skin is shown. 
+We can clearly see that there is minimum for a skin of $0.2$.
+
+\begin{figure}[t]
+ \includegraphics{Figure_skin.pdf}
+ \caption{Run time for different values of the skin.}
+ \label{fig:fig7}
+\end{figure}
+
+In \autoref{fig:fig8}, the runtime as a function of the number of particles is shown for both the program with and without a verlet list. 
+We see that the runtime is much lower with the verlet list. 
+Furthermore, the runtime grows much slower in this case, which we also would expect.
+
+\begin{figure}[t]
+ \includegraphics{withandiwthout.pdf}
+ \caption{Runtime as a function of the number of particles.}
+ \label{fig:fig8}
+\end{figure}
+
 
 \end{document}
