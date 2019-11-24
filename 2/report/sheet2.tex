@@ -260,7 +260,50 @@ A plot is shown in \autoref{fig:fig2}.
 \end{figure}
 
 \subsection{Lennard-Jones Billiards}
+A plot of the simulated trajectories is shown in .... 
+We can see that there already is a collision between the third and fifth particle. 
+In contrast to billiard balls, which can be modeled as hard spheres, the Lennard-Jones potential of the particles is not purely repulsive, but also has an attractive part. 
+This leads not only to collisions, but also to a situation where two particles circle each other.
+For the chosen initial conditions, this can be observed for the second and fourth particle.
+
 \subsection{Periodic Boundary Conditions}
+The functions for the truncated Lennard-Jones potential and force where implemented in the following way:
+\begin{lstlisting}
+def lj_potential(r_ij, R_CUT, SHIFT):
+    if np.linalg.norm(r_ij) > R_CUT:
+        return 0
+    else:
+        return ex_3_2.lj_potential(r_ij) - SHIFT
+\end{lstlisting}
+
+\begin{lstlisting}
+def lj_force(r_ij, R_CUT):
+    if np.linalg.norm(r_ij) > R_CUT:
+        return 0
+    else:
+        return ex_3_2.lj_force(r_ij)
+\end{lstlisting}
+To take into account the periodic boundary conditions with the minimum image convention, we implemented the function pbc:
+\begin{lstlisting}
+def pbc(x, BOX):
+    ret = np.zeros_like(x)
+    for dim in range(len(ret)):
+        ret[dim] = x[dim] - BOX[dim] * np.rint(x[dim]/ BOX[dim])
+    return ret
+\end{lstlisting}
+This functions has the numpy arrays x and BOX as its input.
+x represents a vector like the difference vector $\mathbf{r}_{ij}$ between two particles. 
+BOX contains the dimensions of the domain with periodic boundary condition.
+The function returns the vector x according to the minimum image convention
+
+\begin{lstlisting}
+def minimum_image_vector(x, y, BOX):
+    return pbc(y - x, BOX)
+\end{lstlisting}
+
+
+
+
 \subsection{Lennard-Jones Fluid}
 \subsection{Verlet Lists}
 

@@ -29,7 +29,7 @@ def minimum_image_vector(x, y, BOX):
 def pbc(x, BOX):
     ret = np.zeros_like(x)
     for dim in range(len(ret)):
-        ret[dim] = x[dim] - BOX[dim] * (int(x[dim]) // BOX[dim])
+        ret[dim] = x[dim] - BOX[dim] * np.rint(x[dim]/ BOX[dim])
     return ret
 
 
@@ -130,7 +130,7 @@ if __name__ == "__main__":
             time += DT
 
             positions[i, :2] = x
-            energies[i] = total_energy(x, v, R_CUT, BOX)
+            energies[i] = total_energy(x, v, R_CUT, SHIFT, BOX)
 
             # write out that a new timestep starts
             vtffile.write('timestep\n')
