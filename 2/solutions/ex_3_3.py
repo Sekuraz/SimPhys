@@ -122,12 +122,14 @@ if __name__ == "__main__":
     ax2.set_title('Total energy')
     plt.show()
     
+    plt.rc('text', usetex=True)
+    
     fig2, (axis1) = plt.subplots(1, 1)
     for i in range(N_PART):
         axis1.plot(positions[:, 0, i], positions[:, 1, i], label='{}'.format(i))
-    axis1.set_title('Trajectory')
+    #axis1.set_title('Trajectory')
     axis1.set_aspect('equal')
-    axis1.set_xlabel('x position')
-    axis1.set_ylabel('y position')
+    axis1.set_xlabel(r'$x/\sigma$')
+    axis1.set_ylabel(r'$y/\sigma$')
     axis1.legend()
     plt.show()

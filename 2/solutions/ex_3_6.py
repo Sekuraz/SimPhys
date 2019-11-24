@@ -94,7 +94,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     DT = 0.01
-    T_MAX = 40.0
+    T_MAX = 1.0
     N_TIME_STEPS = int(T_MAX / DT)
 
     R_CUT = 2.5
