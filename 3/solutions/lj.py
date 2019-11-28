@@ -62,9 +62,11 @@ class Simulation:
 
     def pressure(self):
         #TODO
+        pass
 
     def rdf(self):
         #TODO
+        pass
 
     def propagate(self):
         # update positions
@@ -145,10 +147,21 @@ if __name__ == "__main__":
         pressures = []
         temperatures = []
         rdfs = []
-    elif args.cpt and os.path.exists(args.cpt):
+    #elif args.cpt and os.path.exists(args.cpt):
+    else:
         logging.info("Reading state from checkpoint.")
         with open(args.cpt, 'rb') as fp:
-            data = pickle.load(fp)
+            state = pickle.load(fp)
+        positions = state['positions']
+        energies = state['energies']
+        pressures = state['pressures']
+        temperatures = state['temperatures']
+        rdfs = state['rdfs']
+
+        x = state['x']
+        v = state['v']
+        f = state['f']
+
 
     sim = Simulation(DT, x, v, BOX, R_CUT, SHIFT)
 
@@ -167,5 +180,12 @@ if __name__ == "__main__":
             rdfs.append(sim.rdf())
 
     if args.cpt:
-        state = {'energies': energies}
+        state = {'positions': positions,
+                 'energies': energies,
+                 'pressures': pressures,
+                 'temperatures': temperatures,
+                 'rdfs': rdfs,
+                 'x':sim.x,
+                 'v': sim.v,
+                 'f': sim.f}
         write_checkpoint(state, args.cpt, overwrite=True)

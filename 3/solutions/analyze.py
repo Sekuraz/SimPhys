@@ -13,5 +13,7 @@ args = parser.parse_args()
 with open(args.file, 'rb') as fp:
     data = pickle.load(fp)
 
+print(len(data['energies']))
+
 def running_average(O, M):
     pass
