@@ -49,6 +49,12 @@ class Simulation:
                 self.f_ij_matrix[:, :, dim] *= np.where(r != 0.0, fac / r, 0.0)
         self.f = np.sum(self.f_ij_matrix, axis=0).transpose()
 
+    def e_pot(self):
+        return np.sum(self.e_pot_ij_matrix)
+
+    def e_kin(self):
+        return np.sum(0.5 * np.power(self.v, 2))  # mass = 1
+
     def energy(self):
         """Compute and return the energy components of the system."""
         # compute energy matrix
@@ -56,9 +62,11 @@ class Simulation:
         # TODO compute interaction energy from self.e_pot_ij_matrix
         # TODO calculate kinetic energy from the velocities self.v and return both energy components
 
+        return np.array((self.e_pot(), self.e_kin()))
+
     def temperature(self):
-        #TODO
-        pass
+        KBT = 1  # TODO !!!!
+        return 2 * self.e_kin() / (self.n_dims * self.n * KBT)
 
     def pressure(self):
         #TODO
