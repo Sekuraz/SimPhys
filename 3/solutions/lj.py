@@ -65,16 +65,29 @@ class Simulation:
         return np.array((self.e_pot(), self.e_kin()))
 
     def temperature(self):
-        KBT = 1  # TODO !!!!
-        return 2 * self.e_kin() / (self.n_dims * self.n * KBT)
+        # we use kB=1 for the scaling of our units
+        return 2 * self.e_kin() / (self.n_dims * self.n)
 
     def pressure(self):
-        #TODO
-        pass
+        def ideal():
+            return self.e_kin() * 2 / (self.n_dims * np.product(self.box))
+        s = 0
+        for i in range(1, self.n):
+            for j in range(i):
+                s += np.dot(self.f_ij_matrix[i][j], self.r_ij_matrix[i][j])
+        # f = np.multiply(self.f_ij_matrix, self.r_ij_matrix)
+        # f = np.abs(f)  # all the values should be positive
+        # f = np.sum(f)
+        f = s * 2
+        area = np.product(self.box)
+        ret = 1 / area * self.e_kin() + f * 0.25
+        print("Pressure: calculated=%4.6f, ideal=%4.6f" % (ret, ideal()))
+        return ret
 
     def rdf(self):
-        #TODO
-        pass
+        r = np.linalg.norm(self.r_ij_matrix, axis=2)
+        hist, bins = np.histogram(r, bins=100, range=(0.8, 5))
+        return hist, bins
 
     def propagate(self):
         # update positions
