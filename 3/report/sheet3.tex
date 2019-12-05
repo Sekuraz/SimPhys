@@ -163,9 +163,9 @@ The pressure for a system in $d$ dimensions with volume $V$ can be calculated us
 \begin{align}
 P = \underbrace{\frac{Nk_\mathrm{B}T}{V}}_{\text{ideal gas contribution}} + \underbrace{\frac{1}{dV}\sum_{i<j}\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle}_{\text{virial contribution}}.
 \end{align}
-We can split this expression into :
+We can split this expression into a part that corresponds to the system with truncated potentials and a correction $\Delta P$:
 \begin{align}
-P = \underbrace{\frac{Nk_\mathrm{B}T}{V} + \frac{1}{dV}\sum_{\substack{i<j\\ r_{ij}<r_\mathrm{c}}}\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle}_{\text{virial contribution}} + \underbrace{\frac{1}{dV}\sum_{\substack{i<j\\ r_{ij}>r_\mathrm{c}}}\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle}_{\Delta P}.
+P = \underbrace{\frac{Nk_\mathrm{B}T}{V} + \frac{1}{dV}\sum_{\substack{i<j\\ r_{ij}<r_\mathrm{c}}}\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle}_{P_\text{truncated}} + \underbrace{\frac{1}{dV}\sum_{\substack{i<j\\ r_{ij}>r_\mathrm{c}}}\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle}_{\Delta P}.
 \end{align}
 
 \begin{align}
