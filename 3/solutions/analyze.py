@@ -24,8 +24,9 @@ def running_average(O, M):
         if (i < M) or (i >= N - M):
             ret[i] = np.nan
         else:
-            ret[i] =  np.sum(O[i-M:i+M+1]) / (2*M + 1)           
+            ret[i] = np.sum(O[i-M:i+M+1]) / (2*M + 1)
     return ret
+
 
 rdfs = ['rdfs'][:][0]
 bins = ['rdfs'][0][1]
@@ -50,8 +51,6 @@ def print_teq():
         return
     for o in observables:
         d = data[o]
-        if len(d) < args.t_eq:
-            return
         d = d[args.t_eq:]
         print("Average equilibrium %s: %s" % (o, sum(d) / len(d)))
 
