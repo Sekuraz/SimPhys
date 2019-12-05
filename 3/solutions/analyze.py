@@ -26,6 +26,15 @@ def running_average(O, M):
             ret[i] =  np.sum(O[i-M:i+M+1]) / (2*M + 1)           
     return ret
 
+rdfs = ['rdfs'][:][0]
+bins = ['rdfs'][0][1]
+
+def average_rdf(rdfs, t_eq):
+    for i >= t_eq:
+        ret += rdfs[i]
+    ret /= len(rdfs[t_eq:])
+    return ret
+
 
 observables = ['energies', 'pressures', 'temperatures']
 
