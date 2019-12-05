@@ -123,14 +123,48 @@ backgroundcolor=\color{black!5}}
 
 \tableofcontents
 
-\section{Saving and Restarting the Simulaiton}
+\section{Saving and Restarting the Simulation}
 \section{Simple Observables}
 \section{Equilibration}
 \section{Molecular Dynamics at a Desired Temperature}
+The temperature $T(t)$ of the system at a given time $t$ is given by the equipartition theorem:
+\begin{align}
+T(t) = \frac{1}{k_\mathrm{B}DN}\sum_{i=1}^{N}\frac{m}{2}\mathbf{v}^2.
+\end{align}
+To reach the desired temperature $T_0$, we introduce rescaled velocities:
+\begin{align}
+\mathbf{v}\rightarrow a\cdot\mathbf{v}.
+\end{align}
+with a scaling factor $a$. 
+This results in
+\begin{align}
+T_0 = \frac{1}{k_\mathrm{B}DN}\sum_{i=1}^{N}\frac{m}{2}\left(a\cdot\mathbf{v}\right)^2 =a^2\cdot \frac{1}{k_\mathrm{B}DN}\sum_{i=1}^{N}\frac{m}{2}\mathbf{v}^2 = a^2\cdot T(t).
+\end{align}
+We can identify the scaling factor $a$ as
+\begin{align}
+a = \sqrt{\frac{T_0}{T(t)}}.
+\end{align}
+
+
+
+
+
 \section{Setting up and Warming up the System}
 \section{Radial Distribution Function}
 \section{Measruing Equilibrium Mean Values of the Observables}
 \section{Tail Correction in the Pressure Calculation}
+The pressure for a system in $d$ dimensions with volume $V$ can be calculated using the expression
+\begin{align}
+P = \underbrace{\frac{Nk_\mathrm{B}T}{V}}_{\text{ideal gas contribution}} + \underbrace{\frac{1}{dV}\sum_{i<j}\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle}_{\text{virial contribution}}.
+\end{align}
+We can split this expression into :
+\begin{align}
+P = \underbrace{\frac{Nk_\mathrm{B}T}{V} + \frac{1}{dV}\sum_{\substack{i<j\\ r_{ij}<r_\mathrm{c}}}\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle}_{\text{virial contribution}} + \underbrace{\frac{1}{dV}\sum_{\substack{i<j\\ r_{ij}>r_\mathrm{c}}}\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle}_{\Delta P}.
+\end{align}
+
+\begin{align}
+\Delta P = \frac{1}{dV}\sum_{\substack{i<j\\ r_{ij}>r_\mathrm{c}}}\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle
+\end{align}
 
 
 \end{document}
