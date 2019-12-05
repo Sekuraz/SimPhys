@@ -87,9 +87,12 @@ class Simulation:
         # print("Pressure: calculated=%4.6f, ideal=%4.6f" % (ret, ideal()))
         return ret
 
-    def rdf(self):
+    def rdf(self, DENSITY):
         r = np.linalg.norm(self.r_ij_matrix, axis=2)
         hist, bins = np.histogram(r, bins=100, range=(0.8, 5))
+        dr = 0.042
+        for i in range(0, 100):
+            hist[i] /= np.pi*DENSITY*(2*dr*(0.8+i*dr) + dr*dr)
         return hist, bins
 
     def rescale(self, T0):
@@ -217,7 +220,7 @@ if __name__ == "__main__":
             pressures.append(sim.pressure())
             energies.append(np.sum(sim.energy()))
             temperatures.append(sim.temperature())
-            rdfs.append(sim.rdf())
+            rdfs.append(sim.rdf(DENSITY))
 
             sim.rescale(args.temperature)
             sim.f_max *= 1.1
