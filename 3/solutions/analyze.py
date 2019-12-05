@@ -2,6 +2,7 @@
 
 import pickle
 import argparse
+import warnings
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -40,6 +41,9 @@ def average_rdf(rdfs, t_eq):
 
 
 observables = ['energies', 'pressures', 'temperatures']
+if len(data[observables[0]]) > 1000:
+    warnings.warn("Data might be inaccurate due to numerical instabilities!")
+
 
 def print_teq():
     if not hasattr(args, "t_eq"):
