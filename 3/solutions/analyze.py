@@ -57,3 +57,21 @@ def print_teq():
 
 
 print_teq()
+
+
+def plot_observables():
+    fig, axes = plt.subplots(nrows=len(observables), sharex=True)
+    for i, o in enumerate(observables):
+        d = data[o][args.t_eq:]
+        y = list(range(len(d)))
+        p = axes[i]
+        p.title.set_text(o)
+        p.plot(d, label="raw")
+        p.plot(running_average(d, 10), label="running 10")
+        p.plot(running_average(d, 100), label="running 100")
+    plt.legend()
+
+    plt.show()
+
+
+plot_observables()
