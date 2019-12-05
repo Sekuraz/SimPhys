@@ -29,15 +29,17 @@ def running_average(O, M):
 rdfs = ['rdfs'][:][0]
 bins = ['rdfs'][0][1]
 
+
 def average_rdf(rdfs, t_eq):
-    for i >= t_eq:
+    rdfs = rdfs[t_eq:]
+    ret = np.zeros_like(rdfs[0])
+    for i in range(len(rdfs)):
         ret += rdfs[i]
-    ret /= len(rdfs[t_eq:])
+    ret /= len(rdfs)
     return ret
 
 
 observables = ['energies', 'pressures', 'temperatures']
-
 
 def print_teq():
     if not hasattr(args, "t_eq"):
