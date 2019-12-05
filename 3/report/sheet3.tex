@@ -145,13 +145,19 @@ We can identify the scaling factor $a$ as
 a = \sqrt{\frac{T_0}{T(t)}}.
 \end{align}
 
-
-
-
-
 \section{Setting up and Warming up the System}
 \section{Radial Distribution Function}
-\section{Measruing Equilibrium Mean Values of the Observables}
+To caclulate the radial distribution function at a given time, the following function was implemented:
+\begin{lstlisting}
+def rdf(self):
+    r = np.linalg.norm(self.r_ij_matrix, axis=2)
+    hist, bins = np.histogram(r, bins=100, range=(0.8, 5))
+    return hist, bins
+\end{lstlisting}
+First, the distances are calculated from the matrix of distance vectors. 
+
+
+\section{Measuring Equilibrium Mean Values of the Observables}
 \section{Tail Correction in the Pressure Calculation}
 The pressure for a system in $d$ dimensions with volume $V$ can be calculated using the expression
 \begin{align}

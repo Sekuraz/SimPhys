@@ -17,7 +17,14 @@ with open(args.file, 'rb') as fp:
 
 
 def running_average(O, M):
-    pass
+    ret = np.empty_like(O)
+    N = len(O)
+    for i in range(0, N):
+        if (i < M) or (i >= N - M):
+            ret[i] = np.nan
+        else:
+            ret[i] =  np.sum(O[i-M:i+M+1]) / (2*M + 1)           
+    return ret
 
 
 observables = ['energies', 'pressures', 'temperatures']
