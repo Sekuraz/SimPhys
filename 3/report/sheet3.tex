@@ -76,7 +76,7 @@
 \usepackage[T1]{fontenc}        % Tries to use Postscript Type 1 Fonts for better rendering
 \usepackage{lmodern}            % Provides the Latin Modern Font which offers more glyphs than the default Computer Modern
 \usepackage[intlimits]{amsmath} % Provides all mathematical commands
-
+\usepackage{amssymb}
 \usepackage{hyperref}           % Provides clickable links in the PDF-document for \ref
 \usepackage{graphicx}            % Allow you to include images (like graphicx). Usage: \includegraphics{path/to/file}
 
@@ -125,6 +125,25 @@ backgroundcolor=\color{black!5}}
 
 \section{Saving and Restarting the Simulation}
 \section{Simple Observables}
+\begin{lstlisting}
+def temperature(self):
+    return 2 * self.e_kin() / (self.n_dims * self.n)
+\end{lstlisting}
+\begin{lstlisting}
+def pressure(self):
+    def ideal():
+    return self.e_kin() * 2 / (self.n_dims * np.product(self.box))
+    
+    f = np.multiply(self.f_ij_matrix, self.r_ij_matrix)
+    f = np.sum(f)
+
+    area = np.product(self.box)
+    ret = 1 / area * (self.e_kin() + f * 0.25)
+    #print("Pressure: calculated=%4.6f, ideal=%4.6f" % (ret, ideal()))
+    return ret
+\end{lstlisting}
+
+
 \section{Equilibration}
 \section{Molecular Dynamics at a Desired Temperature}
 The temperature $T(t)$ of the system at a given time $t$ is given by the equipartition theorem:
@@ -147,7 +166,7 @@ a = \sqrt{\frac{T_0}{T(t)}}.
 
 \section{Setting up and Warming up the System}
 \section{Radial Distribution Function}
-To caclulate the radial distribution function at a given time, the following function was implemented:
+To calculate the radial distribution function at a given time, the following function was implemented:
 \begin{lstlisting}
 def rdf(self):
     r = np.linalg.norm(self.r_ij_matrix, axis=2)
@@ -167,10 +186,32 @@ We can split this expression into a part that corresponds to the system with tru
 \begin{align}
 P = \underbrace{\frac{Nk_\mathrm{B}T}{V} + \frac{1}{dV}\sum_{\substack{i<j\\ r_{ij}<r_\mathrm{c}}}\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle}_{P_\text{truncated}} + \underbrace{\frac{1}{dV}\sum_{\substack{i<j\\ r_{ij}>r_\mathrm{c}}}\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle}_{\Delta P}.
 \end{align}
-
+This leads to the expression
 \begin{align}
-\Delta P = \frac{1}{dV}\sum_{\substack{i<j\\ r_{ij}>r_\mathrm{c}}}\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle
+\Delta P = \frac{1}{3V}\sum_{\substack{i<j\\ r_{ij}>r_\mathrm{c}}}\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle
 \end{align}
+for a system in 3 dimensions. The average $\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle$ can in general be calculatedusing the appropriate statistical mechanical distribution function (for example the Boltzmann distribution for the canonical ensemble). Using the simplifying assumption that the particle density $\rho\left(\mathbf{r}\right)$ is constant and given by 
+\begin{align}
+\rho\left(\mathbf{r}\right) = \frac{N}{V}
+\end{align}
+we can explicitly calculate $\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle$:
+\begin{align}
+\begin{split}
+\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle_{r_{ij}>r_\mathrm{c}} &\approx \frac{\rho}{N}\iiint_{V\setminus B_{r_\mathrm{c}}(0)}\mathrm{d}^3r_{ij}\,\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}= \frac{1}{V}\iiint_{V\setminus B_{r_\mathrm{c}}(0)}\mathrm{d}^3r_{ij}\,24\epsilon\left(\frac{2\sigma^{12}}{r_{ij}^{12}}-\frac{\sigma^6}{r_{ij}^6}\right)\\ &
+\approx \frac{1}{V}\iiint_{\mathbb{R}^3\setminus B_{r_\mathrm{c}}(0)}\mathrm{d}^3r_{ij}\,24\epsilon\left(\frac{2\sigma^{12}}{r_{ij}^{12}}-\frac{\sigma^6}{r_{ij}^6}\right)= \frac{96\pi\epsilon}{V}\int_{r_\mathrm{c}}^{\infty}\mathrm{d}r_{ij}\,r_{ij}^2\left(\frac{2\sigma^{12}}{r_{ij}^{12}}-\frac{\sigma^6}{r_{ij}^6}\right)\\ &= \frac{96\pi\epsilon\sigma^3}{3V}\left(\frac{2}{3}\left(\frac{\sigma}{r_\mathrm{c}}\right)^9-\left(\frac{\sigma}{r_\mathrm{c}}\right)^3\right)
+\end{split}
+\end{align}
+In the third step we extended the range of integration over $\mathbb{R}^3\setminus B_{r_\mathrm{c}}(0)$, this is approximately equal to the integral over $V\setminus B_{r_\mathrm{c}}(0)$ because the integrand goes to zero like $r_{ij}^{-4}$ as $r_{ij}\rightarrow\infty$. Plugging this expression into the formula for the tail correction results in
+\begin{align}
+\begin{split}
+\Delta P &= \frac{1}{3V}\sum_{\substack{i<j\\ r_{ij}>r_\mathrm{c}}}\langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle = \frac{1}{3V}\cdot\frac{N(N-1)}{2}\cdot \langle\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}\rangle_{r_{ij}>r_\mathrm{c}}\\
+&\approx \frac{1}{3V}\cdot\frac{N(N-1)}{2}\cdot\frac{96\pi\epsilon\sigma^3}{3V}\left(\frac{2}{3}\left(\frac{\sigma}{r_\mathrm{c}}\right)^9-\left(\frac{\sigma}{r_\mathrm{c}}\right)^3\right)\\
+&\approx \frac{16\pi\rho^2\epsilon\sigma^3}{3}\left(\frac{2}{3}\left(\frac{\sigma}{r_\mathrm{c}}\right)^9-\left(\frac{\sigma}{r_\mathrm{c}}\right)^3\right).
+\end{split}
+\end{align}
+In the third step we made use of the approximation $N(N-1)\approx N^2$ for large $N$.
+
+
 
 
 \end{document}
