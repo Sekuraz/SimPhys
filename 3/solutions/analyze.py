@@ -28,8 +28,8 @@ def running_average(O, M):
     return ret
 
 
-rdfs = ['rdfs'][:][0]
-bins = ['rdfs'][0][1]
+rdfs = data['rdfs']
+#bins = ['rdfs'][0][1]
 
 
 def average_rdf(rdfs, t_eq):
@@ -37,7 +37,7 @@ def average_rdf(rdfs, t_eq):
     ret = np.zeros_like(rdfs[0])
     for i in range(len(rdfs)):
         ret += rdfs[i]
-    ret /= len(rdfs)
+    ret = ret/len(rdfs)
     return ret
 
 
@@ -71,6 +71,14 @@ def plot_observables():
     plt.legend()
 
     plt.show()
-
+    
+#def plot_rdf():
+#    plt.plot(average_rdf(rdfs, args.t_eq))
+#    plt.show()
 
 plot_observables()
+plt.show()
+#plot_rdf()
+plt.plot(average_rdf(rdfs, args.t_eq))
+#plt.plot(rdfs[0][1])
+plt.show()
