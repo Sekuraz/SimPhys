@@ -88,12 +88,13 @@ class Simulation:
         return ret
 
     def rdf(self, DENSITY):
+        self.distances()
         r = np.linalg.norm(self.r_ij_matrix, axis=2)
         hist, bins = np.histogram(r, bins=100, range=(0.8, 5))
         dr = 0.042
         for i in range(0, 100):
             hist[i] /= np.pi*DENSITY*(2*dr*(0.8+i*dr) + dr*dr)
-        return hist, bins
+        return hist
 
     def rescale(self, T0):
         temp = self.temperature()
@@ -149,14 +150,22 @@ if __name__ == "__main__":
         '-t',
         '--temperature',
         type=float,
-        default=1.0,
         help='Target temperature.')
+    parser.add_argument(
+        '-f',
+        '--fmax',
+        type=float,
+        help='Enable force capping.')
+    parser.add_argument(
+        '-r',
+        '--random_initial_positions',
+        help='Start with random initial positions.')
     args = parser.parse_args()
 
     np.random.seed(2)
 
     DT = 0.01
-    T_MAX = 10.0
+    T_MAX = 100.0
     N_TIME_STEPS = int(T_MAX / DT)
 
     R_CUT = 2.5
@@ -174,12 +183,15 @@ if __name__ == "__main__":
     if not args.cpt or not os.path.exists(args.cpt):
         logging.info("Starting from scratch.")
         # particle positions
-        # x = np.array(list(itertools.product(np.linspace(0, BOX[0], N_PER_SIDE, endpoint=False),
-        #                                     np.linspace(0, BOX[1], N_PER_SIDE, endpoint=False)))).T
+        if args.random_initial_positions:
+            x = np.random.random((DIM, N_PART))
+            for i in range(DIM):
+                x[i] *= BOX[i]
+        else:
+            x = np.array(list(itertools.product(np.linspace(0, BOX[0], N_PER_SIDE, endpoint=False),
+                                             np.linspace(0, BOX[1], N_PER_SIDE, endpoint=False)))).T
 
-        x = np.random.random((DIM, N_PART))
-        for i in range(DIM):
-            x[i] *= BOX[i]
+        #
 
         # random particle velocities
         v = 0.5*(2.0 * np.random.random((DIM, N_PART)) - 1.0)
@@ -189,7 +201,10 @@ if __name__ == "__main__":
         pressures = []
         temperatures = []
         rdfs = []
-        f_max = 20
+        if args.fmax:
+            f_max = args.fmax
+        else:
+            f_max = np.inf
     #elif args.cpt and os.path.exists(args.cpt):
     else:
         logging.info("Reading state from checkpoint.")
@@ -222,10 +237,13 @@ if __name__ == "__main__":
             temperatures.append(sim.temperature())
             rdfs.append(sim.rdf(DENSITY))
 
-            sim.rescale(args.temperature)
-            sim.f_max *= 1.1
-            if sim.f_max >= 1e9:
-                sim.f_max = np.inf
+            if args.temperature:
+                sim.rescale(args.temperature)
+                
+            if args.fmax:
+                sim.f_max *= 1.1
+                if sim.f_max >= 1e9:
+                    sim.f_max = np.inf
 
     if args.cpt:
         state = {'positions': positions,
