@@ -87,13 +87,10 @@ class Simulation:
         # print("Pressure: calculated=%4.6f, ideal=%4.6f" % (ret, ideal()))
         return ret
 
-    def rdf(self, DENSITY):
+    def rdf(self):
         self.distances()
         r = np.linalg.norm(self.r_ij_matrix, axis=2)
         hist, bins = np.histogram(r, bins=100, range=(0.8, 5))
-        dr = 0.042
-        for i in range(0, 100):
-            hist[i] /= np.pi*DENSITY*(2*dr*(0.8+i*dr) + dr*dr)
         return hist
 
     def rescale(self, T0):
@@ -165,7 +162,7 @@ if __name__ == "__main__":
     np.random.seed(2)
 
     DT = 0.01
-    T_MAX = 100.0
+    T_MAX = 1000.0
     N_TIME_STEPS = int(T_MAX / DT)
 
     R_CUT = 2.5
@@ -201,6 +198,8 @@ if __name__ == "__main__":
         pressures = []
         temperatures = []
         rdfs = []
+        potential_energies = []
+        kinetic_energies = []
         if args.fmax:
             f_max = args.fmax
         else:
@@ -215,6 +214,8 @@ if __name__ == "__main__":
         pressures = state['pressures']
         temperatures = state['temperatures']
         rdfs = state['rdfs']
+        potential_energies = state['potential_energies']
+        kinetic_energies = state['kinetic_energies']
 
         x = state['x']
         v = state['v']
@@ -235,7 +236,9 @@ if __name__ == "__main__":
             pressures.append(sim.pressure())
             energies.append(np.sum(sim.energy()))
             temperatures.append(sim.temperature())
-            rdfs.append(sim.rdf(DENSITY))
+            rdfs.append(sim.rdf())
+            potential_energies.append(sim.e_pot())
+            kinetic_energies.append(sim.e_kin())
 
             if args.temperature:
                 sim.rescale(args.temperature)
@@ -251,6 +254,8 @@ if __name__ == "__main__":
                  'pressures': pressures,
                  'temperatures': temperatures,
                  'rdfs': rdfs,
+                 'potential_energies': potential_energies,
+                 'kinetic_energies': kinetic_energies,
                  'x':sim.x,
                  'v': sim.v,
                  'f': sim.f,
