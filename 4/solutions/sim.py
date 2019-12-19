@@ -13,6 +13,8 @@ TIME_MAX = 2000.0
 T = 0.3
 # total number of particles
 N = 50
+# Number of spatial dimensions
+NDIM = 3
 # friction coefficient
 GAMMA_LANGEVIN = 0.8
 # number of steps to do before the next measurement
@@ -25,8 +27,8 @@ args = parser.parse_args()
 
 
 def compute_temperature(v):
-    # INSERT CODE HERE
-    return
+    ret = compute_energy(v) * 2 / (NDIM * N)
+    return ret
 
 
 def compute_energy(v):
@@ -51,8 +53,20 @@ def step_vv(x, v, f, dt):
 
 def step_vv_langevin(x, v, f, dt, gamma):
 
-    # INSERT  YOUR CODE HERE
-
+    # update positions
+    x += x + dt * v * (1 - dt * 0.5 * gamma) + 0.5 * dt * dt * f
+    
+    # half upate velocity
+    v = (v * (1 - 0.5 * gamma * dt) + 0.5 * dt * f) / (1 + 0.5 * dt * gamma)
+    
+    #calculate new random force
+    f = np.random.random_sample(np.shape(x))
+    f *= np.sqrt(12 * 2 * T * gamma / dt)
+    f -= np.sqrt(6 * 2 * T * gamma / dt)
+    
+    # second half update of the velocity
+    v += 0.5 * dt * f / (1 + 0.5 * dt * gamma)
+    
     return x, v, f
 
 
@@ -62,8 +76,8 @@ t = 0.0
 step = 0
 
 # random particle positions
-x = np.random.random((N, 3))
-v = np.zeros((N, 3))
+x = np.random.random((N, NDIM))
+v = np.zeros((N, NDIM))
 
 # variables to cumulate data
 ts = []
