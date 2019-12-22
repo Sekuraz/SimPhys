@@ -54,16 +54,16 @@ def step_vv(x, v, f, dt):
 def step_vv_langevin(x, v, f, dt, gamma):
 
     # update positions
-    x += x + dt * v * (1 - dt * 0.5 * gamma) + 0.5 * dt * dt * f
+    x += dt * v * (1 - dt * 0.5 * gamma) + 0.5 * dt * dt * f
     
     # half upate velocity
     v = (v * (1 - 0.5 * gamma * dt) + 0.5 * dt * f) / (1 + 0.5 * dt * gamma)
     
     #calculate new random force
     f = np.random.random_sample(np.shape(x))
+    f -= 0.5
     f *= np.sqrt(12 * 2 * T * gamma / dt)
-    f -= np.sqrt(6 * 2 * T * gamma / dt)
-    
+
     # second half update of the velocity
     v += 0.5 * dt * f / (1 + 0.5 * dt * gamma)
     
@@ -97,18 +97,18 @@ while t < TIME_MAX:
     x, v, f = step_vv_langevin(x, v, f, DT, GAMMA_LANGEVIN)
 
     t += DT
-    step += 1
 
     if step % MEASUREMENT_STRIDE == 0:
         E = compute_energy(v)
         Tm = compute_temperature(v)
-        vels.append(v.flatten())
-        traj.append(x.flatten())
+        vels.append(v.copy())
+        traj.append(x.copy())
         print(f"t={t}, E={E}, T_m={Tm}")
 
         ts.append(t)
         Es.append(E)
         Tms.append(Tm)
+    step += 1
 
 
 # at the end of the simulation, write out the final state
