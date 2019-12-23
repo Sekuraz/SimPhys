@@ -12,6 +12,11 @@ NDIM = 1
 # Time step
 DT = 0.01
 
+width = 5.787
+height = width*0.6
+plt.rc('figure', figsize=(width,height))
+plt.rc('text', usetex=True)
+
 parser = argparse.ArgumentParser()
 parser.add_argument('gamma', type=float, help='Friction coefficient')
 parser.add_argument('T', type=float, help='Temperature')
@@ -50,20 +55,19 @@ def plot(pos, time, color, T, gamma):
     hist_range = max(-np.amin(pos), np.amax(pos))
 
     # Sample positions into a histogram
-    # INSERT CODE HERE
     H = np.histogram(pos, bins=200, density=True)
 
     # Calculate bin centers
     bin_centers = (H[1][:-1] + H[1][1:]) / 2
-    plt.plot(bin_centers, H[0])
+    plt.plot(bin_centers, H[0], label='Numerical solution')
 
-    # INSERT CODE HERE TO PLOT THE ANALYTICAL SOLUTION
+    # Plot the analytical solution
     D = T / gamma
     x = np.linspace(-10.0, 10.0, 1000)
-    plt.plot(x, gaussian_distribution(x, 0.0, np.sqrt(2 * D * time)))
+    plt.plot(x, gaussian_distribution(x, 0.0, np.sqrt(2 * D * time)), linestyle='-.', label='Analytical solution')
 
 
-# Initial positions (1 coordinate per particle)
+# Initial positions (NDIM coordinate per particle)
 x = np.zeros((N,NDIM))
 
 # Initial velocities
@@ -81,9 +85,9 @@ for i in range(ROUNDS):
         x, v, f = step_vv_langevin(x, v, f, DT, args.T, args.gamma)
     plot(x, (i * STEPS + j) * DT, colors[i], args.T, args.gamma)
 
-plt.xlim((-7.5,7.5))
-plt.xlabel("x")
-plt.ylabel("P(x, t)")
+plt.xlim((-6,6))
+plt.xlabel(r'$x/x_0$')
+plt.ylabel(r'$P(x, t)\cdot x_0$')
 plt.legend()
-
+plt.tight_layout()
 plt.show()

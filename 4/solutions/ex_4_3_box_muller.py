@@ -70,9 +70,9 @@ width = 5.787
 height = width*0.8
 plt.rc('figure', figsize=(width,height))
 z = np.linspace(0.0, 5.0, 1000)
-plt.hist(np.linalg.norm(v, axis=1), bins='auto', density = True, label='normalized histogram for $v$')
-plt.plot(z, maxwell_boltzmann_distribution(z, mean_velocities, sigma_velocities), label=r'$p(v)\cdot\sqrt{\frac{k_\mathrm{B}T}{m}} = 4\pi\sqrt{\frac{m}{2\pi k_\mathrm{B}T}}^3v^2\cdot\exp\left(-\beta\frac{mv^2}{2}\right) \cdot\sqrt{\frac{k_\mathrm{B}T}{m}}$')
-plt.xlabel(r'$v$')
+plt.hist(np.linalg.norm(v/sigma_velocities, axis=1), bins='auto', density = True, label=r'normalized histogram for $v\cdot\sqrt{m\beta}$')
+plt.plot(z/sigma_velocities, maxwell_boltzmann_distribution(z, mean_velocities, sigma_velocities)*sigma_velocities, label=r'$p(v)\cdot\sqrt{m\beta}^{-1} = 4\pi\sqrt{\frac{m\beta}{2\pi}}^3v^2\cdot\exp\left(-\beta\frac{mv^2}{2}\right) \cdot\sqrt{m\beta}^{-1}$')
+plt.xlabel(r'$v\cdot \sqrt{m\beta}$')
 plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.4))
 plt.tight_layout()
 plt.show()

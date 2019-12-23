@@ -18,10 +18,10 @@ plt.rc('text', usetex=True)
 
 def linear_congruental_generator():
     a = 1103515245
-    c = 13245
+    c = 12345
     m = 2**32
     #seed = 123647
-    seed = int(time.time()*10**7)
+    seed = time.time_ns()
     #seed = int.from_bytes(os.urandom(10), sys.byteorder)
     X = seed
     while True:
