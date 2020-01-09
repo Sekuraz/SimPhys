@@ -25,6 +25,6 @@ x = np.linspace(0.1, 10.0, 1000)
 plt.plot(x, f(x))
 plt.show()
 
-#print(exact_integral(0.1, 10.0))
-for i in range(2, 25):
+print(exact_integral(0.1, 10.0))
+for i in range(2, 20):
     print(simple_sampling(f, 0.1, 10.0, 2**i))
