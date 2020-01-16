@@ -121,8 +121,72 @@ backgroundcolor=\color{black!5}}
 \maketitle
 
 \tableofcontents
-
 \section{Simple Sampling -- Integration}
+The Python code for the following section can be found in the file ex\_5\_2.py.
+\subsection{Exact Integration}
+A plot of the function $f(x)$ on the interval $\left[0.1,50.0\right]$ is shown in \autoref{fig:fig1}. 
+We can see that the function is almost zero for most values of $x$, disrupted by sharp peaks.
+This means that we will need a lot of samples to obtain an acceptable value using simple sampling.
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{plotf.pdf}
+	\caption{Plot of the function $f(x)$ on the interval $\left[0.1,50.0\right]$.}
+	\label{fig:fig1}
+\end{figure}
+
+To obtain the exact integral of $f(x)$ over an interval $\left[a, b\right]$, we wrote the function exact\_integral, which uses the SymPy module to calculate a closed expression of the integral:
+\begin{lstlisting}
+def exact_integral(a, b):
+    x = Symbol('x')
+    ret = integrate((-2 * x**2 * sin(x) * cos(x) - 2 * x * sin(x)**2)\
+        * exp(-x**2 * sin(x)**2), (x, a, b))
+    return ret
+\end{lstlisting}
+The obtained value is
+\begin{align}
+\int_{0.1}^{50.0}\mathrm{d}x\,f(x)\approx -0.9999.
+\end{align}
+
+
+\subsection{Monte Carlo Integration}
+To perform a Monte Carlo integration using simple sampling, we wrote the following function:
+\begin{lstlisting}
+def simple_sampling(f, a, b, N):
+    dx = (b - a) / N
+    ret = 0.0
+    sample = 0.0
+    squared_sum  = 0.0
+    for i in range(N):
+        sample = f((b - a) * np.random.random_sample() + a)
+        ret += sample
+        squared_sum += sample ** 2
+    error = np.sqrt(squared_sum - (ret ** 2) / N)
+    error *= (b - a) / np.sqrt(N * (N-1))
+    ret *= dx
+    return ret, error
+\end{lstlisting}
+The has as its arguments the function $f$ which has to be integrated, the limits $a$ and $b$ of the interval and the number of samples $N$. 
+Furthermore, the function also calculates the an estimate for the error of the calculated value.
+
+To compute an estimate of the error for the obtained integral, we note that the $N$ different samples $f(x_i)$ are uncorrelated in the case of simple sampling.
+The unbiased estimator of the variance of $f$ is given by
+\begin{align}
+\hat{\sigma}(f)^2 = \frac{1}{N-1}\left(\sum_{i=1}^{N}f(x_i)^2-\frac{1}{N}\left(\sum_{i=1}^{N}f(x_i)\right)^2\right).
+\end{align}
+Because the samples are uncorrelated and statistically independent, we can calculate the unbiased estimator of the variance of the integral $I$ as
+\begin{align}
+\hat{\sigma}(I)^2 &= \frac{\left(a-b\right)^2}{N^2}\sum_{i=1}^{N} \hat{\sigma}(f)^2 = \frac{\left(a-b\right)^2\hat{\sigma}(f)^2}{N}\\
+&=\frac{\left(a-b\right)^2}{N\left(N-1\right)}\left(\sum_{i=1}^{N}f(x_i)^2-\frac{1}{N}\left(\sum_{i=1}^{N}f(x_i)\right)^2\right)
+\end{align}
+which leads to an estimation of the error of $I$ that is given by
+\begin{align}
+\epsilon(I)=\sqrt{\frac{\left(a-b\right)^2}{N\left(N-1\right)}\left(\sum_{i=1}^{N}f(x_i)^2-\frac{1}{N}\left(\sum_{i=1}^{N}f(x_i)\right)^2\right)}.
+\end{align}
+This error estimation is equal to the estimator for the standard error of the mean of $f$ times the length of the interval $[a,b]$, which is not surprising considering that $I$ is given by $\left(b-a\right)\cdot \overline{f}$.
+
+
+
+
 \section{Importance Sampling -- Metropolis-Hastings Algorithm}
 \section{Simulate the Ising Model}
 \subsection{Exact Summation}
