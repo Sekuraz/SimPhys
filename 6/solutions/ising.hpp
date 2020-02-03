@@ -31,8 +31,7 @@ public:
 
     for (auto &i : m_data) {
       // TODO
-      // YOUR CODE HERE: fill the Ising model by randomly setting
-      // each site to +1 or -1
+      *i = random_int(2) == 0 ? -1 : 1;
       assert((i == 1) or (i == -1));
     };
 
@@ -42,17 +41,22 @@ public:
 
   // Recalculate the energy from the state of the Ising model
   void recalculate_magnetization() {
-    // TODO
-    // Calculate the magnetization of the system and sotre it in
-    // m_M
+    m_M = 0;
+    for (auto &i : m_data) {
+        m_M += i;
+    }
+    //m_M /= m_l * m_l;
     assert((m_M >= -m_l * m_l) and (m_M <= m_l * m_l));
   };
 
   // Recalculate the energy from the state of the Ising model
   void recalculate_energy() {
-    // TODO
-    // Calculate the energy of the Ising model
-    // and store it in m_E
+    m_E = 0;
+    for(int i = 0; i < m_l; i++) {
+        for(int j =0; j < m_l; j++) {
+            m_E += -0.5 * get(i, j) * (get(i−1,j) + get(i+1,j) + get(i,j−1) + get(i,j+1));
+        }
+    }
   };
 
   // Update running values for energy and magnetization
@@ -91,21 +95,22 @@ public:
     // If it is accepted, update the model in m_data and update the
     // running values for magnetization and energy (m_M and m_E)
     // Return true or false depending on whether the move is accepted
+    if (accepted) {
+        update();
+    }
+    return result;
   };
 
   // Try flipping a random spin. Return true if move accepted
   // If move was accepted, also update energy and magnetization
   bool try_random_flip() {
-    // TODO 
-    // Try a single flip on a randomly chosen
-    // spin. Re-use (don't copy) existing code.
-    // Return true/false depending on whether the move was accepted
+    return try_flip(random_int(m_l), random_int(m_l)));
   };
 
   void try_many_random_flips(int n) {
-    // TODO
-    // Try n moves at randomly chosen spins.
-    // Re-use (don't copy) existing code!
+    for (int i = 0; i < n; i++) {
+        try_random_flip();
+    }
   }
 
   // Get the current energy
