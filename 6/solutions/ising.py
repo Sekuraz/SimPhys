@@ -1,5 +1,6 @@
 from numpy import *
 from matplotlib.pyplot import *
+import cising
 
 L = 10
 Ts = arange(1.0, 5.1, 0.1)
@@ -7,7 +8,8 @@ num_sweeps = 1000
 
 def compute_energy(sigma):
     L = sigma.shape[0]
-    shifted_ixs = range(1,L) + [0]
+    #shifted_ixs = range(1,L) + [0]
+    shifted_ixs = np.roll(np.arange(0, L), -1)
     E = -(sigma*sigma[shifted_ixs,:]).sum()
     E -= (sigma*sigma[:,shifted_ixs]).sum()
     return E
@@ -65,7 +67,7 @@ def exact_sum(L, Ts):
                 else:
                     sigma[i,j] = -1
 
-        if state%10000==0: print state
+        if state%10000==0: print(state)
 
         # compute energy and magnetization of this state
         E = compute_energy(sigma)
@@ -82,19 +84,19 @@ def exact_sum(L, Ts):
     return Emeans, mmeans
 
 # Main program
-print "exact summation"
+print("exact summation")
 Ts = arange(1.0, 5.1, 0.1)
 Emeans, mmeans = exact_sum(4, Ts)
 for i in range(len(Ts)):
-    print "\tT = {} E = {} m = {}".format(Ts[i], Emeans[i], mmeans[i])
+    print("\tT = {} E = {} m = {}".format(Ts[i], Emeans[i], mmeans[i]))
 
 figure(0)
 subplot(211, title='Energy vs. Temperature')
-plot(Ts, Emeans, 'o-', label='exact')
+plot(Ts, Emeans, 'o-', label='exact for $L=4$')
 legend()
 
 subplot(212, title='Magnetization vs. Temperature')
-plot(Ts, mmeans, 'o-', label='exact')
+plot(Ts, mmeans, 'o-', label='exact for $L=4$')
 legend()
 
 ##################################################
@@ -137,25 +139,39 @@ def monte_carlo_ising(L, T, num_sweeps):
         Es.append(E/float(V))
         ms.append(abs(mu)/float(V))
 
-        print "\tT = {} {:5}/{:5}\r".format(T, sweep, num_sweeps),
-        sys.stdout.flush()
+        print("\tT = {} {:5}/{:5}\r".format(T, sweep, num_sweeps),
+        sys.stdout.flush())
 
     Emean, _, Eerr, tauE, _, _, _, _ = compute_act_error(array(Es))
     mmean, _, merr, tauM, _, _, _, _ = compute_act_error(array(ms))
-    print "\rT = {} tau_E = {} tau_M = {} E = {}+/-{} m = {}+/-{}"\
-        .format(T, tauE, tauM, Emean, Eerr, mmean, merr)
+    print("\rT = {} tau_E = {} tau_M = {} E = {}+/-{} m = {}+/-{}"\
+        .format(T, tauE, tauM, Emean, Eerr, mmean, merr))
 
     return Emean, Eerr, mmean, merr, sigma
 
+
+# Analytical result for the magnetization
+def analytical_magnetization(T):
+    if (T < 2/log(1+sqrt(2))):
+        ret = (1 - sinh(2 / T) ** (-4)) ** 0.125
+    else:
+        ret = 0.0
+    return ret
+
+analytical_magnetization_vectorized = vectorize(analytical_magnetization)
+
 # Main program
-for L in [4, 10]:
-    print "MC (L={})".format(L)
+for L in [4, 16]:
+    print("MC (L={})".format(L))
 
     Emeans = []
     Eerrs = []
     mmeans = []
     merrs = []
     sigmas = []
+    
+    E_C = []
+    M_C = []
 
     for T in Ts:
         Emean, Eerr, mmean, merr, sigma = monte_carlo_ising(L, T, num_sweeps)
@@ -164,14 +180,36 @@ for L in [4, 10]:
         mmeans.append(mmean)
         merrs.append(merr)
         sigmas.append(sigma)
+        
+        I = cising.IsingModel(1.0/T, L)
+        Es = []
+        Ms = []
+        for i in range(100000):
+            I.try_many_random_flips(500)
+            #I.try_random_flip()
+            Es.append(I.energy())
+            Ms.append(I.magnetization())
+            
+        E_C.append(np.average(Es)/(L*L))
+        M_C.append(np.average(np.abs(Ms)))
 
+    rc('text', usetex=True)
     figure(0)    
-    subplot(211, title='Energy vs. Temperature')
-    errorbar(Ts, Emeans, yerr=Eerrs, fmt='o-', label='MC L={}'.format(L))
+    subplot(211)
+    errorbar(Ts, Emeans, yerr=Eerrs, fmt='o-', label='MC $L$={}'.format(L))
+    plot(Ts, E_C, '--')
+    ylabel(r'$\mathrm{mean}$ $\mathrm{energy}$ $\frac{E}{J}$')
+    xlabel(r'$\mathrm{dimensionless}$ $\mathrm{temperature}$ $\frac{k_\mathrm{B}T}{J}$')
     legend()
+    
+    T = linspace(1.0, 5.1, 1000)
 
-    subplot(212, title='Magnetization vs. Temperature')
-    errorbar(Ts, mmeans, yerr=merrs, fmt='o-', label='MC L={}'.format(L))
+    subplot(212)
+    errorbar(Ts, mmeans, yerr=merrs, fmt='o-', label='MC $L$={}'.format(L))
+    plot(Ts, M_C, '--')
+    plot(T, analytical_magnetization_vectorized(T), label="analytical result")
+    ylabel(r'$\mathrm{mean}$ $\mathrm{magnetization}$ $\left|\mu\right|$')
+    xlabel(r'$\mathrm{dimensionless}$ $\mathrm{temperature}$ $\frac{k_\mathrm{B}T}{J}$')
     legend()
 
 figure('Final states')

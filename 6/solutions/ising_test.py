@@ -2,7 +2,10 @@
 
 import cising
 import numpy as np
+import matplotlib.pyplot as plt
+import time
 
+start = time.time()
 
 def compute_energy(sigma):
     L = sigma.shape[0]
@@ -49,9 +52,12 @@ Es = []
 Ms = []
 for i in range(100000):
     I.try_many_random_flips(500)
+    #I.try_random_flip()
     Es.append(I.energy())
     Ms.append(I.magnetization())
 
 assert abs(np.average(Es)/(l*l) + 0.4561353695) < 0.01
 
 assert abs(np.average(np.abs(Ms)) - 0.342765627554) < 0.001
+end = time.time()
+print(end-start)
