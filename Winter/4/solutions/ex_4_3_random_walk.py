@@ -7,7 +7,7 @@ import os
 import sys
 
 n_steps = 1000
-n_walks = 10
+n_walks = 1000
 x0 = 0.0
 
 width = 5.787

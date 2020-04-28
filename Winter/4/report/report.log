@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.9.9)  11 DEC 2019 12:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.9.9)  23 DEC 2019 22:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1152,42 +1152,162 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 \tf@toc=\write4
 \openout4 = `report.toc'.
 
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 130.
 
+
+(/usr/share/texlive/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 131.
+ [1
+
+
+{/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}]
+<random_walk_time.pdf, id=92, 417.7206pt x 250.7769pt>
+File: random_walk_time.pdf Graphic file (type pdf)
+<use random_walk_time.pdf>
+Package pdftex.def Info: random_walk_time.pdf  used on input line 176.
+(pdftex.def)             Requested size: 418.25368pt x 251.09387pt.
+ [2 <./random_walk_time.pdf>]
+<random_walk_os.pdf, id=136, 417.7206pt x 250.7769pt>
+File: random_walk_os.pdf Graphic file (type pdf)
+<use random_walk_os.pdf>
+Package pdftex.def Info: random_walk_os.pdf  used on input line 195.
+(pdftex.def)             Requested size: 418.25368pt x 251.09387pt.
+
+Overfull \hbox (3.85062pt too wide) in paragraph at lines 209--210
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (3.85062pt too wide) in paragraph at lines 210--211
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+<gaussian.pdf, id=138, 417.7206pt x 333.88742pt>
+File: gaussian.pdf Graphic file (type pdf)
+<use gaussian.pdf>
+Package pdftex.def Info: gaussian.pdf  used on input line 222.
+(pdftex.def)             Requested size: 418.25368pt x 334.30945pt.
+[3 <./random_walk_os.pdf>] [4 <./gaussian.pdf>]
+<maxwell_boltzmann.pdf, id=224, 417.7206pt x 333.88742pt>
+File: maxwell_boltzmann.pdf Graphic file (type pdf)
+<use maxwell_boltzmann.pdf>
+Package pdftex.def Info: maxwell_boltzmann.pdf  used on input line 267.
+(pdftex.def)             Requested size: 418.25368pt x 334.30945pt.
+ [5] [6 <./maxwell_boltzmann.pdf>]
+<temperature.pdf, id=296, 417.7206pt x 250.7769pt>
+File: temperature.pdf Graphic file (type pdf)
+<use temperature.pdf>
+Package pdftex.def Info: temperature.pdf  used on input line 313.
+(pdftex.def)             Requested size: 418.25368pt x 251.09387pt.
+<maxwell_boltzmann_langevin.pdf, id=298, 417.7206pt x 250.7769pt>
+File: maxwell_boltzmann_langevin.pdf Graphic file (type pdf)
+<use maxwell_boltzmann_langevin.pdf>
+Package pdftex.def Info: maxwell_boltzmann_langevin.pdf  used on input line 321
+.
+(pdftex.def)             Requested size: 418.25368pt x 251.09387pt.
+ [7 <./temperature.pdf>] [8 <./maxwell_boltzmann_langevin.pdf>]
+<msd.pdf, id=379, 417.7206pt x 250.7769pt>
+File: msd.pdf Graphic file (type pdf)
+<use msd.pdf>
+Package pdftex.def Info: msd.pdf  used on input line 379.
+(pdftex.def)             Requested size: 418.25368pt x 251.09387pt.
+<msd_short_times.pdf, id=381, 417.7206pt x 250.7769pt>
+File: msd_short_times.pdf Graphic file (type pdf)
+<use msd_short_times.pdf>
+Package pdftex.def Info: msd_short_times.pdf  used on input line 388.
+(pdftex.def)             Requested size: 418.25368pt x 251.09387pt.
+ [9 <./msd.pdf>] [10 <./msd_short_times.pdf>]
+<vacf.pdf, id=458, 417.7206pt x 250.7769pt>
+File: vacf.pdf Graphic file (type pdf)
+<use vacf.pdf>
+Package pdftex.def Info: vacf.pdf  used on input line 446.
+(pdftex.def)             Requested size: 418.25368pt x 251.09387pt.
+<vacf_zoom.pdf, id=459, 417.7206pt x 250.7769pt>
+File: vacf_zoom.pdf Graphic file (type pdf)
+<use vacf_zoom.pdf>
+Package pdftex.def Info: vacf_zoom.pdf  used on input line 453.
+(pdftex.def)             Requested size: 418.25368pt x 251.09387pt.
+ [11 <./vacf.pdf>] [12 <./vacf_zoom.pdf>]
+Overfull \hbox (16.45074pt too wide) in paragraph at lines 499--500
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+<diffusion300.pdf, id=538, 417.7206pt x 250.7769pt>
+File: diffusion300.pdf Graphic file (type pdf)
+<use diffusion300.pdf>
+Package pdftex.def Info: diffusion300.pdf  used on input line 507.
+(pdftex.def)             Requested size: 418.25368pt x 251.09387pt.
+<diffusion600.pdf, id=539, 417.7206pt x 250.7769pt>
+File: diffusion600.pdf Graphic file (type pdf)
+<use diffusion600.pdf>
+Package pdftex.def Info: diffusion600.pdf  used on input line 510.
+(pdftex.def)             Requested size: 418.25368pt x 251.09387pt.
+[13]
+<diffusion900.pdf, id=559, 417.7206pt x 250.7769pt>
+File: diffusion900.pdf Graphic file (type pdf)
+<use diffusion900.pdf>
+Package pdftex.def Info: diffusion900.pdf  used on input line 517.
+(pdftex.def)             Requested size: 418.25368pt x 251.09387pt.
+ [14 <./diffusion300.pdf> <./diffusion600.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ./diffusion600.pdf): PDF inclusion: mul
+tiple pdfs with page group included in a single page
+>]
 
 Package caption Warning: Unused \captionsetup[subfigure] on input line 34.
 See the caption package documentation for explanation.
 
 No complaints by nag.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 131.
-[1
-
-
-{/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 131.
-
-(./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 131.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 131.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 523.
+[15 <./diffusion900.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 523.
+ (./report.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 523.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 523.
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 0AB1E025F0012F2C5659BD908724829C;213.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 131.
+(rerunfilecheck)             Checksum: 91E3C7642600DE4604EB3E5834321856;828.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 523.
  ) 
 Here is how much of TeX's memory you used:
- 23787 strings out of 494587
- 439575 string characters out of 6177760
- 608229 words of memory out of 5000000
- 27182 multiletter control sequences out of 15000+600000
- 578575 words of font info for 60 fonts, out of 8000000 for 9000
+ 24633 strings out of 494587
+ 449585 string characters out of 6177760
+ 629229 words of memory out of 5000000
+ 27804 multiletter control sequences out of 15000+600000
+ 597093 words of font info for 69 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 48i,7n,72p,9129b,720s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texli
-ve/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/lm/lmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/lm/lmssbx10.pfb>
-Output written on report.pdf (1 page, 77626 bytes).
+ 48i,22n,77p,9129b,2212s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texli
+ve/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texlive/texmf-dist/fonts
+/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/l
+m-mathex.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}</
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx7.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/lm/lmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/lm/lmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr10.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/lm/lmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/lm/lmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy10.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/lm/lmtti10.pfb>
+Output written on report.pdf (15 pages, 897735 bytes).
 PDF statistics:
- 50 PDF objects out of 1000 (max. 8388607)
- 43 compressed objects within 1 object stream
- 7 named destinations out of 1000 (max. 500000)
- 33 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 728 PDF objects out of 1000 (max. 8388607)
+ 667 compressed objects within 7 object streams
+ 207 named destinations out of 1000 (max. 500000)
+ 162 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,124 @@
+% TEMPLATE.TEX
+%
+% Time-stamp: <2013-03-26 11:09 olenz>
+%
+% This is an extensively documented LaTeX file that shows how to
+% produce a good-looking document with current LaTeX (11/2012).
+%
+% IMPORTANT!
+%
+%   Some obsolete commands and packages
+% ----------|-------------------------------
+% obsolete  |     Replacement in LATEX 2ε
+% ----------|-------------------------------
+%           | local            global/switch
+% ----------|-------------------------------
+% {\bf ...} | \textbf{...}     \bfseries
+%     -     | \emph{...}       \em
+% {\it ...} | \textit{...}     \itshape
+%     -     | \textmd{...}     \mdseries
+% {\rm ...} | \textrm{...}     \rmfamily
+% {\sc ...} | \textsc{...}     \scshape
+% {\sf ...} | \textsf{...}     \sffamily
+% {\sl ...} | \textsl{...}     \slshape
+% {\tt ...} | \texttt{...}     \ttfamily
+%     -     | \textup{...}     \upshape
+%
+% DON'T USE \\ TO MAKE LINEBREAKS, INSTEAD JUST LEAVE A BLANK LINE!
+%
+\RequirePackage[l2tabu,orthodox]{nag} % turn on warnings because of bad style
+\documentclass[a4paper,10pt,bibtotoc]{scrartcl}
+%
+\usepackage[bottom=3.5cm, top=2cm]{geometry}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% KOMA CLASSES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% The class "scrartcl" is one of the so-called KOMA-classes, a set of
+% very well done LaTeX-classes that produce a very European layout
+% (e.g. titles with a sans-serif font).
+%
+% The KOMA classes have extensive documentation that you can access
+% via the commands:
+%   texdoc scrguide # in German
+%   texdoc scrguien # in English
+%
+%
+% The available classes are:
+%
+% scrartcl - for "articles", typically for up to ~20 pages, the
+%            highest level sectioning command is \section
+%
+% scrreprt - for "reports", typically for up to ~200 pages, the
+%            highest level sectioning command is \chapter
+%
+% scrbook  - for "books", for more than 200 pages, the highest level
+%            sectioning command is \part.
+%
+% USEFUL OPTIONS
+%
+% a4paper  - Use a4 paper instead of the default american letter
+%            format.
+%
+% 11pt, 12pt, 10pt
+%          - Use a font with the given size.
+%
+% bibtotoc - Add the bibliography to the table of contents
+%
+% The KOMA-script classes have plenty of options to modify
+
+% This allows to type UTF-8 characters like ä,ö,ü,ß
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}        % Tries to use Postscript Type 1 Fonts for better rendering
+\usepackage{lmodern}            % Provides the Latin Modern Font which offers more glyphs than the default Computer Modern
+\usepackage[intlimits]{amsmath} % Provides all mathematical commands
+
+\usepackage{hyperref}           % Provides clickable links in the PDF-document for \ref
+\usepackage{graphicx}            % Allow you to include images (like graphicx). Usage: \includegraphics{path/to/file}
+
+% Allows to set units
+\usepackage[ugly]{units}        % Allows you to type units with correct spacing and font style. Usage: $\unit[100]{m}$ or $\unitfrac[100]{m}{s}$
+
+% Additional packages
+\usepackage{url}                % Lets you typeset urls. Usage: \url{http://...}
+\usepackage{breakurl}           % Enables linebreaks for urls
+\usepackage{xspace}             % Use \xpsace in macros to automatically insert space based on context. Usage: \newcommand{\es}{ESPResSo\xspace}
+\usepackage{xcolor}             % Obviously colors. Usage: \color{red} Red text
+\usepackage{booktabs}           % Nice rules for tables. Usage \begin{tabular}\toprule ... \midrule ... \bottomrule
+
+% Source code listings
+\usepackage{listings}           % Source Code Listings. Usage: \begin{lstlisting}...\end{lstlisting}
+\lstloadlanguages{python}
+\definecolor{lightpurple}{rgb}{0.8,0.8,1}
+
+\lstset{
+stepnumber=1,
+numbersep=5pt,
+numberstyle=\small\color{black},
+basicstyle=\ttfamily,
+%keywordstyle=\color{black},
+%commentstyle=\color{black},
+%stringstyle=\color{black},
+frame=single,
+tabsize=4,
+language = python,
+backgroundcolor=\color{black!5}}
+
+\usepackage{float}
+
+\begin{document}
+
+\titlehead{Simulation Methods in Physics II \hfill SS 2020}
+\title{Report for Worksheet 1: Calculate solid crystalline materials using density functional theory}
+\author{Markus Baur and David Beyer}
+\date{\today}
+\maketitle
+
+\tableofcontents
+
+\section{Short Questions --Short Answers}
+
+\section{Quantum Mechanical Calculations using CP2K}
+
+\end{document}

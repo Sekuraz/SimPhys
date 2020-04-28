@@ -117,8 +117,8 @@ M_exact = np.zeros(N_TEMPERATURE)
 E_MC = np.zeros(N_TEMPERATURE)
 M_MC = np.zeros(N_TEMPERATURE)
 
-#energy_time_series = np.zeros([N_TEMPERATURE, 10000])
-#magnetization_time_series = np.zeros([N_TEMPERATURE, 10000])
+energy_time_series = np.zeros([N_TEMPERATURE, 10000])
+magnetization_time_series = np.zeros([N_TEMPERATURE, 10000])
 
 for i in range(N_TEMPERATURE):
     T = 1.0 + i*0.1
@@ -126,6 +126,7 @@ for i in range(N_TEMPERATURE):
     E_MC[i], M_MC[i], energy_time_series[i,:], magnetization_time_series[i,:] = ising_monte_carlo(10000, 4, 4, T)
 #    print(E_exact[i])
     
+print(ising_mean(4,4,5))
 
 #Analyse the time series from the Monte Carlo simulation
 #for i in range(N_TEMPERATURE):
