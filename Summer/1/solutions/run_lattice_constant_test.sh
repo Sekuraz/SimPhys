@@ -1,9 +1,9 @@
 #!/bin/bash
 
-lattice_constants="3.50 3.51 3.52 3.53 3.54 3.55 3.56 3.57 3.57370926 3.58 3.59 3.60 3.61 3.62"
+lattice_constants="3.78 3.79 3.80 3.81 3.82 3.83 3.84"
 
-input_file=diamond_cutoff.inp
-output_file=diamond_cutoff.out
+input_file=diamond_lattice_constant.inp
+output_file=diamond_lattice_constant.out
 
 counter=1
 max_parallel_calcs=$(expr $no_proc_to_use / $no_proc_per_calc)
