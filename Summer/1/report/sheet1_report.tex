@@ -118,18 +118,67 @@ backgroundcolor=\color{black!5}}
 \tableofcontents
 
 \section{Short Questions --Short Answers}
+\begin{itemize}
+ \item A1: 
+ \item A2:
+ \item A3:
+ \item A4:
+ \item A5:
+\end{itemize}
+
 
 \section{Quantum Mechanical Calculations using CP2K}
-\subsection{Converging the Cut-Off Energy}
+The following section deals with DFT-calculatiosn for diamond.
+
+\subsection{Converging the Cutoff Energy}
+In order to find an appropriate cutoff energy, we ran calculations with different values of the cutoff energy (between 50 and 450 Rydberg). REL\_CUTOFF was set to 60 Rydberg. \autoref{fig:fig1} shows the computed total energies as a function of the cutoff energy. We can clearly see that the total energy sharply decreases when the cutoff energy is increased from 50 Ry to 100 Ry. However, a further increase in the cutoff energy does not change much. Because of this, we used a cutoff energy of 100 Ry in the following simulations.
 
 \begin{figure}[h]
 \centering
  \includegraphics[width=\textwidth]{Figure_cutoff_energy.pdf}
- \caption{...}
+ \caption{Plot of the calculated total energy for different cutoff energies.}
  \label{fig:fig1}
 \end{figure}
 
 \subsection{Optimzing the Lattice Constant}
+To optimize the crystal structure, we ran calculations with the RUN\_TYPE GEO\_OPT and different values of the lattice constant. We could then determine the equilibirium lattice constant using a fit.
+
+\subsubsection{PBE Functional}
+\autoref{fig:fig2} shows the calculated total energy as a function of the volume $V=a^3$ of the unit cell. It is easy to see that there is a minimum. In order to determine the corresponding equilibrium volume, we fitted the quadratic function
+\begin{align}
+f(V) = a + b\cdot\left(V-V_\mathrm{eq}\right)^2
+\end{align}
+to the calculated values, this is also shown in the plot. The obtained fit parameters are
+\begin{align}
+a &= -44.9809763\,\mathrm{Ry}\\
+b &= 7.72048911\cdot 10^{-4}\,\frac{\mathrm{Ry}}{\r{A}^9}\\
+V_\mathrm{eq} &= 50.7015415\,\r{A}^3.
+\end{align}
+The equilibrium volume can be calculated from $V_\mathrm{eq}$ and is given by
+\begin{align}
+a_\mathrm{eq} = \sqrt[3]{V_\mathrm{eq}} \approx 3.70\,\r{A}.
+\end{align}
+This value is about 3\% larger than the experimental value of $a_\mathrm{eq,exp.} \approx 3.57\,\r{A}$\footnote{http://lampx.tugraz.at/~hadley/ss1/crystalstructure/structures/diamond/diamond.php, accessed on April 30, 2020 at 22:00}, which means that PBE overestimates the lattice constant.
+
+\autoref{fig:fig3} shows a visualization of the primitive unit cell of diamond which was created using the software VMD (Visual Molecular Dynamics). The structure was taken from the simulation with the equilibrium lattice constant.
+
+
+\begin{figure}[h]
+\centering
+ \includegraphics[width=\textwidth]{Figure_lattice_constant_PBE.pdf}
+ \caption{Plot of the calculated total energy (using the PBE functional) as a function of the volume of the unit cell. The fit-function which is also shown is a parabola which was fitted to the obtained values in order to determine the equilibrium lattice constant.}
+ \label{fig:fig2}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+ \includegraphics[width=\textwidth]{structure.png}
+ \caption{Visualization of the crystal structure of diamond. The shown selection corresponds to the primite unit cell.}
+ \label{fig:fig3}
+\end{figure}
+
+\subsubsection{LDA Functional}
+
 \subsection{Electronic Structure Calculation}
 
 \end{document}
