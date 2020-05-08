@@ -1,5 +1,5 @@
  # Version information for this restart file 
- # current date 2020-04-30 21:07:08.061
+ # current date 2020-05-03 15:59:47.767
  # current working dir /auto.eland/home/sim03/Documents/SimPhys/Summer/1/solutions/lattice_constant_3.63Ang_LDA
  # Program compiled at                             Thu May  9 16:52:28 CEST 2019
  # Program compiled on                                                      cip0
@@ -66,14 +66,14 @@ C    1.8149926320426386E+00    1.8149926112280907E+00   -6.9001832303959204E-05
      &END COORD
      &KIND C
        BASIS_SET DZVP-MOLOPT-SR-GTH
-       POTENTIAL GTH-LDA
+       POTENTIAL GTH-PADE-q4
        &POTENTIAL
  2 2
   0.3488304500000000E+00 2 -0.8513771100000000E+01  0.1228432030000000E+01
  2
   0.3045532100000000E+00 1  0.9522841789999999E+01
   0.2326773000000000E+00 0
-         # Potential name:  GTH-LDA  for symbol:  C
+         # Potential name:  GTH-PADE-Q4  for symbol:  C
          # Potential read from the potential filename: GTH_POTENTIALS
        &END POTENTIAL
      &END KIND

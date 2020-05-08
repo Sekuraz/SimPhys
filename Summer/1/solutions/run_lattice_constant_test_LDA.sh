@@ -1,6 +1,6 @@
 #!/bin/bash
 
-lattice_constants="3.53 3.54 3.55 3.56 3.57 3.58 3.59 3.60 3.61 3.62 3.63 3.64 3.65 3.66 3.67 3.68 3.69 3.70 3.71 3.72"
+lattice_constants="3.50 3.51 3.52 3.53 3.54 3.55 3.56 3.57 3.58 3.59 3.60 3.61 3.62 3.63 3.64 3.65 3.66 3.67 3.68 3.69 3.70 3.71 3.72"
 
 input_file=diamond_lattice_constant.inp
 output_file=diamond_lattice_constant.out
