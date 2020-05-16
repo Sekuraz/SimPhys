@@ -118,15 +118,99 @@ backgroundcolor=\color{black!5}}
 \tableofcontents
 
 \section{Short Questions --Short Answers}
+\begin{itemize}
+\item \textbf{A1}: Water molecules consist of one oxygen atom (O) and two hydrogen atoms (H). Because oxygen has a much higher electronegativity (i.e a tendency to attract bond electrons towards itself) than hydrogen, water molecules exhibit positive partial charges at the hydrogen atoms and negative partial charges at the oxygen atoms. A dipole moment arises (i.e the molecules are polar) because of the non-linear (bent) molecular structure.
+
+\item \textbf{A2}: A hydrogen bond is a weak bond (compared to covalent or ionic bonds) which arises between a (partially positively charged) hydrogen atom (as part of a molecule) and partially negatively charged atom like oxygen (e.g. in water, i.e also part of a molecule). Hydrogen bonds can be intermolecular (e.g. in water) or intramolecular (e.g. in DNA or proteins).
+
+\item \textbf{A3}: The H--O--H angle in water molecules is about 104.45$^\circ$.\footnote{https://en.wikipedia.org/wiki/Properties\_of\_water, accessed on May 8 2020, 20:00} Hydrogen bonds in water have a typical length of 1.97$\r{A}$.\footnote{http://chemistry.elmhurst.edu/vchembook/161Ahydrogenbond.html, accessed on May 8 2020, 20:00}
+
+\item \textbf{A4}: 
+\end{itemize}
 
 \section{Quantum Mechanical Calculation of Water}
-\subsection*{Quantum Mechanical Calculation of Water}
-\subsection*{Ab Initio Molecular Dynamics Simulation of Water Dimer}
-\subsection*{Infrared Spectroscopy}
+\subsection{Quantum Mechanical Calculation of Water}
+\subsection{Ab Initio Molecular Dynamics Simulation of Water Dimer}
+\subsection{Infrared Spectroscopy}
 
 \section{Atomistic Simulation of Water}
-\subsection*{Running the Simulations}
-\subsection*{Analysis}
+\subsection{Running the Simulations}
+We performed atomistic simulations of 216 water molecules using GROMACS and three different water models (SPCE, SPCE/E and TIP3P). The temperature was set to $T=300\,\mathrm{K}$ and the simulations were run for 250000 time steps of size $\Delta t = 2\,\mathrm{ps}$
 
+\subsection{Analysis}
+\subsubsection*{Radial Distribution Function}
+\autoref{fig:fig_gromacs_1} -- \autoref{fig:fig_gromacs_3} show the calculated radial distribution functions for the different water models.
+
+\begin{figure}[h]
+\centering
+ \includegraphics[width=0.8\textwidth]{RDF_SPC.pdf}
+ \caption{Radial distribution function for the SPC water model.}
+ \label{fig:fig_gromacs_1}
+ \includegraphics[width=0.8\textwidth]{RDF_SPCE.pdf}
+ \caption{Radial distribution function for the SPCE water model.}
+ \label{fig:fig_gromacs_2}
+ \includegraphics[width=0.8\textwidth]{RDF_TIP3P.pdf}
+ \caption{Radial distribution function for the TIP3P water model.}
+ \label{fig:fig_gromacs_3}
+\end{figure}
+
+\subsubsection*{Hydrogen Bond Analysis}
+The number of hydrogen bonds per water molecule for the three different water models is shown in \autoref{tab1}.
+
+\begin{table}[h]
+\centering
+\caption{Average number of hydrogen bonds per water molecule for different water models.}
+\begin{tabular}{@{}cc@{}}
+\toprule
+water model & avg. number of H-bonds \\ \midrule
+SPC         &          1.73                 \\
+SPCE        &          1.80               \\
+TIP3P       &          1.67                 \\ \bottomrule
+\end{tabular}
+\label{tab1}
+\end{table}
+
+\subsubsection*{Mean Square Displacement and Diffusion Coefficient}
+\autoref{fig:fig_gromacs_4}--\autoref{fig:fig_gromacs_6} show plots of the mean square displacement which was computed for the different water models.
+
+\begin{table}[h]
+\centering
+\caption{Computed diffusion coefficients for the different water models}
+\begin{tabular}{@{}cc@{}}
+\toprule
+water model & diffusion coefficient $D$ in $10^{-5}\,\mathrm{cm}^2\cdot \mathrm{s}^{-1}$ \\ \midrule
+SPC         &          3.7948 $\pm$ 0.1089                 \\
+SPCE        &          2.2704 $\pm$ 0.1190            \\
+TIP3P       &          5.0608 $\pm$       0.3821    \\ \bottomrule
+\end{tabular}
+\label{tab1}
+\end{table}
+
+
+\begin{figure}[h]
+\centering
+ \includegraphics[width=0.8\textwidth]{MSD_SPC.pdf}
+ \caption{Mean square displacement for the SPC water model.}
+ \label{fig:fig_gromacs_4}
+ \includegraphics[width=0.8\textwidth]{MSD_SPCE.pdf}
+ \caption{Mean square displacement for the SPCE water model.}
+ \label{fig:fig_gromacs_5}
+ \includegraphics[width=0.8\textwidth]{MSD_TIP3P.pdf}
+ \caption{Mean square displacement for the TIP3P water model.}
+ \label{fig:fig_gromacs_6}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+ \includegraphics[width=0.8\textwidth]{MSD_SPC_LOG.pdf}
+ \caption{Log-log plot of the mean square displacement for the SPC water model.}
+ \label{fig:fig_gromacs_7}
+ \includegraphics[width=0.8\textwidth]{MSD_SPCE_LOG.pdf}
+ \caption{Log-log plot of the mean square displacement for the SPC water model.}
+ \label{fig:fig_gromacs_8}
+ \includegraphics[width=0.8\textwidth]{MSD_TIP3P_LOG.pdf}
+ \caption{Log-log plot of the mean square displacement for the SPC water model.}
+ \label{fig:fig_gromacs_9}
+\end{figure}
 
 \end{document}
