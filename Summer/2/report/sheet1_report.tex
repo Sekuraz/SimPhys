@@ -125,7 +125,7 @@ backgroundcolor=\color{black!5}}
 
 \item \textbf{A3}: The H--O--H angle in water molecules is about 104.45$^\circ$.\footnote{https://en.wikipedia.org/wiki/Properties\_of\_water, accessed on May 8 2020, 20:00} Hydrogen bonds in water have a typical length of 1.97$\r{A}$.\footnote{http://chemistry.elmhurst.edu/vchembook/161Ahydrogenbond.html, accessed on May 8 2020, 20:00}
 
-\item \textbf{A4}: 
+\item \textbf{A4}: SPC, SPC/E and TIP3P are all 3-site water models, meaning that they include partial charges at three sites in the molecule. SPC and SPC/E have a bond length of 1.0$\,$\r{A} and an angle of 109.47$^\circ$ (tetrahedral) while TIP33P has a bond length of 0.9572$\,$\r{A} and an angle of 104.52$^\circ$. The partial charges and strength of the Lennard-Jones interaction also vary between the models. The difference between SPC and SPC/E is that SPC/E also includes an average polarization energy.
 \end{itemize}
 
 \section{Quantum Mechanical Calculation of Water}
@@ -135,7 +135,7 @@ backgroundcolor=\color{black!5}}
 
 \section{Atomistic Simulation of Water}
 \subsection{Running the Simulations}
-We performed atomistic simulations of 216 water molecules using GROMACS and three different water models (SPCE, SPCE/E and TIP3P). The temperature was set to $T=300\,\mathrm{K}$ and the simulations were run for 250000 time steps of size $\Delta t = 2\,\mathrm{ps}$
+We performed atomistic simulations of 216 water molecules using GROMACS and three different water models (SPCE, SPCE/E and TIP3P). The temperature was set to $T=300\,\mathrm{K}$ and the simulations were run for 250000 time steps of size $\Delta t = 2\,\mathrm{fs}$
 
 \subsection{Analysis}
 \subsubsection*{Radial Distribution Function}
@@ -171,7 +171,32 @@ TIP3P       &          1.67                 \\ \bottomrule
 \end{table}
 
 \subsubsection*{Mean Square Displacement and Diffusion Coefficient}
-\autoref{fig:fig_gromacs_4}--\autoref{fig:fig_gromacs_6} show plots of the mean square displacement which was computed for the different water models.
+\autoref{fig:fig_gromacs_4}--\autoref{fig:fig_gromacs_6} show plots of the mean square displacement which was computed for the different water models. 
+For larger values of $t$, the MSD begins to oscillate stronger and stronger due to the fact that there are less samples available. 
+We can clearly see that the slope (i.e. the diffusion coefficient) for TIP3P is by far the largest while for SPC/E it is the smallest.
+
+To identify the ballistic regime, we plot the MSD on log-log plot (\autoref{fig:fig_gromacs_7}--\autoref{fig:fig_gromacs_9}). 
+For all three models there is a change in the slope which points to change in the power law $t^n$. 
+To investigate the behaviour for $t\rightarrow 0$, we fitted a power aw $a\cdot t^n$ to the first few data points of each model.
+The obtained fits are also shown in the respective figures.
+\autoref{tab3} shows the exponents which were extracted from the fits.
+While they are all larger than 1, they are still smaller than the value we would expect for purely ballistic motion ($n=2$).
+
+\begin{table}[h]
+\centering
+\caption{Computed power law exponents in the short time limit for the different water models}
+\begin{tabular}{@{}cc@{}}
+\toprule
+water model & power law exponent $n$ \\ \midrule
+SPC         & 1.240\\
+SPCE        & 1.253\\
+TIP3P       & 1.255\\ \bottomrule
+\end{tabular}
+\label{tab3}
+\end{table}
+
+GROMACS uses a fitting range of $\left[50\,\mathrm{ps},450\,\mathrm{ps}\right]$ which seems sensible given the fact that there is a ballistic regime for small $t$ and larger fluctutations for large $t$. 
+The computed diffusion coefficients are given in \autoref{tab2}, while they are not exactly equal, they are of the same order of magnitude. 
 
 \begin{table}[h]
 \centering
@@ -183,7 +208,7 @@ SPC         &          3.7948 $\pm$ 0.1089                 \\
 SPCE        &          2.2704 $\pm$ 0.1190            \\
 TIP3P       &          5.0608 $\pm$       0.3821    \\ \bottomrule
 \end{tabular}
-\label{tab1}
+\label{tab2}
 \end{table}
 
 
@@ -206,10 +231,10 @@ TIP3P       &          5.0608 $\pm$       0.3821    \\ \bottomrule
  \caption{Log-log plot of the mean square displacement for the SPC water model.}
  \label{fig:fig_gromacs_7}
  \includegraphics[width=0.8\textwidth]{MSD_SPCE_LOG.pdf}
- \caption{Log-log plot of the mean square displacement for the SPC water model.}
+ \caption{Log-log plot of the mean square displacement for the SPCE water model.}
  \label{fig:fig_gromacs_8}
  \includegraphics[width=0.8\textwidth]{MSD_TIP3P_LOG.pdf}
- \caption{Log-log plot of the mean square displacement for the SPC water model.}
+ \caption{Log-log plot of the mean square displacement for the TIP3P water model.}
  \label{fig:fig_gromacs_9}
 \end{figure}
 
