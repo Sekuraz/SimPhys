@@ -1,0 +1,79 @@
+&GLOBAL
+        #   PRINT_LEVEL LOW
+   PROJECT_NAME water-pbe
+   RUN_TYPE GEO_OPT
+&END GLOBAL
+
+&FORCE_EVAL
+  METHOD QS
+  STRESS_TENSOR NONE
+  &DFT
+      POTENTIAL_FILE_NAME ./GTH_POTENTIALS
+      BASIS_SET_FILE_NAME ./BASIS_MOLOPT
+      &QS
+         EPS_DEFAULT 1e-10
+         EXTRAPOLATION ASPC
+         METHOD GPW
+      &END QS
+      &MGRID
+         NGRIDS 4
+         CUTOFF 300
+         REL_CUTOFF 60
+      &END MGRID
+      &POISSON
+         PERIODIC NONE
+         POISSON_SOLVER WAVELET 
+      &END POISSON
+      &SCF
+          EPS_SCF 1E-6
+          SCF_GUESS ATOMIC
+          &OT ON
+             MINIMIZER DIIS
+             PRECONDITIONER FULL_ALL
+          &END OT 
+          &OUTER_SCF TRUE
+             EPS_SCF 1E-6
+          &END OUTER_SCF
+      &END SCF
+      &XC
+          &XC_FUNCTIONAL LDA
+          &END XC_FUNCTIONAL
+            #&VDW_POTENTIAL
+            #   POTENTIAL_TYPE PAIR_POTENTIAL
+            #   &PAIR_POTENTIAL
+            #       PARAMETER_FILE_NAME dftd3.dat
+            #       TYPE DFTD3
+            #       REFERENCE_FUNCTIONAL PBE
+            #       R_CUTOFF [angstrom] 16
+            #   &END PAIR_POTENTIAL
+           #&END VDW_POTENTIAL
+      &END XC
+      &PRINT
+         &MOMENTS
+            PERIODIC .FALSE.
+            FILENAME =water_dipole.out
+        &END MOMENTS
+      &END PRINT
+  &END DFT
+
+  &SUBSYS
+    &CELL
+       ABC  15.0 15.0 15.0 
+       PERIODIC NONE
+    &END CELL
+    &TOPOLOGY
+      COORD_FILE_NAME water-monomer.xyz
+      COORD_FILE_FORMAT xyz
+      &CENTER_COORDINATES
+      &END CENTER_COORDINATES
+    &END TOPOLOGY
+    &KIND H
+      POTENTIAL GTH-LDA
+      BASIS_SET DZVP-MOLOPT-GTH
+    &END KIND
+    &KIND O
+      POTENTIAL GTH-LDA
+      BASIS_SET DZVP-MOLOPT-GTH
+    &END KIND
+  &END SUBSYS
+&END FORCE_EVAL
