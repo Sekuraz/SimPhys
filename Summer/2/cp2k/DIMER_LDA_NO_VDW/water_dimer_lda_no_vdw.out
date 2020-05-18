@@ -1,0 +1,3257 @@
+ DBCSR| Multiplication driver                                               BLAS
+ DBCSR| Multrec recursion limit                                              512
+ DBCSR| Multiplication stack size                                           1000
+ DBCSR| Maximum elements for images                                    UNLIMITED
+ DBCSR| Multiplicative factor virtual images                                   1
+ DBCSR| Multiplication size stacks                                             3
+
+
+  **** **** ******  **  PROGRAM STARTED AT               2020-05-18 23:11:41.629
+ ***** ** ***  *** **   PROGRAM STARTED ON                                 sheep
+ **    ****   ******    PROGRAM STARTED BY                                 sim03
+ ***** **    ** ** **   PROGRAM PROCESS ID                               3429207
+  **** **  *******  **  PROGRAM STARTED IN /auto.eland/home/sim03/Documents/SimP
+                                           hys/Summer/2/cp2k/DIMER_LDA_NO_VDW
+
+ CP2K| version string:                                          CP2K version 5.1
+ CP2K| source code revision number:                                    svn:18091
+ CP2K| cp2kflags: fftw3 max_contr=4                                             
+ CP2K| is freely available from                            https://www.cp2k.org/
+ CP2K| Program compiled at                         Thu May  9 16:52:28 CEST 2019
+ CP2K| Program compiled on                                                  cip0
+ CP2K| Program compiled for                                                 icp2
+ CP2K| Data directory path          /auto.eland/group/allatom/cp2k/cp2k-5.1/data
+ CP2K| Input file name                                water_dimer_lda_no_vdw.inp
+
+ GLOBAL| Force Environment number                                              1
+ GLOBAL| Basis set file name                                      ./BASIS_MOLOPT
+ GLOBAL| Potential file name                                    ./GTH_POTENTIALS
+ GLOBAL| MM Potential file name                                     MM_POTENTIAL
+ GLOBAL| Coordinate file name                                    water-dimer.xyz
+ GLOBAL| Method name                                                        CP2K
+ GLOBAL| Project name                                                  water-pbe
+ GLOBAL| Preferred FFT library                                             FFTW3
+ GLOBAL| Preferred diagonalization lib.                                       SL
+ GLOBAL| Run type                                                        GEO_OPT
+ GLOBAL| All-to-all communication in single precision                          F
+ GLOBAL| FFTs using library dependent lengths                                  F
+ GLOBAL| Global print level                                               MEDIUM
+ GLOBAL| Total number of message passing processes                             1
+ GLOBAL| Number of threads for this process                                    1
+ GLOBAL| This output is from process                                           0
+ GLOBAL| CPU model name :  Intel(R) Core(TM) i7-3930K CPU @ 3.20GHz
+
+ MEMORY| system memory details [Kb]
+ MEMORY|                        rank 0           min           max       average
+ MEMORY| MemTotal              8112104       8112104       8112104       8112104
+ MEMORY| MemFree                302468        302468        302468        302468
+ MEMORY| Buffers                220008        220008        220008        220008
+ MEMORY| Cached                3112088       3112088       3112088       3112088
+ MEMORY| Slab                   410556        410556        410556        410556
+ MEMORY| SReclaimable           324988        324988        324988        324988
+ MEMORY| MemLikelyFree         3959552       3959552       3959552       3959552
+
+
+ *** Fundamental physical constants (SI units) ***
+
+ *** Literature: B. J. Mohr and B. N. Taylor,
+ ***             CODATA recommended values of the fundamental physical
+ ***             constants: 2006, Web Version 5.1
+ ***             http://physics.nist.gov/constants
+
+ Speed of light in vacuum [m/s]                             2.99792458000000E+08
+ Magnetic constant or permeability of vacuum [N/A**2]       1.25663706143592E-06
+ Electric constant or permittivity of vacuum [F/m]          8.85418781762039E-12
+ Planck constant (h) [J*s]                                  6.62606896000000E-34
+ Planck constant (h-bar) [J*s]                              1.05457162825177E-34
+ Elementary charge [C]                                      1.60217648700000E-19
+ Electron mass [kg]                                         9.10938215000000E-31
+ Electron g factor [ ]                                     -2.00231930436220E+00
+ Proton mass [kg]                                           1.67262163700000E-27
+ Fine-structure constant                                    7.29735253760000E-03
+ Rydberg constant [1/m]                                     1.09737315685270E+07
+ Avogadro constant [1/mol]                                  6.02214179000000E+23
+ Boltzmann constant [J/K]                                   1.38065040000000E-23
+ Atomic mass unit [kg]                                      1.66053878200000E-27
+ Bohr radius [m]                                            5.29177208590000E-11
+
+ *** Conversion factors ***
+
+ [u] -> [a.u.]                                              1.82288848426455E+03
+ [Angstrom] -> [Bohr] = [a.u.]                              1.88972613288564E+00
+ [a.u.] = [Bohr] -> [Angstrom]                              5.29177208590000E-01
+ [a.u.] -> [s]                                              2.41888432650478E-17
+ [a.u.] -> [fs]                                             2.41888432650478E-02
+ [a.u.] -> [J]                                              4.35974393937059E-18
+ [a.u.] -> [N]                                              8.23872205491840E-08
+ [a.u.] -> [K]                                              3.15774647902944E+05
+ [a.u.] -> [kJ/mol]                                         2.62549961709828E+03
+ [a.u.] -> [kcal/mol]                                       6.27509468713739E+02
+ [a.u.] -> [Pa]                                             2.94210107994716E+13
+ [a.u.] -> [bar]                                            2.94210107994716E+08
+ [a.u.] -> [atm]                                            2.90362800883016E+08
+ [a.u.] -> [eV]                                             2.72113838565563E+01
+ [a.u.] -> [Hz]                                             6.57968392072181E+15
+ [a.u.] -> [1/cm] (wave numbers)                            2.19474631370540E+05
+ [a.u./Bohr**2] -> [1/cm]                                   5.14048714338585E+03
+ 
+
+ CELL_TOP| Volume [angstrom^3]:                                         3375.000
+ CELL_TOP| Vector a [angstrom    15.000     0.000     0.000    |a| =      15.000
+ CELL_TOP| Vector b [angstrom     0.000    15.000     0.000    |b| =      15.000
+ CELL_TOP| Vector c [angstrom     0.000     0.000    15.000    |c| =      15.000
+ CELL_TOP| Angle (b,c), alpha [degree]:                                   90.000
+ CELL_TOP| Angle (a,c), beta  [degree]:                                   90.000
+ CELL_TOP| Angle (a,b), gamma [degree]:                                   90.000
+ CELL_TOP| Numerically orthorhombic:                                         YES
+
+ GENERATE|  Preliminary Number of Bonds generated:                             0
+ GENERATE|  Achieved consistency in connectivity generation.
+
+ CELL| Volume [angstrom^3]:                                             3375.000
+ CELL| Vector a [angstrom]:      15.000     0.000     0.000    |a| =      15.000
+ CELL| Vector b [angstrom]:       0.000    15.000     0.000    |b| =      15.000
+ CELL| Vector c [angstrom]:       0.000     0.000    15.000    |c| =      15.000
+ CELL| Angle (b,c), alpha [degree]:                                       90.000
+ CELL| Angle (a,c), beta  [degree]:                                       90.000
+ CELL| Angle (a,b), gamma [degree]:                                       90.000
+ CELL| Numerically orthorhombic:                                             YES
+
+ CELL_REF| Volume [angstrom^3]:                                         3375.000
+ CELL_REF| Vector a [angstrom    15.000     0.000     0.000    |a| =      15.000
+ CELL_REF| Vector b [angstrom     0.000    15.000     0.000    |b| =      15.000
+ CELL_REF| Vector c [angstrom     0.000     0.000    15.000    |c| =      15.000
+ CELL_REF| Angle (b,c), alpha [degree]:                                   90.000
+ CELL_REF| Angle (a,c), beta  [degree]:                                   90.000
+ CELL_REF| Angle (a,b), gamma [degree]:                                   90.000
+ CELL_REF| Numerically orthorhombic:                                         YES
+
+ *******************************************************************************
+ *******************************************************************************
+ **                                                                           **
+ **     #####                         ##              ##                      **
+ **    ##   ##            ##          ##              ##                      **
+ **   ##     ##                       ##            ######                    **
+ **   ##     ##  ##   ##  ##   #####  ##  ##   ####   ##    #####    #####    **
+ **   ##     ##  ##   ##  ##  ##      ## ##   ##      ##   ##   ##  ##   ##   **
+ **   ##  ## ##  ##   ##  ##  ##      ####     ###    ##   ######   ######    **
+ **    ##  ###   ##   ##  ##  ##      ## ##      ##   ##   ##       ##        **
+ **     #######   #####   ##   #####  ##  ##  ####    ##    #####   ##        **
+ **           ##                                                    ##        **
+ **                                                                           **
+ **                                                ... make the atoms dance   **
+ **                                                                           **
+ **            Copyright (C) by CP2K developers group (2000 - 2017)           **
+ **                                                                           **
+ *******************************************************************************
+
+ DFT| Spin restricted Kohn-Sham (RKS) calculation                            RKS
+ DFT| Multiplicity                                                             1
+ DFT| Number of spin states                                                    1
+ DFT| Charge                                                                   0
+ DFT| Self-interaction correction (SIC)                                       NO
+ DFT| Cutoffs: density                                              1.000000E-10
+ DFT|          gradient                                             1.000000E-10
+ DFT|          tau                                                  1.000000E-10
+ DFT|          cutoff_smoothing_range                               0.000000E+00
+ DFT| XC density smoothing                                                  NONE
+ DFT| XC derivatives                                                          PW
+ FUNCTIONAL| ROUTINE=NEW
+ FUNCTIONAL| PADE:
+ FUNCTIONAL| S. Goedecker, M. Teter and J. Hutter, Phys. Rev. B 54, 1703 (1996) 
+
+ QS| Method:                                                                 GPW
+ QS| Density plane wave grid type                        NON-SPHERICAL FULLSPACE
+ QS| Number of grid levels:                                                    4
+ QS| Density cutoff [a.u.]:                                                150.0
+ QS| Multi grid cutoff [a.u.]: 1) grid level                               150.0
+ QS|                           2) grid level                                50.0
+ QS|                           3) grid level                                16.7
+ QS|                           4) grid level                                 5.6
+ QS| Grid level progression factor:                                          3.0
+ QS| Relative density cutoff [a.u.]:                                        30.0
+ QS| Consistent realspace mapping and integration 
+ QS| Interaction thresholds: eps_pgf_orb:                                1.0E-05
+ QS|                         eps_filter_matrix:                          0.0E+00
+ QS|                         eps_core_charge:                            1.0E-12
+ QS|                         eps_rho_gspace:                             1.0E-10
+ QS|                         eps_rho_rspace:                             1.0E-10
+ QS|                         eps_gvg_rspace:                             1.0E-05
+ QS|                         eps_ppl:                                    1.0E-02
+ QS|                         eps_ppnl:                                   1.0E-07
+
+
+ ATOMIC KIND INFORMATION
+
+  1. Atomic kind: H                                     Number of atoms:       4
+
+     Orbital Basis Set                                           DZVP-MOLOPT-GTH
+
+       Number of orbital shell sets:                                           1
+       Number of orbital shells:                                               3
+       Number of primitive Cartesian functions:                                7
+       Number of Cartesian basis functions:                                    5
+       Number of spherical basis functions:                                    5
+       Norm type:                                                              2
+
+       Normalised Cartesian orbitals:
+
+                        Set   Shell   Orbital            Exponent    Coefficient
+
+                          1       1    2s               11.478000       0.129129
+                                                         3.700759       0.177012
+                                                         1.446884       0.141285
+                                                         0.716815       0.245670
+                                                         0.247919       0.094768
+                                                         0.066918       0.004062
+                                                         0.021708      -0.000053
+
+                          1       2    3s               11.478000      -0.079256
+                                                         3.700759      -0.152992
+                                                         1.446884       0.015066
+                                                         0.716815      -0.331234
+                                                         0.247919       0.210690
+                                                         0.066918       0.058630
+                                                         0.021708      -0.003429
+
+                          1       3    3px              11.478000       0.325290
+                                                         3.700759       0.187466
+                                                         1.446884       0.443300
+                                                         0.716815       0.267738
+                                                         0.247919       0.088285
+                                                         0.066918       0.019092
+                                                         0.021708       0.000629
+                          1       3    3py              11.478000       0.325290
+                                                         3.700759       0.187466
+                                                         1.446884       0.443300
+                                                         0.716815       0.267738
+                                                         0.247919       0.088285
+                                                         0.066918       0.019092
+                                                         0.021708       0.000629
+                          1       3    3pz              11.478000       0.325290
+                                                         3.700759       0.187466
+                                                         1.446884       0.443300
+                                                         0.716815       0.267738
+                                                         0.247919       0.088285
+                                                         0.066918       0.019092
+                                                         0.021708       0.000629
+
+     GTH Potential information for                                       GTH-LDA
+
+       Description:                       Goedecker-Teter-Hutter pseudopotential
+                                           Goedecker et al., PRB 54, 1703 (1996)
+                                          Hartwigsen et al., PRB 58, 3641 (1998)
+                                                      Krack, TCA 114, 145 (2005)
+
+       Gaussian exponent of the core charge distribution:              12.500000
+       Electronic configuration (s p d ...):                                   1
+
+       Parameters of the local part of the GTH pseudopotential:
+
+                          rloc        C1          C2          C3          C4
+                        0.200000   -4.180237    0.725075
+
+  2. Atomic kind: O                                     Number of atoms:       2
+
+     Orbital Basis Set                                           DZVP-MOLOPT-GTH
+
+       Number of orbital shell sets:                                           1
+       Number of orbital shells:                                               5
+       Number of primitive Cartesian functions:                                7
+       Number of Cartesian basis functions:                                   14
+       Number of spherical basis functions:                                   13
+       Norm type:                                                              2
+
+       Normalised Cartesian orbitals:
+
+                        Set   Shell   Orbital            Exponent    Coefficient
+
+                          1       1    2s               12.015955      -0.284499
+                                                         5.108150      -0.322498
+                                                         2.048398       0.148191
+                                                         0.832382       0.295475
+                                                         0.352316       0.150829
+                                                         0.142977       0.015788
+                                                         0.046761      -0.000019
+
+                          1       2    3s               12.015955       0.725622
+                                                         5.108150       0.644384
+                                                         2.048398      -0.157350
+                                                         0.832382      -0.853528
+                                                         0.352316       0.146068
+                                                         0.142977       0.153978
+                                                         0.046761       0.000658
+
+                          1       3    3px              12.015955       1.192141
+                                                         5.108150       1.354170
+                                                         2.048398       0.897267
+                                                         0.832382       0.408839
+                                                         0.352316       0.116648
+                                                         0.142977       0.022184
+                                                         0.046761       0.000308
+                          1       3    3py              12.015955       1.192141
+                                                         5.108150       1.354170
+                                                         2.048398       0.897267
+                                                         0.832382       0.408839
+                                                         0.352316       0.116648
+                                                         0.142977       0.022184
+                                                         0.046761       0.000308
+                          1       3    3pz              12.015955       1.192141
+                                                         5.108150       1.354170
+                                                         2.048398       0.897267
+                                                         0.832382       0.408839
+                                                         0.352316       0.116648
+                                                         0.142977       0.022184
+                                                         0.046761       0.000308
+
+                          1       4    4px              12.015955      -1.062381
+                                                         5.108150      -1.285791
+                                                         2.048398      -0.727000
+                                                         0.832382      -0.522764
+                                                         0.352316       0.182681
+                                                         0.142977       0.087560
+                                                         0.046761       0.000981
+                          1       4    4py              12.015955      -1.062381
+                                                         5.108150      -1.285791
+                                                         2.048398      -0.727000
+                                                         0.832382      -0.522764
+                                                         0.352316       0.182681
+                                                         0.142977       0.087560
+                                                         0.046761       0.000981
+                          1       4    4pz              12.015955      -1.062381
+                                                         5.108150      -1.285791
+                                                         2.048398      -0.727000
+                                                         0.832382      -0.522764
+                                                         0.352316       0.182681
+                                                         0.142977       0.087560
+                                                         0.046761       0.000981
+
+                          1       5    4dx2             12.015955       1.125955
+                                                         5.108150       1.160468
+                                                         2.048398       0.999335
+                                                         0.832382       0.756334
+                                                         0.352316       0.048604
+                                                         0.142977       0.010378
+                                                         0.046761      -0.000027
+                          1       5    4dxy             12.015955       1.950212
+                                                         5.108150       2.009990
+                                                         2.048398       1.730899
+                                                         0.832382       1.310009
+                                                         0.352316       0.084185
+                                                         0.142977       0.017974
+                                                         0.046761      -0.000046
+                          1       5    4dxz             12.015955       1.950212
+                                                         5.108150       2.009990
+                                                         2.048398       1.730899
+                                                         0.832382       1.310009
+                                                         0.352316       0.084185
+                                                         0.142977       0.017974
+                                                         0.046761      -0.000046
+                          1       5    4dy2             12.015955       1.125955
+                                                         5.108150       1.160468
+                                                         2.048398       0.999335
+                                                         0.832382       0.756334
+                                                         0.352316       0.048604
+                                                         0.142977       0.010378
+                                                         0.046761      -0.000027
+                          1       5    4dyz             12.015955       1.950212
+                                                         5.108150       2.009990
+                                                         2.048398       1.730899
+                                                         0.832382       1.310009
+                                                         0.352316       0.084185
+                                                         0.142977       0.017974
+                                                         0.046761      -0.000046
+                          1       5    4dz2             12.015955       1.125955
+                                                         5.108150       1.160468
+                                                         2.048398       0.999335
+                                                         0.832382       0.756334
+                                                         0.352316       0.048604
+                                                         0.142977       0.010378
+                                                         0.046761      -0.000027
+
+     GTH Potential information for                                       GTH-LDA
+
+       Description:                       Goedecker-Teter-Hutter pseudopotential
+                                           Goedecker et al., PRB 54, 1703 (1996)
+                                          Hartwigsen et al., PRB 58, 3641 (1998)
+                                                      Krack, TCA 114, 145 (2005)
+
+       Gaussian exponent of the core charge distribution:               8.154466
+       Electronic configuration (s p d ...):                               2   4
+
+       Parameters of the local part of the GTH pseudopotential:
+
+                          rloc        C1          C2          C3          C4
+                        0.247621  -16.580318    2.395701
+
+       Parameters of the non-local part of the GTH pseudopotential:
+
+                   l      r(l)      h(i,j,l)
+
+                   0    0.221786   18.266917
+                   1    0.256829
+
+
+ MOLECULE KIND INFORMATION
+
+
+ All atoms are their own molecule, skipping detailed information
+
+
+ TOTAL NUMBERS AND MAXIMUM NUMBERS
+
+  Total number of            - Atomic kinds:                                   2
+                             - Atoms:                                          6
+                             - Shell sets:                                     6
+                             - Shells:                                        22
+                             - Primitive Cartesian functions:                 42
+                             - Cartesian basis functions:                     48
+                             - Spherical basis functions:                     46
+
+  Maximum angular momentum of- Orbital basis functions:                        2
+                             - Local part of the GTH pseudopotential:          2
+                             - Non-local part of the GTH pseudopotential:      0
+
+
+ MODULE QUICKSTEP:  ATOMIC COORDINATES IN angstrom
+
+  Atom  Kind  Element       X           Y           Z          Z(eff)       Mass
+
+       1     1 H    1    5.682168    7.460916    8.068995      1.00       1.0079
+       2     1 H    1    7.044529    7.498716    7.340463      1.00       1.0079
+       3     2 O    8    6.087035    7.501426    7.199080      6.00      15.9994
+       4     1 H    1    9.317832    8.271832    6.979637      1.00       1.0079
+       5     1 H    1    9.299722    6.728168    6.931005      1.00       1.0079
+       6     2 O    8    9.017461    7.487949    7.446038      6.00      15.9994
+
+
+
+
+ SCF PARAMETERS         Density guess:                                    ATOMIC
+                        --------------------------------------------------------
+                        max_scf:                                              50
+                        max_scf_history:                                       0
+                        max_diis:                                              4
+                        --------------------------------------------------------
+                        eps_scf:                                        1.00E-06
+                        eps_scf_history:                                0.00E+00
+                        eps_diis:                                       1.00E-01
+                        eps_eigval:                                     1.00E-05
+                        --------------------------------------------------------
+                        level_shift [a.u.]:                                 0.00
+                        --------------------------------------------------------
+                        Outer loop SCF in use 
+                        No variables optimised in outer loop
+                        eps_scf                                         1.00E-06
+                        max_scf                                               50
+                        No outer loop optimization
+                        step_size                                       5.00E-01
+
+ PW_GRID| Information for grid number                                          1
+ PW_GRID| Cutoff [a.u.]                                                    150.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -80      79                Points:         160
+ PW_GRID|   Bounds   2            -80      79                Points:         160
+ PW_GRID|   Bounds   3            -80      79                Points:         160
+ PW_GRID| Volume element (a.u.^3)  0.5560E-02     Volume (a.u.^3)     22775.6292
+ PW_GRID| Grid span                                                    FULLSPACE
+
+ PW_GRID| Information for grid number                                          2
+ PW_GRID| Cutoff [a.u.]                                                     50.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -48      47                Points:          96
+ PW_GRID|   Bounds   2            -48      47                Points:          96
+ PW_GRID|   Bounds   3            -48      47                Points:          96
+ PW_GRID| Volume element (a.u.^3)  0.2574E-01     Volume (a.u.^3)     22775.6292
+ PW_GRID| Grid span                                                    FULLSPACE
+
+ PW_GRID| Information for grid number                                          3
+ PW_GRID| Cutoff [a.u.]                                                     16.7
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -27      26                Points:          54
+ PW_GRID|   Bounds   2            -27      26                Points:          54
+ PW_GRID|   Bounds   3            -27      26                Points:          54
+ PW_GRID| Volume element (a.u.^3)  0.1446         Volume (a.u.^3)     22775.6292
+ PW_GRID| Grid span                                                    FULLSPACE
+
+ PW_GRID| Information for grid number                                          4
+ PW_GRID| Cutoff [a.u.]                                                      5.6
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -16      15                Points:          32
+ PW_GRID|   Bounds   2            -16      15                Points:          32
+ PW_GRID|   Bounds   3            -16      15                Points:          32
+ PW_GRID| Volume element (a.u.^3)  0.6951         Volume (a.u.^3)     22775.6292
+ PW_GRID| Grid span                                                    FULLSPACE
+
+ POISSON| Solver                                                         WAVELET
+ POISSON| Wavelet| Scaling function                                           40
+ POISSON| Periodicity                                                       NONE
+
+ RS_GRID| Information for grid number                                          1
+ RS_GRID|   Bounds   1            -80      79                Points:         160
+ RS_GRID|   Bounds   2            -80      79                Points:         160
+ RS_GRID|   Bounds   3            -80      79                Points:         160
+
+ RS_GRID| Information for grid number                                          2
+ RS_GRID|   Bounds   1            -48      47                Points:          96
+ RS_GRID|   Bounds   2            -48      47                Points:          96
+ RS_GRID|   Bounds   3            -48      47                Points:          96
+
+ RS_GRID| Information for grid number                                          3
+ RS_GRID|   Bounds   1            -27      26                Points:          54
+ RS_GRID|   Bounds   2            -27      26                Points:          54
+ RS_GRID|   Bounds   3            -27      26                Points:          54
+
+ RS_GRID| Information for grid number                                          4
+ RS_GRID|   Bounds   1            -16      15                Points:          32
+ RS_GRID|   Bounds   2            -16      15                Points:          32
+ RS_GRID|   Bounds   3            -16      15                Points:          32
+
+ DISTRIBUTION OF THE PARTICLES (ROWS)
+              Process row      Number of particles         Number of matrix rows
+                        0                        6                            -1
+                      Sum                        6                            -1
+
+ DISTRIBUTION OF THE PARTICLES (COLUMNS)
+              Process col      Number of particles      Number of matrix columns
+                        0                        6                            -1
+                      Sum                        6                            -1
+
+ *******************************************************************************
+ ***                     STARTING GEOMETRY OPTIMIZATION                      ***
+ ***                                   BFGS                                  ***
+ *******************************************************************************
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Extrapolation method: initial_guess
+
+ Atomic guess: The first density matrix is obtained in terms of atomic orbitals
+               and electronic configurations assigned to each atomic kind
+
+ Guess for atomic kind: H
+
+ Electronic structure
+    Total number of core electrons                                          0.00
+    Total number of valence electrons                                       1.00
+    Total number of electrons                                               1.00
+    Multiplicity                                                   not specified
+    S      1.00
+
+
+ *******************************************************************************
+                  Iteration          Convergence                     Energy [au]
+ *******************************************************************************
+                          1        0.437564E-02                  -0.424156232739
+                          2        0.531381E-03                  -0.424175240583
+                          3        0.259204E-06                  -0.424175524879
+
+ Energy components [Hartree]           Total Energy ::           -0.424175524879
+                                        Band Energy ::           -0.199012467579
+                                     Kinetic Energy ::            0.464005690159
+                                   Potential Energy ::           -0.888181215038
+                                      Virial (-V/T) ::            1.914160179228
+                                        Core Energy ::           -0.479157464987
+                                          XC Energy ::           -0.244352473955
+                                     Coulomb Energy ::            0.299334414064
+                       Total Pseudopotential Energy ::           -0.962290093071
+                       Local Pseudopotential Energy ::           -0.962290093071
+                    Nonlocal Pseudopotential Energy ::            0.000000000000
+                                        Confinement ::            0.191269379246
+
+ Orbital energies  State     L     Occupation   Energy[a.u.]          Energy[eV]
+
+                       1     0          1.000      -0.199012           -5.415405
+
+
+ Total Electron Density at R=0:                                         0.242905
+
+ Guess for atomic kind: O
+
+ Electronic structure
+    Total number of core electrons                                          2.00
+    Total number of valence electrons                                       6.00
+    Total number of electrons                                               8.00
+    Multiplicity                                                   not specified
+    S   [  2.00] 2.00
+    P      4.00
+
+
+ *******************************************************************************
+                  Iteration          Convergence                     Energy [au]
+ *******************************************************************************
+                          1         1.57482                     -14.924693586422
+                          2         2.09133                     -14.976616717977
+                          3        0.891427E-01                 -15.707817752963
+                          4        0.259828E-02                 -15.709126481644
+                          5        0.108099E-02                 -15.709127391188
+                          6        0.673210E-03                 -15.709127507600
+                          7        0.273239E-04                 -15.709127581158
+                          8        0.174976E-06                 -15.709127581287
+
+ Energy components [Hartree]           Total Energy ::          -15.709127581287
+                                        Band Energy ::           -2.990963098796
+                                     Kinetic Energy ::           11.871338457666
+                                   Potential Energy ::          -27.580466038953
+                                      Virial (-V/T) ::            2.323281922869
+                                        Core Energy ::          -26.244847542766
+                                          XC Energy ::           -3.168219078094
+                                     Coulomb Energy ::           13.703939039573
+                       Total Pseudopotential Energy ::          -38.150872052433
+                       Local Pseudopotential Energy ::          -39.450329861486
+                    Nonlocal Pseudopotential Energy ::            1.299457809053
+                                        Confinement ::            0.346860520002
+
+ Orbital energies  State     L     Occupation   Energy[a.u.]          Energy[eV]
+
+                       1     0          2.000      -0.855607          -23.282237
+
+                       1     1          4.000      -0.319938           -8.705943
+
+
+ Total Electron Density at R=0:                                         0.000086
+ Re-scaling the density matrix to get the right number of electrons
+                  # Electrons              Trace(P)               Scaling factor
+                           16                16.000                        1.000
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    4.6     0.27874888       -32.9196900609 -3.29E+01
+     2 OT DIIS     0.15E+00    3.2     0.21883006       -33.1267442693 -2.07E-01
+     3 OT DIIS     0.15E+00    3.3     0.16645577       -33.8496119660 -7.23E-01
+     4 OT DIIS     0.15E+00    3.2     0.08736953       -34.2459514584 -3.96E-01
+     5 OT DIIS     0.15E+00    3.2     0.03674642       -34.3481592259 -1.02E-01
+     6 OT DIIS     0.15E+00    3.2     0.02496836       -34.3618008518 -1.36E-02
+     7 OT DIIS     0.15E+00    3.2     0.00998402       -34.3677540732 -5.95E-03
+     8 OT DIIS     0.15E+00    3.2     0.00926658       -34.3688112326 -1.06E-03
+     9 OT DIIS     0.15E+00    3.2     0.00468292       -34.3696046961 -7.93E-04
+    10 OT DIIS     0.15E+00    3.1     0.00070898       -34.3697787533 -1.74E-04
+    11 OT DIIS     0.15E+00    3.2     0.00034265       -34.3697884555 -9.70E-06
+    12 OT DIIS     0.15E+00    3.2     0.00020076       -34.3697908186 -2.36E-06
+    13 OT DIIS     0.15E+00    3.1     0.00009421       -34.3697920874 -1.27E-06
+    14 OT DIIS     0.15E+00    3.2     0.00006742       -34.3697922989 -2.11E-07
+    15 OT DIIS     0.15E+00    3.1     0.00005615       -34.3697923744 -7.55E-08
+    16 OT DIIS     0.15E+00    3.3     0.00002178       -34.3697924126 -3.82E-08
+    17 OT DIIS     0.15E+00    3.1     0.00001867       -34.3697924235 -1.09E-08
+    18 OT DIIS     0.15E+00    3.2     0.00001745       -34.3697924252 -1.65E-09
+    19 OT DIIS     0.15E+00    3.2     0.00000623       -34.3697924276 -2.41E-09
+    20 OT DIIS     0.15E+00    3.2     0.00000281       -34.3697924281 -4.74E-10
+    21 OT DIIS     0.15E+00    3.1     0.00000132       -34.3697924282 -1.32E-10
+    22 OT DIIS     0.15E+00    3.2     0.00000085       -34.3697924282 -3.91E-11
+
+  *** SCF run converged in    22 steps ***
+
+
+  Electronic density on regular grids:        -15.9999996329        0.0000003671
+  Core density on regular grids:               15.9999999995       -0.0000000005
+  Total charge density on r-space grids:        0.0000003666
+  Total charge density g-space grids:           0.0000003666
+
+  Overlap energy of the core charge distribution:               0.00000014778938
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.56720676837417
+  Hartree energy:                                              35.99400043372654
+  Exchange-correlation energy:                                 -8.26521868629225
+
+  Total energy:                                               -34.36979242823183
+
+  outer SCF iter =    1 RMS gradient =   0.85E-06 energy =        -34.3697924282
+  outer SCF loop converged in   1 iterations or   22 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.805128                              0.194872
+       2     H        1          0.799738                              0.200262
+       3     O        2          6.436513                             -0.436513
+       4     H        1          0.774572                              0.225428
+       5     H        1          0.774428                              0.225572
+       6     O        2          6.409622                             -0.409622
+ # Total charge                             16.000000                  0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.434                         0.566
+      2       H      1       1.000          0.423                         0.577
+      3       O      2       6.000          7.127                        -1.127
+      4       H      1       1.000          0.427                         0.573
+      5       H      1       1.000          0.427                         0.573
+      6       O      2       6.000          7.142                        -1.142
+
+  Total Charge                                                            0.019
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.369792428246377
+
+
+ --------  Informations at step =     0 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3697924282
+  Used time                  =               76.020
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:      1
+ --------------------------
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 0
+
+  B(1) =   1.000000
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.5     0.00335689       -34.3704393161 -3.44E+01
+     2 OT DIIS     0.15E+00    3.2     0.00152497       -34.3708166831 -3.77E-04
+     3 OT DIIS     0.15E+00    3.2     0.00084117       -34.3708782841 -6.16E-05
+     4 OT DIIS     0.15E+00    3.2     0.00003009       -34.3708959668 -1.77E-05
+     5 OT DIIS     0.15E+00    3.1     0.00000739       -34.3708960002 -3.34E-08
+     6 OT DIIS     0.15E+00    3.3     0.00000450       -34.3708960016 -1.37E-09
+     7 OT DIIS     0.15E+00    3.1     0.00000030       -34.3708960019 -3.46E-10
+
+  *** SCF run converged in     7 steps ***
+
+
+  Electronic density on regular grids:        -15.9999996569        0.0000003431
+  Core density on regular grids:               15.9999999995       -0.0000000005
+  Total charge density on r-space grids:        0.0000003426
+  Total charge density g-space grids:           0.0000003426
+
+  Overlap energy of the core charge distribution:               0.00000010169861
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.50725471123037
+  Hartree energy:                                              36.03669950919789
+  Exchange-correlation energy:                                 -8.24906923219575
+
+  Total energy:                                               -34.37089600189855
+
+  outer SCF iter =    1 RMS gradient =   0.30E-06 energy =        -34.3708960019
+  outer SCF loop converged in   1 iterations or    7 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.802815                              0.197185
+       2     H        1          0.793034                              0.206966
+       3     O        2          6.448870                             -0.448870
+       4     H        1          0.768509                              0.231491
+       5     H        1          0.768253                              0.231747
+       6     O        2          6.418518                             -0.418518
+ # Total charge                             16.000000                 -0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.433                         0.567
+      2       H      1       1.000          0.420                         0.580
+      3       O      2       6.000          7.130                        -1.130
+      4       H      1       1.000          0.425                         0.575
+      5       H      1       1.000          0.425                         0.575
+      6       O      2       6.000          7.146                        -1.146
+
+  Total Charge                                                            0.020
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.370896001907404
+
+
+ --------  Informations at step =     1 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3708960019
+  Real energy change         =        -0.0011035737
+  Predicted change in energy =        -0.0008406456
+  Scaling factor             =         0.0000000000
+  Step size                  =         0.0656604443
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                  YES
+  Used time                  =               25.992
+
+  Convergence check :
+  Max. step size             =         0.0656604443
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                   NO
+  RMS step size              =         0.0185640520
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                   NO
+  Max. gradient              =         0.0071002977
+  Conv. limit for gradients  =         0.0004500000
+  Conv. for gradients        =                   NO
+  RMS gradient               =         0.0025937745
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. for gradients        =                   NO
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:      2
+ --------------------------
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 0
+
+  B(1) =   2.000000
+  B(2) =  -1.000000
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.4     0.00204973       -34.3710313694 -3.44E+01
+     2 OT DIIS     0.15E+00    3.2     0.00092570       -34.3711753831 -1.44E-04
+     3 OT DIIS     0.15E+00    3.1     0.00053340       -34.3711989573 -2.36E-05
+     4 OT DIIS     0.15E+00    3.2     0.00002606       -34.3712056758 -6.72E-06
+     5 OT DIIS     0.15E+00    3.2     0.00001559       -34.3712056876 -1.18E-08
+     6 OT DIIS     0.15E+00    3.2     0.00000212       -34.3712056918 -4.15E-09
+     7 OT DIIS     0.15E+00    3.2     0.00000010       -34.3712056919 -1.74E-10
+
+  *** SCF run converged in     7 steps ***
+
+
+  Electronic density on regular grids:        -15.9999997969        0.0000002031
+  Core density on regular grids:               15.9999999994       -0.0000000006
+  Total charge density on r-space grids:        0.0000002025
+  Total charge density g-space grids:           0.0000002025
+
+  Overlap energy of the core charge distribution:               0.00000008067978
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.47382738788531
+  Hartree energy:                                              36.06049962836533
+  Exchange-correlation energy:                                 -8.23975169702520
+
+  Total energy:                                               -34.37120569192444
+
+  outer SCF iter =    1 RMS gradient =   0.99E-07 energy =        -34.3712056919
+  outer SCF loop converged in   1 iterations or    7 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.802455                              0.197545
+       2     H        1          0.788359                              0.211641
+       3     O        2          6.457159                             -0.457159
+       4     H        1          0.763809                              0.236191
+       5     H        1          0.763479                              0.236521
+       6     O        2          6.424740                             -0.424740
+ # Total charge                             16.000000                  0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.433                         0.567
+      2       H      1       1.000          0.418                         0.582
+      3       O      2       6.000          7.132                        -1.132
+      4       H      1       1.000          0.423                         0.577
+      5       H      1       1.000          0.423                         0.577
+      6       O      2       6.000          7.151                        -1.151
+
+  Total Charge                                                            0.020
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.371205691927116
+
+
+ --------  Informations at step =     2 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3712056919
+  Real energy change         =        -0.0003096900
+  Predicted change in energy =        -0.0002640965
+  Scaling factor             =         0.0000000000
+  Step size                  =         0.0457545756
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                  YES
+  Used time                  =               25.892
+
+  Convergence check :
+  Max. step size             =         0.0457545756
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                   NO
+  RMS step size              =         0.0185111433
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                   NO
+  Max. gradient              =         0.0037818072
+  Conv. limit for gradients  =         0.0004500000
+  Conv. for gradients        =                   NO
+  RMS gradient               =         0.0016743123
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. for gradients        =                   NO
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:      3
+ --------------------------
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 1
+
+  B(1) =   2.500000
+  B(2) =  -2.000000
+  B(3) =   0.500000
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.4     0.00158971       -34.3712925020 -3.44E+01
+     2 OT DIIS     0.15E+00    3.2     0.00061590       -34.3713859179 -9.34E-05
+     3 OT DIIS     0.15E+00    3.2     0.00026749       -34.3714008984 -1.50E-05
+     4 OT DIIS     0.15E+00    3.1     0.00002939       -34.3714022601 -1.36E-06
+     5 OT DIIS     0.15E+00    3.2     0.00000563       -34.3714022835 -2.34E-08
+     6 OT DIIS     0.15E+00    3.1     0.00000282       -34.3714022841 -6.00E-10
+     7 OT DIIS     0.15E+00    3.2     0.00000014       -34.3714022843 -1.74E-10
+
+  *** SCF run converged in     7 steps ***
+
+
+  Electronic density on regular grids:        -15.9999995873        0.0000004127
+  Core density on regular grids:               15.9999999995       -0.0000000005
+  Total charge density on r-space grids:        0.0000004121
+  Total charge density g-space grids:           0.0000004121
+
+  Overlap energy of the core charge distribution:               0.00000007691430
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.47110239043455
+  Hartree energy:                                              36.06267315370724
+  Exchange-correlation energy:                                 -8.23939681347990
+
+  Total energy:                                               -34.37140228425348
+
+  outer SCF iter =    1 RMS gradient =   0.14E-06 energy =        -34.3714022843
+  outer SCF loop converged in   1 iterations or    7 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.803646                              0.196354
+       2     H        1          0.786067                              0.213933
+       3     O        2          6.460783                             -0.460783
+       4     H        1          0.762703                              0.237297
+       5     H        1          0.762363                              0.237637
+       6     O        2          6.424438                             -0.424438
+ # Total charge                             16.000000                  0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.433                         0.567
+      2       H      1       1.000          0.416                         0.584
+      3       O      2       6.000          7.133                        -1.133
+      4       H      1       1.000          0.423                         0.577
+      5       H      1       1.000          0.423                         0.577
+      6       O      2       6.000          7.152                        -1.152
+
+  Total Charge                                                            0.020
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.371402284258373
+
+
+ --------  Informations at step =     3 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3714022843
+  Real energy change         =        -0.0001965923
+  Predicted change in energy =        -0.0001028353
+  Scaling factor             =         0.0000000000
+  Step size                  =         0.0464980081
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                  YES
+  Used time                  =               25.897
+
+  Convergence check :
+  Max. step size             =         0.0464980081
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                   NO
+  RMS step size              =         0.0159634338
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                   NO
+  Max. gradient              =         0.0052572205
+  Conv. limit for gradients  =         0.0004500000
+  Conv. for gradients        =                   NO
+  RMS gradient               =         0.0022134690
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. for gradients        =                   NO
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:      4
+ --------------------------
+
+  Step is scaled; Scaling factor =  0.35676
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 2
+
+  B(1) =   2.800000
+  B(2) =  -2.800000
+  B(3) =   1.200000
+  B(4) =  -0.200000
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.5     0.01847157       -34.3471281086 -3.43E+01
+     2 OT DIIS     0.15E+00    3.2     0.00789734       -34.3592972515 -1.22E-02
+     3 OT DIIS     0.15E+00    3.2     0.00464546       -34.3612221364 -1.92E-03
+     4 OT DIIS     0.15E+00    3.1     0.00023038       -34.3616714410 -4.49E-04
+     5 OT DIIS     0.15E+00    3.2     0.00010052       -34.3616725592 -1.12E-06
+     6 OT DIIS     0.15E+00    3.2     0.00002677       -34.3616727241 -1.65E-07
+     7 OT DIIS     0.15E+00    3.2     0.00000207       -34.3616727432 -1.90E-08
+     8 OT DIIS     0.15E+00    3.2     0.00000039       -34.3616727433 -1.67E-10
+
+  *** SCF run converged in     8 steps ***
+
+
+  Electronic density on regular grids:        -15.9999997374        0.0000002626
+  Core density on regular grids:               15.9999999995       -0.0000000005
+  Total charge density on r-space grids:        0.0000002621
+  Total charge density g-space grids:           0.0000002621
+
+  Overlap energy of the core charge distribution:               0.00000003659754
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.43200050358784
+  Hartree energy:                                              36.10075679501391
+  Exchange-correlation energy:                                 -8.22864898668997
+
+  Total energy:                                               -34.36167274332035
+
+  outer SCF iter =    1 RMS gradient =   0.39E-06 energy =        -34.3616727433
+  outer SCF loop converged in   1 iterations or    8 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.819911                              0.180089
+       2     H        1          0.765707                              0.234293
+       3     O        2          6.497244                             -0.497244
+       4     H        1          0.747441                              0.252559
+       5     H        1          0.746507                              0.253493
+       6     O        2          6.423190                             -0.423190
+ # Total charge                             16.000000                  0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.437                         0.563
+      2       H      1       1.000          0.402                         0.598
+      3       O      2       6.000          7.145                        -1.145
+      4       H      1       1.000          0.416                         0.584
+      5       H      1       1.000          0.416                         0.584
+      6       O      2       6.000          7.163                        -1.163
+
+  Total Charge                                                            0.021
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.361672743326650
+
+
+ --------  Informations at step =     4 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3616727433
+  Real energy change         =         0.0097295409
+  Predicted change in energy =        -0.0016367527
+  Scaling factor             =         0.3567620766
+  Step size                  =         0.4724315332
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                   NO
+  Used time                  =               28.973
+
+  Convergence check :
+  Max. step size             =         0.4724315332
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                   NO
+  RMS step size              =         0.1572375979
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                   NO
+  Max. gradient              =         0.0720353101
+  Conv. limit for gradients  =         0.0004500000
+  Conv. for gradients        =                   NO
+  RMS gradient               =         0.0223030445
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. for gradients        =                   NO
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:      5
+ --------------------------
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 3
+
+  B(1) =   3.000000
+  B(2) =  -3.428571
+  B(3) =   1.928571
+  B(4) =  -0.571429
+  B(5) =   0.071429
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.5     0.05645478       -34.2370447803 -3.42E+01
+     2 OT DIIS     0.15E+00    3.1     0.02217112       -34.3526874010 -1.16E-01
+     3 OT DIIS     0.15E+00    3.2     0.01241779       -34.3687955980 -1.61E-02
+     4 OT DIIS     0.15E+00    3.1     0.00103248       -34.3716079408 -2.81E-03
+     5 OT DIIS     0.15E+00    3.2     0.00043582       -34.3716442924 -3.64E-05
+     6 OT DIIS     0.15E+00    3.1     0.00016540       -34.3716473140 -3.02E-06
+     7 OT DIIS     0.15E+00    3.2     0.00004271       -34.3716478462 -5.32E-07
+     8 OT DIIS     0.15E+00    3.1     0.00000353       -34.3716478862 -4.00E-08
+     9 OT DIIS     0.15E+00    3.2     0.00000040       -34.3716478867 -4.73E-10
+
+  *** SCF run converged in     9 steps ***
+
+
+  Electronic density on regular grids:        -15.9999993179        0.0000006821
+  Core density on regular grids:               15.9999999995       -0.0000000005
+  Total charge density on r-space grids:        0.0000006816
+  Total charge density g-space grids:           0.0000006816
+
+  Overlap energy of the core charge distribution:               0.00000008269717
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.48813294113192
+  Hartree energy:                                              36.05068303224194
+  Exchange-correlation energy:                                 -8.24468285091029
+
+  Total energy:                                               -34.37164788666892
+
+  outer SCF iter =    1 RMS gradient =   0.40E-06 energy =        -34.3716478867
+  outer SCF loop converged in   1 iterations or    9 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.805448                              0.194552
+       2     H        1          0.784942                              0.215058
+       3     O        2          6.462828                             -0.462828
+       4     H        1          0.763763                              0.236237
+       5     H        1          0.763406                              0.236594
+       6     O        2          6.419613                             -0.419613
+ # Total charge                             16.000000                  0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.434                         0.566
+      2       H      1       1.000          0.415                         0.585
+      3       O      2       6.000          7.134                        -1.134
+      4       H      1       1.000          0.423                         0.577
+      5       H      1       1.000          0.423                         0.577
+      6       O      2       6.000          7.151                        -1.151
+
+  Total Charge                                                            0.020
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.371647886672640
+
+
+ --------  Informations at step =     5 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3716478867
+  Real energy change         =        -0.0099751433
+  Predicted change in energy =        -0.0134475047
+  Scaling factor             =         0.3567620766
+  Step size                  =         0.4323366257
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                  YES
+  Used time                  =               32.187
+
+  Convergence check :
+  Max. step size             =         0.4323366257
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                   NO
+  RMS step size              =         0.1398296974
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                   NO
+  Max. gradient              =         0.0033905033
+  Conv. limit for gradients  =         0.0004500000
+  Conv. for gradients        =                   NO
+  RMS gradient               =         0.0013642239
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. for gradients        =                   NO
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:      6
+ --------------------------
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 3
+
+  B(1) =   3.000000
+  B(2) =  -3.428571
+  B(3) =   1.928571
+  B(4) =  -0.571429
+  B(5) =   0.071429
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.4     0.06303333       -34.2106764476 -3.42E+01
+     2 OT DIIS     0.15E+00    3.2     0.02625953       -34.3478621310 -1.37E-01
+     3 OT DIIS     0.15E+00    3.1     0.01769467       -34.3657864155 -1.79E-02
+     4 OT DIIS     0.15E+00    3.2     0.00121250       -34.3716460944 -5.86E-03
+     5 OT DIIS     0.15E+00    3.1     0.00033129       -34.3717068430 -6.07E-05
+     6 OT DIIS     0.15E+00    3.2     0.00019517       -34.3717096955 -2.85E-06
+     7 OT DIIS     0.15E+00    3.2     0.00001995       -34.3717104750 -7.79E-07
+     8 OT DIIS     0.15E+00    3.2     0.00000267       -34.3717104913 -1.63E-08
+     9 OT DIIS     0.15E+00    3.1     0.00000047       -34.3717104915 -2.60E-10
+
+  *** SCF run converged in     9 steps ***
+
+
+  Electronic density on regular grids:        -15.9999993052        0.0000006948
+  Core density on regular grids:               15.9999999996       -0.0000000004
+  Total charge density on r-space grids:        0.0000006944
+  Total charge density g-space grids:           0.0000006944
+
+  Overlap energy of the core charge distribution:               0.00000008463172
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.49581783623718
+  Hartree energy:                                              36.04529049088192
+  Exchange-correlation energy:                                 -8.24703781144348
+
+  Total energy:                                               -34.37171049152234
+
+  outer SCF iter =    1 RMS gradient =   0.47E-06 energy =        -34.3717104915
+  outer SCF loop converged in   1 iterations or    9 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.806281                              0.193719
+       2     H        1          0.785013                              0.214987
+       3     O        2          6.463406                             -0.463406
+       4     H        1          0.763854                              0.236146
+       5     H        1          0.763368                              0.236632
+       6     O        2          6.418077                             -0.418077
+ # Total charge                             16.000000                 -0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.434                         0.566
+      2       H      1       1.000          0.415                         0.585
+      3       O      2       6.000          7.134                        -1.134
+      4       H      1       1.000          0.423                         0.577
+      5       H      1       1.000          0.423                         0.577
+      6       O      2       6.000          7.151                        -1.151
+
+  Total Charge                                                            0.020
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.371710491533250
+
+
+ --------  Informations at step =     6 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3717104915
+  Real energy change         =        -0.0000626049
+  Predicted change in energy =        -0.0000489294
+  Scaling factor             =         0.3567620766
+  Step size                  =         0.0209092422
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                  YES
+  Used time                  =               32.204
+
+  Convergence check :
+  Max. step size             =         0.0209092422
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                   NO
+  RMS step size              =         0.0103205220
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                   NO
+  Max. gradient              =         0.0032268283
+  Conv. limit for gradients  =         0.0004500000
+  Conv. for gradients        =                   NO
+  RMS gradient               =         0.0011424895
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. for gradients        =                   NO
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:      7
+ --------------------------
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 3
+
+  B(1) =   3.000000
+  B(2) =  -3.428571
+  B(3) =   1.928571
+  B(4) =  -0.571429
+  B(5) =   0.071429
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.5     0.03806299       -34.3092225625 -3.43E+01
+     2 OT DIIS     0.15E+00    3.2     0.01507456       -34.3625356639 -5.33E-02
+     3 OT DIIS     0.15E+00    3.2     0.00787850       -34.3706303629 -8.09E-03
+     4 OT DIIS     0.15E+00    3.2     0.00060677       -34.3717566343 -1.13E-03
+     5 OT DIIS     0.15E+00    3.2     0.00034552       -34.3717667766 -1.01E-05
+     6 OT DIIS     0.15E+00    3.1     0.00005897       -34.3717687362 -1.96E-06
+     7 OT DIIS     0.15E+00    3.2     0.00001571       -34.3717688583 -1.22E-07
+     8 OT DIIS     0.15E+00    3.1     0.00000156       -34.3717688641 -5.73E-09
+     9 OT DIIS     0.15E+00    3.2     0.00000019       -34.3717688642 -1.02E-10
+
+  *** SCF run converged in     9 steps ***
+
+
+  Electronic density on regular grids:        -15.9999992830        0.0000007170
+  Core density on regular grids:               15.9999999995       -0.0000000005
+  Total charge density on r-space grids:        0.0000007166
+  Total charge density g-space grids:           0.0000007165
+
+  Overlap energy of the core charge distribution:               0.00000008843853
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.50696933974579
+  Hartree energy:                                              36.03736626557303
+  Exchange-correlation energy:                                 -8.25032346610376
+
+  Total energy:                                               -34.37176886417608
+
+  outer SCF iter =    1 RMS gradient =   0.19E-06 energy =        -34.3717688642
+  outer SCF loop converged in   1 iterations or    9 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.806814                              0.193186
+       2     H        1          0.786767                              0.213233
+       3     O        2          6.462233                             -0.462233
+       4     H        1          0.763999                              0.236001
+       5     H        1          0.763398                              0.236602
+       6     O        2          6.416789                             -0.416789
+ # Total charge                             16.000000                 -0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.434                         0.566
+      2       H      1       1.000          0.415                         0.585
+      3       O      2       6.000          7.134                        -1.134
+      4       H      1       1.000          0.423                         0.577
+      5       H      1       1.000          0.423                         0.577
+      6       O      2       6.000          7.150                        -1.150
+
+  Total Charge                                                            0.020
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.371768864177568
+
+
+ --------  Informations at step =     7 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3717688642
+  Real energy change         =        -0.0000583726
+  Predicted change in energy =        -0.0000356965
+  Scaling factor             =         0.3567620766
+  Step size                  =         0.0200885519
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                  YES
+  Used time                  =               32.246
+
+  Convergence check :
+  Max. step size             =         0.0200885519
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                   NO
+  RMS step size              =         0.0100142079
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                   NO
+  Max. gradient              =         0.0013225361
+  Conv. limit for gradients  =         0.0004500000
+  Conv. for gradients        =                   NO
+  RMS gradient               =         0.0006377067
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. for gradients        =                   NO
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:      8
+ --------------------------
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 3
+
+  B(1) =   3.000000
+  B(2) =  -3.428571
+  B(3) =   1.928571
+  B(4) =  -0.571429
+  B(5) =   0.071429
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.5     0.01086779       -34.3667711717 -3.44E+01
+     2 OT DIIS     0.15E+00    3.2     0.00442437       -34.3710501745 -4.28E-03
+     3 OT DIIS     0.15E+00    3.2     0.00264707       -34.3717034167 -6.53E-04
+     4 OT DIIS     0.15E+00    3.1     0.00017118       -34.3718353409 -1.32E-04
+     5 OT DIIS     0.15E+00    3.1     0.00002952       -34.3718363450 -1.00E-06
+     6 OT DIIS     0.15E+00    3.2     0.00001574       -34.3718363658 -2.08E-08
+     7 OT DIIS     0.15E+00    3.2     0.00000121       -34.3718363707 -4.89E-09
+     8 OT DIIS     0.15E+00    3.2     0.00000018       -34.3718363707 -5.48E-11
+
+  *** SCF run converged in     8 steps ***
+
+
+  Electronic density on regular grids:        -15.9999991051        0.0000008949
+  Core density on regular grids:               15.9999999994       -0.0000000006
+  Total charge density on r-space grids:        0.0000008943
+  Total charge density g-space grids:           0.0000008943
+
+  Overlap energy of the core charge distribution:               0.00000009612108
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.52994318235208
+  Hartree energy:                                              36.02114151769842
+  Exchange-correlation energy:                                 -8.25714007504915
+
+  Total energy:                                               -34.37183637070724
+
+  outer SCF iter =    1 RMS gradient =   0.18E-06 energy =        -34.3718363707
+  outer SCF loop converged in   1 iterations or    8 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.807870                              0.192130
+       2     H        1          0.790922                              0.209078
+       3     O        2          6.460205                             -0.460205
+       4     H        1          0.763388                              0.236612
+       5     H        1          0.762906                              0.237094
+       6     O        2          6.414709                             -0.414709
+ # Total charge                             16.000000                 -0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.434                         0.566
+      2       H      1       1.000          0.416                         0.584
+      3       O      2       6.000          7.134                        -1.134
+      4       H      1       1.000          0.423                         0.577
+      5       H      1       1.000          0.423                         0.577
+      6       O      2       6.000          7.149                        -1.149
+
+  Total Charge                                                            0.019
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.371836370707825
+
+
+ --------  Informations at step =     8 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3718363707
+  Real energy change         =        -0.0000675065
+  Predicted change in energy =        -0.0000747185
+  Scaling factor             =         0.3567620766
+  Step size                  =         0.0586288663
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                  YES
+  Used time                  =               28.857
+
+  Convergence check :
+  Max. step size             =         0.0586288663
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                   NO
+  RMS step size              =         0.0269186645
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                   NO
+  Max. gradient              =         0.0050843848
+  Conv. limit for gradients  =         0.0004500000
+  Conv. for gradients        =                   NO
+  RMS gradient               =         0.0020330335
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. for gradients        =                   NO
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:      9
+ --------------------------
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 3
+
+  B(1) =   3.000000
+  B(2) =  -3.428571
+  B(3) =   1.928571
+  B(4) =  -0.571429
+  B(5) =   0.071429
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.5     0.00246382       -34.3716114584 -3.44E+01
+     2 OT DIIS     0.15E+00    3.1     0.00096170       -34.3718343194 -2.23E-04
+     3 OT DIIS     0.15E+00    3.2     0.00047204       -34.3718690299 -3.47E-05
+     4 OT DIIS     0.15E+00    3.1     0.00004884       -34.3718732035 -4.17E-06
+     5 OT DIIS     0.15E+00    3.2     0.00001649       -34.3718732638 -6.03E-08
+     6 OT DIIS     0.15E+00    3.1     0.00000470       -34.3718732688 -4.92E-09
+     7 OT DIIS     0.15E+00    3.2     0.00000032       -34.3718732693 -5.79E-10
+
+  *** SCF run converged in     7 steps ***
+
+
+  Electronic density on regular grids:        -15.9999991163        0.0000008837
+  Core density on regular grids:               15.9999999994       -0.0000000006
+  Total charge density on r-space grids:        0.0000008832
+  Total charge density g-space grids:           0.0000008831
+
+  Overlap energy of the core charge distribution:               0.00000009328099
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.52202461669889
+  Hartree energy:                                              36.02675487932961
+  Exchange-correlation energy:                                 -8.25487176681031
+
+  Total energy:                                               -34.37187326933050
+
+  outer SCF iter =    1 RMS gradient =   0.32E-06 energy =        -34.3718732693
+  outer SCF loop converged in   1 iterations or    7 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.807391                              0.192609
+       2     H        1          0.790175                              0.209825
+       3     O        2          6.460825                             -0.460825
+       4     H        1          0.763178                              0.236822
+       5     H        1          0.762786                              0.237214
+       6     O        2          6.415645                             -0.415645
+ # Total charge                             16.000000                 -0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.434                         0.566
+      2       H      1       1.000          0.416                         0.584
+      3       O      2       6.000          7.134                        -1.134
+      4       H      1       1.000          0.423                         0.577
+      5       H      1       1.000          0.423                         0.577
+      6       O      2       6.000          7.150                        -1.150
+
+  Total Charge                                                            0.019
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.371873269333413
+
+
+ --------  Informations at step =     9 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3718732693
+  Real energy change         =        -0.0000368986
+  Predicted change in energy =        -0.0000284657
+  Scaling factor             =         0.3567620766
+  Step size                  =         0.0119161632
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                  YES
+  Used time                  =               26.062
+
+  Convergence check :
+  Max. step size             =         0.0119161632
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                   NO
+  RMS step size              =         0.0056109365
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                   NO
+  Max. gradient              =         0.0034614073
+  Conv. limit for gradients  =         0.0004500000
+  Conv. for gradients        =                   NO
+  RMS gradient               =         0.0011899037
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. for gradients        =                   NO
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:     10
+ --------------------------
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 3
+
+  B(1) =   3.000000
+  B(2) =  -3.428571
+  B(3) =   1.928571
+  B(4) =  -0.571429
+  B(5) =   0.071429
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.4     0.00297325       -34.3715276431 -3.44E+01
+     2 OT DIIS     0.15E+00    3.2     0.00117208       -34.3718614815 -3.34E-04
+     3 OT DIIS     0.15E+00    3.2     0.00041890       -34.3719189688 -5.75E-05
+     4 OT DIIS     0.15E+00    3.2     0.00003088       -34.3719220783 -3.11E-06
+     5 OT DIIS     0.15E+00    3.2     0.00000631       -34.3719221103 -3.19E-08
+     6 OT DIIS     0.15E+00    3.2     0.00000129       -34.3719221119 -1.60E-09
+     7 OT DIIS     0.15E+00    3.1     0.00000052       -34.3719221119 -2.80E-11
+
+  *** SCF run converged in     7 steps ***
+
+
+  Electronic density on regular grids:        -15.9999990929        0.0000009071
+  Core density on regular grids:               15.9999999994       -0.0000000006
+  Total charge density on r-space grids:        0.0000009065
+  Total charge density g-space grids:           0.0000009065
+
+  Overlap energy of the core charge distribution:               0.00000009031244
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.51653868817307
+  Hartree energy:                                              36.03072516014217
+  Exchange-correlation energy:                                 -8.25340495870105
+
+  Total energy:                                               -34.37192211190304
+
+  outer SCF iter =    1 RMS gradient =   0.52E-06 energy =        -34.3719221119
+  outer SCF loop converged in   1 iterations or    7 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.807020                              0.192980
+       2     H        1          0.790083                              0.209917
+       3     O        2          6.462451                             -0.462451
+       4     H        1          0.762163                              0.237837
+       5     H        1          0.761967                              0.238033
+       6     O        2          6.416315                             -0.416315
+ # Total charge                             16.000000                  0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.434                         0.566
+      2       H      1       1.000          0.416                         0.584
+      3       O      2       6.000          7.135                        -1.135
+      4       H      1       1.000          0.423                         0.577
+      5       H      1       1.000          0.423                         0.577
+      6       O      2       6.000          7.149                        -1.149
+
+  Total Charge                                                            0.019
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.371922111907899
+
+
+ --------  Informations at step =    10 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3719221119
+  Real energy change         =        -0.0000488426
+  Predicted change in energy =        -0.0000330821
+  Scaling factor             =         0.3567620766
+  Step size                  =         0.0161351140
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                  YES
+  Used time                  =               25.954
+
+  Convergence check :
+  Max. step size             =         0.0161351140
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                   NO
+  RMS step size              =         0.0087223613
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                   NO
+  Max. gradient              =         0.0017050527
+  Conv. limit for gradients  =         0.0004500000
+  Conv. for gradients        =                   NO
+  RMS gradient               =         0.0005881144
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. for gradients        =                   NO
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:     11
+ --------------------------
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 3
+
+  B(1) =   3.000000
+  B(2) =  -3.428571
+  B(3) =   1.928571
+  B(4) =  -0.571429
+  B(5) =   0.071429
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.5     0.00144919       -34.3718588938 -3.44E+01
+     2 OT DIIS     0.15E+00    3.2     0.00057317       -34.3719385392 -7.96E-05
+     3 OT DIIS     0.15E+00    3.1     0.00020302       -34.3719524004 -1.39E-05
+     4 OT DIIS     0.15E+00    3.2     0.00001632       -34.3719530917 -6.91E-07
+     5 OT DIIS     0.15E+00    3.2     0.00000683       -34.3719530987 -7.02E-09
+     6 OT DIIS     0.15E+00    3.2     0.00000219       -34.3719530996 -9.36E-10
+     7 OT DIIS     0.15E+00    3.1     0.00000013       -34.3719530997 -1.02E-10
+
+  *** SCF run converged in     7 steps ***
+
+
+  Electronic density on regular grids:        -15.9999990768        0.0000009232
+  Core density on regular grids:               15.9999999994       -0.0000000006
+  Total charge density on r-space grids:        0.0000009226
+  Total charge density g-space grids:           0.0000009225
+
+  Overlap energy of the core charge distribution:               0.00000008695366
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.51158675642137
+  Hartree energy:                                              36.03443371235972
+  Exchange-correlation energy:                                 -8.25219256362048
+
+  Total energy:                                               -34.37195309971539
+
+  outer SCF iter =    1 RMS gradient =   0.13E-06 energy =        -34.3719530997
+  outer SCF loop converged in   1 iterations or    7 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.807008                              0.192992
+       2     H        1          0.789862                              0.210138
+       3     O        2          6.464758                             -0.464758
+       4     H        1          0.760831                              0.239169
+       5     H        1          0.760727                              0.239273
+       6     O        2          6.416815                             -0.416815
+ # Total charge                             16.000000                 -0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.434                         0.566
+      2       H      1       1.000          0.415                         0.585
+      3       O      2       6.000          7.136                        -1.136
+      4       H      1       1.000          0.423                         0.577
+      5       H      1       1.000          0.423                         0.577
+      6       O      2       6.000          7.149                        -1.149
+
+  Total Charge                                                            0.019
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.371953099714787
+
+
+ --------  Informations at step =    11 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3719530997
+  Real energy change         =        -0.0000309878
+  Predicted change in energy =        -0.0000293660
+  Scaling factor             =         0.3567620766
+  Step size                  =         0.0292641807
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                  YES
+  Used time                  =               26.206
+
+  Convergence check :
+  Max. step size             =         0.0292641807
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                   NO
+  RMS step size              =         0.0140100712
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                   NO
+  Max. gradient              =         0.0008155372
+  Conv. limit for gradients  =         0.0004500000
+  Conv. for gradients        =                   NO
+  RMS gradient               =         0.0003500965
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. for gradients        =                   NO
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:     12
+ --------------------------
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 3
+
+  B(1) =   3.000000
+  B(2) =  -3.428571
+  B(3) =   1.928571
+  B(4) =  -0.571429
+  B(5) =   0.071429
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.4     0.00109359       -34.3719141060 -3.44E+01
+     2 OT DIIS     0.15E+00    3.2     0.00044553       -34.3719588092 -4.47E-05
+     3 OT DIIS     0.15E+00    3.1     0.00021915       -34.3719663800 -7.57E-06
+     4 OT DIIS     0.15E+00    3.0     0.00001135       -34.3719672543 -8.74E-07
+     5 OT DIIS     0.15E+00    3.0     0.00000684       -34.3719672572 -2.90E-09
+     6 OT DIIS     0.15E+00    3.0     0.00000090       -34.3719672580 -8.31E-10
+
+  *** SCF run converged in     6 steps ***
+
+
+  Electronic density on regular grids:        -15.9999990394        0.0000009606
+  Core density on regular grids:               15.9999999994       -0.0000000006
+  Total charge density on r-space grids:        0.0000009599
+  Total charge density g-space grids:           0.0000009599
+
+  Overlap energy of the core charge distribution:               0.00000008615735
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.50940405298250
+  Hartree energy:                                              36.03599233800484
+  Exchange-correlation energy:                                 -8.25158264330755
+
+  Total energy:                                               -34.37196725799252
+
+  outer SCF iter =    1 RMS gradient =   0.90E-06 energy =        -34.3719672580
+  outer SCF loop converged in   1 iterations or    6 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.806992                              0.193008
+       2     H        1          0.789341                              0.210659
+       3     O        2          6.465304                             -0.465304
+       4     H        1          0.760817                              0.239183
+       5     H        1          0.760601                              0.239399
+       6     O        2          6.416944                             -0.416944
+ # Total charge                             16.000000                 -0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.434                         0.566
+      2       H      1       1.000          0.415                         0.585
+      3       O      2       6.000          7.137                        -1.137
+      4       H      1       1.000          0.423                         0.577
+      5       H      1       1.000          0.423                         0.577
+      6       O      2       6.000          7.149                        -1.149
+
+  Total Charge                                                            0.019
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.371967258021570
+
+
+ --------  Informations at step =    12 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3719672580
+  Real energy change         =        -0.0000141583
+  Predicted change in energy =        -0.0000087178
+  Scaling factor             =         0.3567620766
+  Step size                  =         0.0101125834
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                  YES
+  Used time                  =               21.920
+
+  Convergence check :
+  Max. step size             =         0.0101125834
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                   NO
+  RMS step size              =         0.0037766669
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                   NO
+  Max. gradient              =         0.0013037118
+  Conv. limit for gradients  =         0.0004500000
+  Conv. for gradients        =                   NO
+  RMS gradient               =         0.0004701275
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. for gradients        =                   NO
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:     13
+ --------------------------
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 3
+
+  B(1) =   3.000000
+  B(2) =  -3.428571
+  B(3) =   1.928571
+  B(4) =  -0.571429
+  B(5) =   0.071429
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.5     0.00150898       -34.3718784352 -3.44E+01
+     2 OT DIIS     0.15E+00    3.2     0.00060061       -34.3719651900 -8.68E-05
+     3 OT DIIS     0.15E+00    3.2     0.00019081       -34.3719806857 -1.55E-05
+     4 OT DIIS     0.15E+00    3.2     0.00001184       -34.3719813053 -6.20E-07
+     5 OT DIIS     0.15E+00    3.2     0.00000458       -34.3719813099 -4.56E-09
+     6 OT DIIS     0.15E+00    3.1     0.00000158       -34.3719813103 -3.88E-10
+     7 OT DIIS     0.15E+00    3.1     0.00000011       -34.3719813103 -5.34E-11
+
+  *** SCF run converged in     7 steps ***
+
+
+  Electronic density on regular grids:        -15.9999989981        0.0000010019
+  Core density on regular grids:               15.9999999994       -0.0000000006
+  Total charge density on r-space grids:        0.0000010013
+  Total charge density g-space grids:           0.0000010013
+
+  Overlap energy of the core charge distribution:               0.00000008568332
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.50822967400246
+  Hartree energy:                                              36.03688190531549
+  Exchange-correlation energy:                                 -8.25131188351755
+
+  Total energy:                                               -34.37198131034594
+
+  outer SCF iter =    1 RMS gradient =   0.11E-06 energy =        -34.3719813103
+  outer SCF loop converged in   1 iterations or    7 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.807104                              0.192896
+       2     H        1          0.789051                              0.210949
+       3     O        2          6.465389                             -0.465389
+       4     H        1          0.760841                              0.239159
+       5     H        1          0.760392                              0.239608
+       6     O        2          6.417222                             -0.417222
+ # Total charge                             16.000000                 -0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.435                         0.565
+      2       H      1       1.000          0.415                         0.585
+      3       O      2       6.000          7.136                        -1.136
+      4       H      1       1.000          0.423                         0.577
+      5       H      1       1.000          0.423                         0.577
+      6       O      2       6.000          7.149                        -1.149
+
+  Total Charge                                                            0.019
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.371981310345262
+
+
+ --------  Informations at step =    13 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3719813103
+  Real energy change         =        -0.0000140523
+  Predicted change in energy =        -0.0000192194
+  Scaling factor             =         0.3567620766
+  Step size                  =         0.0286021123
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                  YES
+  Used time                  =               25.748
+
+  Convergence check :
+  Max. step size             =         0.0286021123
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                   NO
+  RMS step size              =         0.0107391257
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                   NO
+  Max. gradient              =         0.0015241525
+  Conv. limit for gradients  =         0.0004500000
+  Conv. for gradients        =                   NO
+  RMS gradient               =         0.0005437841
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. for gradients        =                   NO
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:     14
+ --------------------------
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 3
+
+  B(1) =   3.000000
+  B(2) =  -3.428571
+  B(3) =   1.928571
+  B(4) =  -0.571429
+  B(5) =   0.071429
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.5     0.00095722       -34.3719454772 -3.44E+01
+     2 OT DIIS     0.15E+00    3.2     0.00038517       -34.3719802929 -3.48E-05
+     3 OT DIIS     0.15E+00    3.2     0.00014662       -34.3719864938 -6.20E-06
+     4 OT DIIS     0.15E+00    3.1     0.00000736       -34.3719868619 -3.68E-07
+     5 OT DIIS     0.15E+00    3.3     0.00000401       -34.3719868632 -1.29E-09
+     6 OT DIIS     0.15E+00    3.2     0.00000091       -34.3719868635 -3.02E-10
+
+  *** SCF run converged in     6 steps ***
+
+
+  Electronic density on regular grids:        -15.9999989998        0.0000010002
+  Core density on regular grids:               15.9999999994       -0.0000000006
+  Total charge density on r-space grids:        0.0000009996
+  Total charge density g-space grids:           0.0000009996
+
+  Overlap energy of the core charge distribution:               0.00000008615120
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.50960154288491
+  Hartree energy:                                              36.03590541303315
+  Exchange-correlation energy:                                 -8.25171281377222
+
+  Total energy:                                               -34.37198686353265
+
+  outer SCF iter =    1 RMS gradient =   0.91E-06 energy =        -34.3719868635
+  outer SCF loop converged in   1 iterations or    6 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.807000                              0.193000
+       2     H        1          0.789699                              0.210301
+       3     O        2          6.464814                             -0.464814
+       4     H        1          0.760833                              0.239167
+       5     H        1          0.760458                              0.239542
+       6     O        2          6.417195                             -0.417195
+ # Total charge                             16.000000                 -0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.435                         0.565
+      2       H      1       1.000          0.415                         0.585
+      3       O      2       6.000          7.136                        -1.136
+      4       H      1       1.000          0.423                         0.577
+      5       H      1       1.000          0.423                         0.577
+      6       O      2       6.000          7.149                        -1.149
+
+  Total Charge                                                            0.019
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.371986863559215
+
+
+ --------  Informations at step =    14 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3719868636
+  Real energy change         =        -0.0000055532
+  Predicted change in energy =        -0.0000049157
+  Scaling factor             =         0.3567620766
+  Step size                  =         0.0066422211
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                  YES
+  Used time                  =               22.748
+
+  Convergence check :
+  Max. step size             =         0.0066422211
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                   NO
+  RMS step size              =         0.0022776165
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                   NO
+  Max. gradient              =         0.0006591107
+  Conv. limit for gradients  =         0.0004500000
+  Conv. for gradients        =                   NO
+  RMS gradient               =         0.0002218629
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. in RMS gradients     =                  YES
+ ---------------------------------------------------
+
+ --------------------------
+ OPTIMIZATION STEP:     15
+ --------------------------
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 3
+
+  B(1) =   3.000000
+  B(2) =  -3.428571
+  B(3) =   1.928571
+  B(4) =  -0.571429
+  B(5) =   0.071429
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.4     0.00051916       -34.3719769269 -3.44E+01
+     2 OT DIIS     0.15E+00    3.2     0.00021522       -34.3719869159 -9.99E-06
+     3 OT DIIS     0.15E+00    3.2     0.00011915       -34.3719885864 -1.67E-06
+     4 OT DIIS     0.15E+00    3.1     0.00000622       -34.3719888466 -2.60E-07
+     5 OT DIIS     0.15E+00    3.1     0.00000280       -34.3719888474 -7.18E-10
+     6 OT DIIS     0.15E+00    3.2     0.00000057       -34.3719888475 -1.39E-10
+
+  *** SCF run converged in     6 steps ***
+
+
+  Electronic density on regular grids:        -15.9999989996        0.0000010004
+  Core density on regular grids:               15.9999999994       -0.0000000006
+  Total charge density on r-space grids:        0.0000009999
+  Total charge density g-space grids:           0.0000009999
+
+  Overlap energy of the core charge distribution:               0.00000008629981
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.51006776310664
+  Hartree energy:                                              36.03556833760102
+  Exchange-correlation energy:                                 -8.25184394268530
+
+  Total energy:                                               -34.37198884750751
+
+  outer SCF iter =    1 RMS gradient =   0.57E-06 energy =        -34.3719888475
+  outer SCF loop converged in   1 iterations or    6 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.806903                              0.193097
+       2     H        1          0.790018                              0.209982
+       3     O        2          6.464510                             -0.464510
+       4     H        1          0.760809                              0.239191
+       5     H        1          0.760493                              0.239507
+       6     O        2          6.417268                             -0.417268
+ # Total charge                             16.000000                  0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.435                         0.565
+      2       H      1       1.000          0.415                         0.585
+      3       O      2       6.000          7.136                        -1.136
+      4       H      1       1.000          0.423                         0.577
+      5       H      1       1.000          0.423                         0.577
+      6       O      2       6.000          7.149                        -1.149
+
+  Total Charge                                                            0.019
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.371988847518388
+
+
+ --------  Informations at step =    15 ------------
+  Optimization Method        =                 BFGS
+  Total Energy               =       -34.3719888475
+  Real energy change         =        -0.0000019840
+  Predicted change in energy =        -0.0000012083
+  Scaling factor             =         0.3567620766
+  Step size                  =         0.0026772204
+  Trust radius               =         0.4724315332
+  Decrease in energy         =                  YES
+  Used time                  =               24.354
+
+  Convergence check :
+  Max. step size             =         0.0026772204
+  Conv. limit for step size  =         0.0030000000
+  Convergence in step size   =                  YES
+  RMS step size              =         0.0011604744
+  Conv. limit for RMS step   =         0.0015000000
+  Convergence in RMS step    =                  YES
+  Max. gradient              =         0.0002792343
+  Conv. limit for gradients  =         0.0004500000
+  Conv. in gradients         =                  YES
+  RMS gradient               =         0.0001307159
+  Conv. limit for RMS grad.  =         0.0003000000
+  Conv. in RMS gradients     =                  YES
+ ---------------------------------------------------
+
+ *******************************************************************************
+ ***                    GEOMETRY OPTIMIZATION COMPLETED                      ***
+ *******************************************************************************
+
+                    Reevaluating energy at the minimum
+
+ DISTRIBUTION OF THE NEIGHBOR LISTS
+              Total number of particle pairs:                                 21
+              Total number of matrix elements:                              1277
+              Average number of particle pairs:                               21
+              Maximum number of particle pairs:                               21
+              Average number of matrix element:                             1277
+              Maximum number of matrix elements:                            1277
+
+
+ DISTRIBUTION OF THE OVERLAP MATRIX
+              Number  of non-zero blocks:                                     21
+              Percentage non-zero blocks:                                 100.00
+              Average number of blocks per CPU:                               21
+              Maximum number of blocks per CPU:                               21
+              Average number of matrix elements per CPU:                    1287
+              Maximum number of matrix elements per CPU:                    1287
+
+ Number of electrons:                                                         16
+ Number of occupied orbitals:                                                  8
+ Number of molecular orbitals:                                                 8
+
+ Number of orbital functions:                                                 46
+ Number of independent orbital functions:                                     46
+
+ Parameters for the always stable predictor-corrector (ASPC) method:
+
+  ASPC order: 3
+
+  B(1) =   3.000000
+  B(2) =  -3.428571
+  B(3) =   1.928571
+  B(4) =  -0.571429
+  B(5) =   0.071429
+
+ Extrapolation method: ASPC
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00    2.4     0.00026006       -34.3719858369 -3.44E+01
+     2 OT DIIS     0.15E+00    3.1     0.00010676       -34.3719883640 -2.53E-06
+     3 OT DIIS     0.15E+00    3.2     0.00005683       -34.3719887906 -4.27E-07
+     4 OT DIIS     0.15E+00    3.2     0.00000268       -34.3719888473 -5.68E-08
+     5 OT DIIS     0.15E+00    3.1     0.00000119       -34.3719888475 -1.50E-10
+     6 OT DIIS     0.15E+00    3.1     0.00000030       -34.3719888475 -3.28E-11
+
+  *** SCF run converged in     6 steps ***
+
+
+  Electronic density on regular grids:        -15.9999989996        0.0000010004
+  Core density on regular grids:               15.9999999994       -0.0000000006
+  Total charge density on r-space grids:        0.0000009999
+  Total charge density g-space grids:           0.0000009999
+
+  Overlap energy of the core charge distribution:               0.00000008629981
+  Self energy of the core charge distribution:                -87.66578109182967
+  Core Hamiltonian energy:                                     25.51005551637105
+  Hartree energy:                                              36.03557853157909
+  Exchange-correlation energy:                                 -8.25184188993977
+
+  Total energy:                                               -34.37198884751949
+
+  outer SCF iter =    1 RMS gradient =   0.30E-06 energy =        -34.3719888475
+  outer SCF loop converged in   1 iterations or    6 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     H        1          0.806902                              0.193098
+       2     H        1          0.790018                              0.209982
+       3     O        2          6.464510                             -0.464510
+       4     H        1          0.760809                              0.239191
+       5     H        1          0.760492                              0.239508
+       6     O        2          6.417267                             -0.417267
+ # Total charge                             16.000000                  0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       H      1       1.000          0.435                         0.565
+      2       H      1       1.000          0.415                         0.585
+      3       O      2       6.000          7.136                        -1.136
+      4       H      1       1.000          0.423                         0.577
+      5       H      1       1.000          0.423                         0.577
+      6       O      2       6.000          7.149                        -1.149
+
+  Total Charge                                                            0.019
+ !-----------------------------------------------------------------------------!
+
+ MOMENTS
+  The electric/magnetic moments are written to file:
+  water_dipole.out
+
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):              -34.371988847519489
+
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                DBCSR STATISTICS                             -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ COUNTER                                    TOTAL       BLAS       SMM       ACC
+ flops     5 x     5 x     8               684000     100.0%      0.0%      0.0%
+ flops    13 x     5 x     8               711360     100.0%      0.0%      0.0%
+ flops     5 x    13 x     8               711360     100.0%      0.0%      0.0%
+ flops     8 x     8 x     8              1033216     100.0%      0.0%      0.0%
+ flops    13 x    13 x     8              1387152     100.0%      0.0%      0.0%
+ flops     5 x     8 x     5              2880000     100.0%      0.0%      0.0%
+ flops     8 x     8 x    46              3350272     100.0%      0.0%      0.0%
+ flops    13 x     8 x     5              3744000     100.0%      0.0%      0.0%
+ flops     5 x     8 x    13              3744000     100.0%      0.0%      0.0%
+ flops    46 x     8 x     8              4162816     100.0%      0.0%      0.0%
+ flops    13 x     8 x    13              4867200     100.0%      0.0%      0.0%
+ flops    46 x     8 x    46             10495360     100.0%      0.0%      0.0%
+ flops inhomo. stacks                           0       0.0%      0.0%      0.0%
+ flops total                        37.770736E+06     100.0%      0.0%      0.0%
+ flops max/rank                     37.770736E+06     100.0%      0.0%      0.0%
+ matmuls inhomo. stacks                         0       0.0%      0.0%      0.0%
+ matmuls total                              22386     100.0%      0.0%      0.0%
+ number of processed stacks                  5079     100.0%      0.0%      0.0%
+ average stack size                                     4.4       0.0       0.0
+ marketing flops                    40.166336E+06
+ -------------------------------------------------------------------------------
+ # multiplications                           3233
+ max memory usage/rank             980.381696E+06
+ # max total images/rank                        1
+ # max 3D layers                                1
+ # MPI messages exchanged                       0
+ MPI messages size (bytes):
+  total size                         0.000000E+00
+  min size                           0.000000E+00
+  max size                           0.000000E+00
+  average size                       0.000000E+00
+ MPI breakdown and total messages size (bytes):
+             size <=      128                   0                        0
+       128 < size <=     8192                   0                        0
+      8192 < size <=    32768                   0                        0
+     32768 < size <=   131072                   0                        0
+    131072 < size <=  4194304                   0                        0
+   4194304 < size <= 16777216                   0                        0
+  16777216 < size                               0                        0
+ -------------------------------------------------------------------------------
+
+ MEMORY| Estimated peak process memory [MiB]                                 935
+
+ -------------------------------------------------------------------------------
+ ----                             MULTIGRID INFO                            ----
+ -------------------------------------------------------------------------------
+ count for grid        1:          17350          cutoff [a.u.]          150.00
+ count for grid        2:           6078          cutoff [a.u.]           50.00
+ count for grid        3:           3399          cutoff [a.u.]           16.67
+ count for grid        4:           1807          cutoff [a.u.]            5.56
+ total gridlevel count  :          28634
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                           R E F E R E N C E S                               -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ 
+ CP2K version 5.1, the CP2K developers group (2017).
+ CP2K is freely available from https://www.cp2k.org/ .
+
+ Schuett, Ole; Messmer, Peter; Hutter, Juerg; VandeVondele, Joost. 
+ Electronic Structure Calculations on Graphics Processing Units, John Wiley & Sons, Ltd, 173-190 (2016). 
+ GPU-Accelerated Sparse Matrix-Matrix Multiplication for Linear Scaling Density Functional Theory.
+ http://dx.doi.org/10.1002/9781118670712.ch8
+
+
+ Borstnik, U; VandeVondele, J; Weber, V; Hutter, J. 
+ PARALLEL COMPUTING, 40 (5-6), 47-58 (2014). 
+ Sparse matrix multiplication: The distributed block-compressed sparse
+ row library.
+ http://dx.doi.org/10.1016/j.parco.2014.03.012
+
+
+ Hutter, J; Iannuzzi, M; Schiffmann, F; VandeVondele, J. 
+ WILEY INTERDISCIPLINARY REVIEWS-COMPUTATIONAL MOLECULAR SCIENCE, 4 (1), 15-25 (2014). 
+ CP2K: atomistic simulations of condensed matter systems.
+ http://dx.doi.org/10.1002/wcms.1159
+
+
+ VandeVondele, J; Hutter, J. 
+ JOURNAL OF CHEMICAL PHYSICS, 127 (11), 114105 (2007). 
+ Gaussian basis sets for accurate calculations on molecular systems in
+ gas and condensed phases.
+ http://dx.doi.org/10.1063/1.2770708
+
+
+ Genovese, L; Deutsch, T; Goedecker, S. 
+ JOURNAL OF CHEMICAL PHYSICS, 127 (5), 054704 (2007). 
+ Efficient and accurate three-dimensional Poisson solver for surface
+ problems.
+ http://dx.doi.org/10.1063/1.2754685
+
+
+ Genovese, L; Deutsch, T; Neelov, A; Goedecker, S; Beylkin, G. 
+ JOURNAL OF CHEMICAL PHYSICS, 125 (7), 074105 (2006). 
+ Efficient solution of Poisson's equation with free boundary conditions.
+ http://dx.doi.org/10.1063/1.2335442
+
+
+ Krack, M. 
+ THEORETICAL CHEMISTRY ACCOUNTS, 114 (1-3), 145-152 (2005). 
+ Pseudopotentials for H to Kr optimized for gradient-corrected
+ exchange-correlation functionals.
+ http://dx.doi.org/10.1007/s00214-005-0655-y
+
+
+ VandeVondele, J; Krack, M; Mohamed, F; Parrinello, M; Chassaing, T;
+ Hutter, J. COMPUTER PHYSICS COMMUNICATIONS, 167 (2), 103-128 (2005). 
+ QUICKSTEP: Fast and accurate density functional calculations using a
+ mixed Gaussian and plane waves approach.
+ http://dx.doi.org/10.1016/j.cpc.2004.12.014
+
+
+ Frigo, M; Johnson, SG. 
+ PROCEEDINGS OF THE IEEE, 93 (2), 216-231 (2005). 
+ The design and implementation of FFTW3.
+ http://dx.doi.org/10.1109/JPROC.2004.840301
+
+
+ Kolafa, J. 
+ JOURNAL OF COMPUTATIONAL CHEMISTRY, 25 (3), 335-342 (2004). 
+ Time-reversible always stable predictor-corrector method for molecular dynamics of polarizable molecules.
+ http://dx.doi.org/10.1002/jcc.10385
+
+
+ VandeVondele, J; Hutter, J. 
+ JOURNAL OF CHEMICAL PHYSICS, 118 (10), 4365-4369 (2003). 
+ An efficient orbital transformation method for electronic structure
+ calculations.
+ http://dx.doi.org/10.1063/1.1543154
+
+
+ Hartwigsen, C; Goedecker, S; Hutter, J. 
+ PHYSICAL REVIEW B, 58 (7), 3641-3662 (1998). 
+ Relativistic separable dual-space Gaussian pseudopotentials from H to Rn.
+ http://dx.doi.org/10.1103/PhysRevB.58.3641
+
+
+ Lippert, G; Hutter, J; Parrinello, M. 
+ MOLECULAR PHYSICS, 92 (3), 477-487 (1997). 
+ A hybrid Gaussian and plane wave density functional scheme.
+ http://dx.doi.org/10.1080/002689797170220
+
+
+ Goedecker, S; Teter, M; Hutter, J. 
+ PHYSICAL REVIEW B, 54 (3), 1703-1710 (1996). 
+ Separable dual-space Gaussian pseudopotentials.
+ http://dx.doi.org/10.1103/PhysRevB.54.1703
+
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                T I M I N G                                  -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ SUBROUTINE                       CALLS  ASD         SELF TIME        TOTAL TIME
+                                MAXIMUM       AVERAGE  MAXIMUM  AVERAGE  MAXIMUM
+ CP2K                                 1  1.0    0.083    0.083  502.886  502.886
+ cp_geo_opt                           1  2.0    0.047    0.047  501.280  501.280
+ geoopt_bfgs                          1  3.0    0.003    0.003  501.233  501.233
+ cp_eval_at                          17  4.0    0.002    0.002  498.866  498.866
+ qs_forces                           16  5.0    0.001    0.001  478.931  478.931
+ qs_energies                         17  5.9    0.001    0.001  460.167  460.167
+ scf_env_do_scf                      17  6.9    0.001    0.001  441.182  441.182
+ scf_env_do_scf_inner_loop          138  8.0    0.012    0.012  397.295  397.295
+ rebuild_ks_matrix                  154  9.6    0.000    0.000  374.624  374.624
+ qs_ks_build_kohn_sham_matrix       154 10.6    0.022    0.022  374.623  374.623
+ qs_ks_update_qs_env                155  9.0    0.001    0.001  336.055  336.055
+ pw_transfer                       1870 13.0    0.130    0.130  295.084  295.084
+ fft_wrap_pw1pw2                   1870 14.0    0.021    0.021  294.954  294.954
+ fft_wrap_pw1pw2_150                943 14.6   20.354   20.354  277.268  277.268
+ pw_poisson_solve                   154 11.6   18.747   18.747  235.687  235.687
+ fft3d_s                           1871 15.9  191.392  191.392  191.401  191.401
+ ps_wavelet_solve                   154 12.6  116.835  116.835  118.802  118.802
+ qs_rho_update_rho                  155  9.1    0.001    0.001  114.576  114.576
+ calculate_rho_elec                 155 10.1    8.425    8.425  114.575  114.575
+ density_rs2pw                      155 11.1    0.013    0.013  105.358  105.358
+ sum_up_and_integrate               154 11.6    1.037    1.037   68.043   68.043
+ integrate_v_rspace                 154 12.6    7.807    7.807   67.005   67.005
+ potential_pw2rs                    154 13.6    0.176    0.176   59.172   59.172
+ init_scf_loop                       17  7.9    0.000    0.000   43.881   43.881
+ pw_gather_s                        945 15.5   42.786   42.786   42.786   42.786
+ pw_scatter_s                       925 16.4   39.649   39.649   39.649   39.649
+ qs_ks_update_qs_env_forces          16  6.0    0.000    0.000   38.573   38.573
+ qs_vxc_create                      154 11.6    0.003    0.003   23.662   23.662
+ xc_vxc_pw_create                   154 12.6    0.709    0.709   23.659   23.659
+ xc_rho_set_and_dset_create         154 13.6    0.006    0.006   22.949   22.949
+ xc_functional_eval                 154 14.6   22.000   22.000   22.000   22.000
+ fft_wrap_pw1pw2_50                 309 15.3    0.625    0.625   15.389   15.389
+ init_scf_run                        17  6.9    0.001    0.001   12.340   12.340
+ scf_env_initial_rho_setup           17  7.9    0.000    0.000   12.339   12.339
+ wfi_extrapolate                     17  8.9    0.002    0.002   11.495   11.495
+ -------------------------------------------------------------------------------
+
+ The number of warnings for this run is : 0
+ 
+ -------------------------------------------------------------------------------
+  **** **** ******  **  PROGRAM ENDED AT                 2020-05-18 23:20:04.553
+ ***** ** ***  *** **   PROGRAM RAN ON                                     sheep
+ **    ****   ******    PROGRAM RAN BY                                     sim03
+ ***** **    ** ** **   PROGRAM PROCESS ID                               3429207
+  **** **  *******  **  PROGRAM STOPPED IN /auto.eland/home/sim03/Documents/SimP
+                                           hys/Summer/2/cp2k/DIMER_LDA_NO_VDW
