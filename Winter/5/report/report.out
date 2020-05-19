@@ -1,0 +1,9 @@
+\BOOKMARK [1][-]{section.1}{Simple Sampling \205 Integration}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Exact Integration}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Monte Carlo Integration}{section.1}% 3
+\BOOKMARK [1][-]{section.2}{Importance Sampling \205 Metropolis-Hastings Algorithm}{}% 4
+\BOOKMARK [2][-]{subsection.2.1}{Metropolis-Hastings-Algorithm}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.2}{Sampling a Gaussian Distribution}{section.2}% 6
+\BOOKMARK [1][-]{section.3}{Simulate the Ising Model}{}% 7
+\BOOKMARK [2][-]{subsection.3.1}{Exact Summation}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.2}{Monte-Carlo Simulation}{section.3}% 9

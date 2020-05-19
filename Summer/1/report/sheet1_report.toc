@@ -1,0 +1,7 @@
+\contentsline {section}{\numberline {1}Short Questions --Short Answers}{1}{section.1}
+\contentsline {section}{\numberline {2}Quantum Mechanical Calculations using CP2K}{2}{section.2}
+\contentsline {subsection}{\numberline {2.1}Converging the Cutoff Energy}{2}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Optimzing the Lattice Constant}{2}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}PBE Functional}{2}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}LDA Functional}{3}{subsubsection.2.2.2}
+\contentsline {subsection}{\numberline {2.3}Electronic Structure Calculation}{5}{subsection.2.3}

@@ -1,0 +1,7 @@
+\contentsline {section}{\numberline {1}Speeding up the Simulation}{1}{section.1}
+\contentsline {section}{\numberline {2}Determining Equilibrium Values and Errors}{3}{section.2}
+\contentsline {section}{\numberline {3}Finite Size Scaling}{6}{section.3}
+\contentsline {subsection}{\numberline {3.1}Determining $T_\mathrm {c}$}{6}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Estimating $\beta _m$}{7}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}The Master Curve}{9}{subsection.3.3}
+\contentsline {section}{\numberline {4}Calculating the Magnetic Susceptibility from Fluctuating Magnetization}{12}{section.4}

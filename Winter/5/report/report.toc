@@ -1,0 +1,9 @@
+\contentsline {section}{\numberline {1}Simple Sampling -- Integration}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}Exact Integration}{1}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Monte Carlo Integration}{2}{subsection.1.2}
+\contentsline {section}{\numberline {2}Importance Sampling -- Metropolis-Hastings Algorithm}{4}{section.2}
+\contentsline {subsection}{\numberline {2.1}Metropolis-Hastings-Algorithm}{4}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Sampling a Gaussian Distribution}{5}{subsection.2.2}
+\contentsline {section}{\numberline {3}Simulate the Ising Model}{7}{section.3}
+\contentsline {subsection}{\numberline {3.1}Exact Summation}{8}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Monte-Carlo Simulation}{10}{subsection.3.2}
