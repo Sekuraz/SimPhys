@@ -7,6 +7,5 @@ data= np.genfromtxt(dir_file,unpack=False)
 data = data[:,1:]
 
 hbonds = [np.linalg.norm(data[i * 6 +1,:]-data[i * 6 + 5,:]) for i in range(int(len(data[:,0])/6 -1))]
-#hbonds = np.linalg.norm(data[1,:]-data[5,:])
            
 print(np.mean(hbonds))

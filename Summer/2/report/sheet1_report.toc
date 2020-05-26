@@ -2,6 +2,7 @@
 \contentsline {section}{\numberline {2}Quantum Mechanical Calculation of Water}{2}{section.2}
 \contentsline {subsection}{\numberline {2.1}Quantum Mechanical Calculation of Water}{2}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Ab Initio Molecular Dynamics Simulation of Water Dimer}{3}{subsection.2.2}
-\contentsline {section}{\numberline {3}Atomistic Simulation of Water}{4}{section.3}
-\contentsline {subsection}{\numberline {3.1}Running the Simulations}{4}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Analysis}{4}{subsection.3.2}
+\contentsline {subsection}{\numberline {2.3}Infrared Spectroscopy}{3}{subsection.2.3}
+\contentsline {section}{\numberline {3}Atomistic Simulation of Water}{5}{section.3}
+\contentsline {subsection}{\numberline {3.1}Running the Simulations}{5}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Analysis}{5}{subsection.3.2}
