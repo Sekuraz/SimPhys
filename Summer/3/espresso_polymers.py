@@ -60,7 +60,7 @@ lj1_cut =          2**(1./6.)
 
 # attractive harmonic spring
 k =             100.0
-      
+
 # Integration parameters
 #############################################################
 
@@ -102,8 +102,7 @@ system.box_l = [box_l, box_l, box_l]
 
 
 if args.with_LJ:
-    raise NotImplementedError('fill in your code for interaction setup')
-
+    system.non_bonded_inter[0, 0].lennard_jones.set_params(epsilon=lj1_eps, sigma=lj1_sig, cutoff=lj1_cut, shift='auto')
     # YOUR CODE HERE
     # look up in the espresso documentation how to set up a LJ interaction between
     # all particles of type 0 using the lj1_* variables defined above
@@ -146,13 +145,13 @@ if args.with_LJ:
         system.integrator.run(warm_step)
         dist = system.analysis.min_dist()
         print(f'min dist between monomers: {dist}')
-    
+
         cap = cap + warm_incr
-        
+
     print( "Remove capping of LJ-interactions." )
     system.force_cap = 0
-    
-    
+
+
 # overlaps are taken care of, now run for a while to properly warm-up
 warm_steps = int(0.05*int_time/system.time_step)
 print(f'warming up for {warm_steps} steps')
@@ -173,17 +172,17 @@ re2_ar = []
 rg2_ar = []
 t_ar  = []
 
-print( f"\nStart integration with timestep {system.time_step} until time t>={int_time}",flush=True) 
+print( f"\nStart integration with timestep {system.time_step} until time t>={int_time}",flush=True)
 
 obs_file = open("{}-obs.dat".format(name), "w")
 obs_file.write("#t\tmin_dist\tre\trg\tT\n" )
 obs_file.flush()
- 
+
 while system.time<int_time:
     system.integrator.run(loop_steps)
 
     #print( f" Step {system.time/system.time_step}/{int_step*int_loop} (t={system.time}): ", flush= True)
-    
+
     dist = system.analysis.min_dist()
     temp = system.analysis.energy()['kinetic']/(n_part/(2./3.))
     re = system.analysis.calc_re( chain_start=0, number_of_chains=N_polymers, chain_length=beads_per_chain)[0]
@@ -191,7 +190,7 @@ while system.time<int_time:
     re2_ar.append(re**2)
     rg2_ar.append(rg**2)
     t_ar.append(system.time)
-    
+
     obs_file.write(f'{system.time}\t{dist}\t{re}\t{rg}\t{temp}\n')
     obs_file.flush()
 
