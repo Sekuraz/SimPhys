@@ -66,7 +66,7 @@ ion_diameter = 1.0
 valency_ci = 1
 
 # number of beads of the rod
-num_rod_beads = int(line_dens * L)
+num_rod_beads = int(round(line_dens * L))
 
 
 # Run parameters
@@ -103,7 +103,7 @@ rod_charge = -1.0
 rod_distance = L/num_rod_beads
 
 # number of counterions
-num_ci = int(total_rod_charge/valency_ci)
+num_ci = int(round(total_rod_charge/valency_ci))
 
 
 ####################
