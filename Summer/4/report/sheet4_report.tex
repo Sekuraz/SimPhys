@@ -1,0 +1,278 @@
+% TEMPLATE.TEX
+%
+% Time-stamp: <2013-03-26 11:09 olenz>
+%
+% This is an extensively documented LaTeX file that shows how to
+% produce a good-looking document with current LaTeX (11/2012).
+%
+% IMPORTANT!
+%
+%   Some obsolete commands and packages
+% ----------|-------------------------------
+% obsolete  |     Replacement in LATEX 2ε
+% ----------|-------------------------------
+%           | local            global/switch
+% ----------|-------------------------------
+% {\bf ...} | \textbf{...}     \bfseries
+%     -     | \emph{...}       \em
+% {\it ...} | \textit{...}     \itshape
+%     -     | \textmd{...}     \mdseries
+% {\rm ...} | \textrm{...}     \rmfamily
+% {\sc ...} | \textsc{...}     \scshape
+% {\sf ...} | \textsf{...}     \sffamily
+% {\sl ...} | \textsl{...}     \slshape
+% {\tt ...} | \texttt{...}     \ttfamily
+%     -     | \textup{...}     \upshape
+%
+% DON'T USE \\ TO MAKE LINEBREAKS, INSTEAD JUST LEAVE A BLANK LINE!
+%
+\RequirePackage[l2tabu,orthodox]{nag} % turn on warnings because of bad style
+\documentclass[a4paper,10pt,bibtotoc]{scrartcl}
+%
+\usepackage[bottom=3.5cm, top=2cm]{geometry}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% KOMA CLASSES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% The class "scrartcl" is one of the so-called KOMA-classes, a set of
+% very well done LaTeX-classes that produce a very European layout
+% (e.g. titles with a sans-serif font).
+%
+% The KOMA classes have extensive documentation that you can access
+% via the commands:
+%   texdoc scrguide # in German
+%   texdoc scrguien # in English
+%
+%
+% The available classes are:
+%
+% scrartcl - for "articles", typically for up to ~20 pages, the
+%            highest level sectioning command is \section
+%
+% scrreprt - for "reports", typically for up to ~200 pages, the
+%            highest level sectioning command is \chapter
+%
+% scrbook  - for "books", for more than 200 pages, the highest level
+%            sectioning command is \part.
+%
+% USEFUL OPTIONS
+%
+% a4paper  - Use a4 paper instead of the default american letter
+%            format.
+%
+% 11pt, 12pt, 10pt
+%          - Use a font with the given size.
+%
+% bibtotoc - Add the bibliography to the table of contents
+%
+% The KOMA-script classes have plenty of options to modify
+
+% This allows to type UTF-8 characters like ä,ö,ü,ß
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}        % Tries to use Postscript Type 1 Fonts for better rendering
+\usepackage{lmodern}            % Provides the Latin Modern Font which offers more glyphs than the default Computer Modern
+\usepackage[intlimits]{amsmath} % Provides all mathematical commands
+
+\usepackage{hyperref}           % Provides clickable links in the PDF-document for \ref
+\usepackage{graphicx}            % Allow you to include images (like graphicx). Usage: \includegraphics{path/to/file}
+
+% Allows to set units
+\usepackage[ugly]{units}        % Allows you to type units with correct spacing and font style. Usage: $\unit[100]{m}$ or $\unitfrac[100]{m}{s}$
+
+% Additional packages
+\usepackage{url}                % Lets you typeset urls. Usage: \url{http://...}
+\usepackage{breakurl}           % Enables linebreaks for urls
+\usepackage{xspace}             % Use \xpsace in macros to automatically insert space based on context. Usage: \newcommand{\es}{ESPResSo\xspace}
+\usepackage{xcolor}             % Obviously colors. Usage: \color{red} Red text
+\usepackage{booktabs}           % Nice rules for tables. Usage \begin{tabular}\toprule ... \midrule ... \bottomrule
+
+% Source code listings
+\usepackage{listings}           % Source Code Listings. Usage: \begin{lstlisting}...\end{lstlisting}
+\lstloadlanguages{python}
+\definecolor{lightpurple}{rgb}{0.8,0.8,1}
+
+\lstset{
+stepnumber=1,
+numbersep=5pt,
+numberstyle=\small\color{black},
+basicstyle=\ttfamily,
+%keywordstyle=\color{black},
+%commentstyle=\color{black},
+%stringstyle=\color{black},
+frame=single,
+tabsize=4,
+language = python,
+backgroundcolor=\color{black!5}}
+
+\usepackage{float}
+
+\begin{document}
+
+\titlehead{Simulation Methods in Physics II \hfill SS 2020}
+\title{Report for Worksheet 4: Charge Distribution Around a Charged Rod}
+\author{Markus Baur and David Beyer}
+\date{\today}
+\maketitle
+
+\tableofcontents
+
+\section{Short Questions -- Short Answers}
+\begin{itemize}
+ \item \textbf{Counterion condensation}
+ \item \textbf{Bjerrum length}
+ \item \textbf{Mean field theory} is a quite general concept to deal with physical systems which include interactions.
+\end{itemize}
+
+
+\section{Analytical Solution: Poisson-Boltzmann Theory}
+We used the following Python script to calculate the integration constants $\gamma$ and $R_\mathrm{M}$ and plot the solutions of the Poisson-Boltzmann equation. To obtain an equation which contains only $\gamma$, we subtracted equation (6) and (7) (in the paper). The resulting implicit equation was solved using scipy.optimize.fsolve.
+\begin{lstlisting}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import fsolve
+import time
+
+start = time.time()
+
+#Set plot size
+width = 5.787
+height = width*0.6
+plt.rc('figure', figsize=(width,height))
+
+#Use LaTeX for fonts
+plt.rc('font',**{'family':'serif','serif':['Computer Modern']})
+plt.rc('text', usetex=True)
+
+#Parameters
+R = 28.2
+l_B = 1.0
+r_0 = 1.0
+r = np.linspace(1.0, R, 1000)
+lambdas = [1.0, 2.0]
+
+#Function for charge distribution
+def charge_distribution(r, xi, gamma, R_M):
+    ret = 1.0 - 1.0 / xi + gamma *\\
+    np.tan(gamma * np.log(r / R_M)) / xi
+    return ret
+
+#Equation which has to be solved numerically
+def equation1(gamma, r_0, xi, R):
+    ret = gamma * np.log(r_0 / R) - np.arctan((1 - xi) / gamma)\\
+    + np.arctan(1.0 / gamma)
+    return ret
+
+def equation2(gamma, R):
+    ret = R / np.exp(np.arctan(1.0 / gamma) / gamma)
+    return ret
+
+#Loop over different values for lambda
+for i in lambdas:
+    xi = i * l_B
+    #Determine parameter numerically:
+    gamma = fsolve(equation1, 1.0, args=(r_0, xi, R), maxfev=10000)
+    R_M = equation2(gamma, R)
+    
+    #Plot charge distribution
+    plt.plot(r, charge_distribution(r, xi, gamma, R_M),\\
+    label=r'$\lambda={}$'.format(i))
+    
+end = time.time()
+print(end - start)
+
+plt.xlim(1.0, R)
+plt.ylim(0.0, 1.0)
+plt.xscale('log')
+plt.xlabel(r'$r/l_\mathrm{B}$')
+plt.ylabel(r'$P(r)$')
+plt.legend()
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+The resulting plot is shown in \autoref{fig:PB}, it matches the result shown on the worksheet. We can see that for the larger value of $\lambda$ (line charge density), the ions are generally closer to the rod. The calculation takes about 0.15 seconds.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{PB.pdf}
+\caption{Plot of the Poisson-Boltzmann result for the integrated counterion density around a charged rod for $\lambda=1.0$ and $\lambda=2.0$.}
+\label{fig:PB}
+\end{figure}
+
+
+
+
+\section{Computer Simulations}
+\subsection{Mapping the Cell Model onto a Simulation}
+To map the cell model onto a cubic box, we want both systems to have the same (mean) ion density. The cylindrical cell with radius $R$ and height $L$ has a volume of 
+\begin{align}
+ V_\mathrm{cylinder} = \pi R^2 L
+\end{align}
+and a total rod charge of
+\begin{align}
+ Q_\mathrm{cylinder,rod} = L\lambda
+\end{align}
+which corresponds to a mean ion density (excluding counterions) of
+\begin{align}
+ \langle\rho_\mathrm{cylinder, ion}\rangle = \frac{L\lambda}{\pi R^2 L} = \frac{\lambda}{\pi R^2}.
+\end{align}
+The cubic box has a volume of
+\begin{align}
+ V_\mathrm{box} = L^3
+\end{align}
+and a total rod charge of
+\begin{align}
+ Q_\mathrm{box,rod} = L\lambda
+\end{align}
+which corresponds to a mean ion density (excluding counterions) of
+\begin{align}
+ \langle\rho_\mathrm{box, ion}\rangle = \frac{L\lambda}{L^3} = \frac{\lambda}{L^2}.
+\end{align}
+By demanding the two densities to be identical, we obtain a box length of
+\begin{align}
+ L = \sqrt{\pi} R \approx 49.98.
+\end{align}
+For the two different values of the line charge density, this corresponds to 
+\begin{align}
+ N_{\mathrm{ion}} = L\lambda = \sqrt{\pi} R \lambda \approx \begin{cases}
+    49.98, & \text{if $\lambda=1.0$}.\\
+    99.97, & \text{if $\lambda=2.0$}.
+  \end{cases}
+\end{align}
+ions (again excluding the counterions) of unit charge. At this point there appears one of two problems: If we allow for a non-integer charge of the ions on the rod, this leads to a non-neutral system because the counter ions have a valency of 1. If however on the other hand the ions on the rod have a unit charge, the mean line charge density is only approximately equal to $\lambda$. In the following we used the second possibility and the following number of ions on the rod with unit charge:
+\begin{align}
+ N_{\mathrm{ion}} =  \begin{cases}
+    50, & \text{if $\lambda=1.0$}.\\
+    100, & \text{if $\lambda=2.0$}.
+  \end{cases}
+\end{align}
+
+
+
+
+
+\subsection{Warmup Runs}
+\subsection{Equilibration and Sampling Time}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{energy_1.pdf}
+\caption{Coulomb energy as a function of time for $\lambda=1.0$.}
+\label{fig:warmup1}
+\includegraphics[width=\textwidth]{energy_2.pdf}
+\caption{Coulomb energy as a function of time for $\lambda=2.0$.}
+\label{fig:warmup2}
+\end{figure}
+
+\subsection{Measuring the Charge Distribution}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{lambda_1.pdf}
+\caption{Plot of the integrated counterion density calculated using Poisson-Boltzmann and MD-Simulation for $\lambda=1.0$.}
+\label{fig:sim1}
+\includegraphics[width=\textwidth]{lambda_2.pdf}
+\caption{Plot of the integrated counterion density calculated using Poisson-Boltzmann and MD-Simulation for $\lambda=2.0$.}
+\label{fig:sim2}
+\end{figure}
+
+\end{document}
