@@ -29,7 +29,7 @@
 \RequirePackage[l2tabu,orthodox]{nag} % turn on warnings because of bad style
 \documentclass[a4paper,10pt,bibtotoc]{scrartcl}
 %
-\usepackage[bottom=3.5cm, top=2cm]{geometry}
+\usepackage[bottom=3.5cm, top=2cm, left=20mm,right=20mm]{geometry}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % KOMA CLASSES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -106,6 +106,7 @@ language = python,
 backgroundcolor=\color{black!5}}
 
 \usepackage{float}
+\usepackage{subcaption}
 
 \begin{document}
 
@@ -119,14 +120,19 @@ backgroundcolor=\color{black!5}}
 
 \section{Short Questions -- Short Answers}
 \begin{itemize}
- \item \textbf{Counterion condensation}
- \item \textbf{Bjerrum length}
- \item \textbf{Mean field theory} is a quite general concept to deal with physical systems which include interactions.
+ \item When looking at a charged object (like a rod) in a solution containing counterions there are two things that can happen: If entropy dominates, the counterions will try to explore all of phase space and hence not localize near the object. If however energy dominates, the counterions will localize near/onto the object, this is known as \textbf{counterion condensation}.
+ \item The \textbf{Bjerrum length} $l_\mathrm{B}$ is defined as the separation for which the electrostatic coulomb energy of two elementary charges $e$ is equal to the thermal energy $k_\mathrm{B}T$:
+\begin{align}
+&k_\mathrm{B}T = \frac{e^2}{4\pi\epsilon_0\epsilon_r l_\mathrm{B}}\\
+&\Rightarrow l_\mathrm{B} = \frac{e^2}{4\pi\epsilon_0\epsilon_r k_\mathrm{B}T}
+\end{align}
+
+ \item \textbf{Mean field theory} is a quite general concept to deal with physical systems which include interactions. The idea of mean field theory is to describe an interacting system as an effective non-interacting system where a single particle interacts with an effective external mean field which models the interaction with all the other particles. A characteristic feature of mean field theory is that the mean field has to be determined self-consistently. In general, mean field theory tends to be more accurate in higher spatial dimensions. The classical example of a mean field theory is the Weiss mean field theory which is used to describe the ferromagnetic phase transition.
 \end{itemize}
 
 
 \section{Analytical Solution: Poisson-Boltzmann Theory}
-We used the following Python script to calculate the integration constants $\gamma$ and $R_\mathrm{M}$ and plot the solutions of the Poisson-Boltzmann equation. To obtain an equation which contains only $\gamma$, we subtracted equation (6) and (7) (in the paper). The resulting implicit equation was solved using scipy.optimize.fsolve.
+We used the following Python script (Poisson-Boltzmann.py) to calculate the integration constants $\gamma$ and $R_\mathrm{M}$ and plot the solutions of the Poisson-Boltzmann equation. To obtain an equation which contains only $\gamma$, we subtracted equation (6) and (7) (in the paper). The resulting implicit equation was solved using scipy.optimize.fsolve.
 \begin{lstlisting}
 import numpy as np
 import matplotlib.pyplot as plt
@@ -190,11 +196,11 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 \end{lstlisting}
-The resulting plot is shown in \autoref{fig:PB}, it matches the result shown on the worksheet. We can see that for the larger value of $\lambda$ (line charge density), the ions are generally closer to the rod. The calculation takes about 0.15 seconds.
+The resulting plot is shown in \autoref{fig:PB}, it matches the result shown on the worksheet. We can see that for the larger value of $\lambda$ (line charge density), the counterions are generally closer to the rod. The calculation takes about 0.15 seconds.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{PB.pdf}
+\includegraphics[width=0.7\textwidth]{PB.pdf}
 \caption{Plot of the Poisson-Boltzmann result for the integrated counterion density around a charged rod for $\lambda=1.0$ and $\lambda=2.0$.}
 \label{fig:PB}
 \end{figure}
@@ -239,40 +245,242 @@ For the two different values of the line charge density, this corresponds to
     99.97, & \text{if $\lambda=2.0$}.
   \end{cases}
 \end{align}
-ions (again excluding the counterions) of unit charge. At this point there appears one of two problems: If we allow for a non-integer charge of the ions on the rod, this leads to a non-neutral system because the counter ions have a valency of 1. If however on the other hand the ions on the rod have a unit charge, the mean line charge density is only approximately equal to $\lambda$. In the following we used the second possibility and the following number of ions on the rod with unit charge:
+ions (again excluding the counterions) of unit charge. At this point there appears one of two problems: If we allow for a non-integer charge of the ions on the rod, this leads to a non-neutral system because the counter ions have a valency of 1. If however on the other hand the ions on the rod have a unit charge, the mean line charge density is only approximately equal to $\lambda$. In the following we chose to have a neutral system and used the following number of ions on the rod with unit charge:
 \begin{align}
  N_{\mathrm{ion}} =  \begin{cases}
     50, & \text{if $\lambda=1.0$}.\\
     100, & \text{if $\lambda=2.0$}.
   \end{cases}
 \end{align}
+Due to the neutrality condition, the number of counterions is the same.
+In the provided script we had to set $L$:
+\begin{lstlisting}
+L = np.sqrt(np.pi) * 28.2
+\end{lstlisting}
+To calculate the correct number of ions and counterions we used
+\begin{lstlisting}
+num_rod_beads = int(round(line_dens * L))
+num_ci = int(round(total_rod_charge/valency_ci))
+\end{lstlisting}
 
 
 
 
 
 \subsection{Warmup Runs}
+First we ran a test run for both line charge densities and visualized the results in VMD. To fold all particles back into the first unit cell, we used the following commands in the Tk-console:
+\begin{lstlisting}
+ pbc set {49.9832 49.9832 49.9832} -all
+ pbc box -off
+ pbc wrap -all
+\end{lstlisting}
+\autoref{fig:VMD} shows snapshots of the two systems at $t=0$ and $t=1000$. We can see that there is a crowding of ions near the rod for both systems after some time has elapsed, however this effect is much more pronounced for $\lambda=2.0$. This observation is in agreement with the analytical results from the Poisson-Boltzmann mean field theory which were plotted in the previous section.
+
+\begin{figure}[H]
+\begin{subfigure}{.5\textwidth}
+  \centering
+  % include first image
+  \includegraphics[width=\linewidth]{initial_1.png}  
+  \caption{Snapshot of the system with line charge density $\lambda=1.0$ at time $t=0$.}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  % include second image
+  \includegraphics[width=\linewidth]{final_1.png}  
+  \caption{Snapshot of the system with line charge density $\lambda=1.0$ at time $t=1000$.}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  % include first image
+  \includegraphics[width=\linewidth]{initial_2.png}  
+  \caption{Snapshot of the system with line charge density $\lambda=2.0$ at time $t=0$.}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  % include second image
+  \includegraphics[width=\linewidth]{final_2.png}  
+  \caption{Snapshot of the system with line charge density $\lambda=2.0$ at time $t=1000$.}
+\end{subfigure}
+\caption{VMD-snapshots of the systems with line charge densities $\lambda=1.0$ and $\lambda=2.0$.}
+\label{fig:VMD}
+\end{figure}
+
 \subsection{Equilibration and Sampling Time}
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth]{energy_1.pdf}
-\caption{Coulomb energy as a function of time for $\lambda=1.0$.}
-\label{fig:warmup1}
-\includegraphics[width=\textwidth]{energy_2.pdf}
-\caption{Coulomb energy as a function of time for $\lambda=2.0$.}
-\label{fig:warmup2}
+\autoref{equi1} and \autoref{equi2} show the Coulomb energy as a function of time for the different values of $\lambda$. The plots suggest that the equilibration time is about 100 time units (=frames). To be on the safe side, we only used data after the first 200 frames.
+
+\autoref{equi3} and \autoref{equi4} show the Coulomb energy as a function of time for the different values of $\lambda$ and a longer time interval.
+The plots suggest that the slowest fluctuations take about 100 frames.
+To get statistically meaningful results, we ran simulations of 10000 frames for both systems.
+
+\begin{figure}[ht]
+\begin{subfigure}{.5\textwidth}
+  \centering
+  % include first image
+  \includegraphics[width=\linewidth]{energy_1.pdf}  
+  \caption{Coulomb energy as a function of time for $\lambda=1.0$.}
+  \label{equi1}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  % include second image
+  \includegraphics[width=\linewidth]{energy_2.pdf}  
+  \caption{Coulomb energy as a function of time for $\lambda=2.0$.}
+  \label{equi2}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  % include first image
+  \includegraphics[width=\linewidth]{energy_1_long.pdf}  
+  \caption{Coulomb energy as a function of time for $\lambda=1.0$.}
+  \label{equi3}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  % include second image
+  \includegraphics[width=\linewidth]{energy_2_long.pdf}  
+  \caption{Coulomb energy as a function of time for $\lambda=2.0$.}
+  \label{equi4}
+\end{subfigure}
+\label{fig:fig}
 \end{figure}
 
 \subsection{Measuring the Charge Distribution}
+To measure the charge distribution, we have to write the particle coordinates to an output file, this can be done in the following way:
+\begin{lstlisting}
+for p in system.part:
+        if p.type==ci_type:
+            positions_file.write("{}  \t {} \n"\\
+            .format(p.pos_folded[0], p.pos_folded[1]))
+\end{lstlisting}
+We use the option pos\_folded to fold the coordinates back into the first unit cell. 
+Because we are only interested in the direction orthogonal to the rod, we do not need the $z$ coordinates.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth]{lambda_1.pdf}
-\caption{Plot of the integrated counterion density calculated using Poisson-Boltzmann and MD-Simulation for $\lambda=1.0$.}
-\label{fig:sim1}
-\includegraphics[width=\textwidth]{lambda_2.pdf}
-\caption{Plot of the integrated counterion density calculated using Poisson-Boltzmann and MD-Simulation for $\lambda=2.0$.}
-\label{fig:sim2}
+To calculate the integrated counterion density, we wrote the script histogram.py (see below). 
+First, we generate an array of orthogonal distances from the rod, this is done by subtracting $L/2$ from all particles coordinates (the rod is positioned in the center) and applying the NumPy function linalg.norm.
+Next, we generate a histogram of the distances using the NumPy function histogram. 
+To finally calculate the integrated counterion density, we have to sum all particles in the histogram up to a distance $r$, this is achieved by using the NumPy function cumsum.
+We then plot the resulting (normalized) integrated charge density and also plot the analytical (Poisson-Boltzmann) result for comparison.
+\begin{lstlisting}
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+from scipy.optimize import fsolve
+
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_file = dir_path + '/positions_2.dat'
+data = np.loadtxt(dir_file,unpack=False) - np.sqrt(np.pi)\\
+* 28.2/2.0
+
+#Set plot size
+width = 5.787
+height = width*0.6
+plt.rc('figure', figsize=(width,height))
+
+#Use LaTeX for fonts
+plt.rc('font',**{'family':'serif','serif':['Computer Modern']})
+plt.rc('text', usetex=True)
+
+r = np.linalg.norm(data, axis=1)
+hist, bin_edges = np.histogram(r[20000:], bins\\
+= np.linspace(1.0, 28.2, endpoint=True, num=1000))
+
+real_hist = np.cumsum(hist)
+real_hist = real_hist / np.amax(real_hist)
+
+#Parameters
+R = 28.2
+l_B = 1.0
+r_0 = 1.0
+r = np.linspace(1.0, R, 1000)
+lambdas = [2.0]
+
+#Function for charge distribution
+def charge_distribution(r, xi, gamma, R_M):
+    ret = 1.0 - 1.0 / xi + gamma\\
+    * np.tan(gamma * np.log(r / R_M)) / xi
+    return ret
+
+#Equation which has to be solved numerically
+def equation1(gamma, r_0, xi, R):
+    ret = gamma * np.log(r_0 / R)\\
+    - np.arctan((1 - xi) / gamma) + np.arctan(1.0 / gamma)
+    return ret
+
+def equation2(gamma, R):
+    ret = R / np.exp(np.arctan(1.0 / gamma) / gamma)
+    return ret
+
+#Loop over different values for lambda
+for i in lambdas:
+    xi = i * l_B
+    #Determine parameter numerically:
+    gamma = fsolve(equation1, 1.0, args=(r_0, xi, R), maxfev=10000)
+    R_M = equation2(gamma, R)
+    
+    #Plot charge distribution
+    plt.plot(r, charge_distribution(r, xi, gamma, R_M),\\
+    label=r'Poisson-Boltzmann')
+
+plt.xlim(1.0, R)
+plt.ylim(0.0, 1.0)
+
+plt.plot(bin_edges[:-1], real_hist, label=r'Simulation')
+plt.xscale('log')
+plt.xlabel(r'$r/l_\mathrm{B}$')
+plt.ylabel(r'$P(r)$')
+plt.legend()
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+\autoref{fig:counter1} and \autoref{fig:counter2} show the calculated integrated counterion densities.
+We can see that the simulation results are quite close the prediction of the Poisson-Boltzmann mean field theory. For both values of $\lambda$, $P(r)$ from the simulation is slightly larger then the analytical result, except for large values of $r$. This deviation for large $r$, which is shown in detail in \autoref{fig:counter3} and \autoref{fig:counter4} can be explained by the fact that simulation box is cubic while the cell model is cylindrical: in the cylinder, the maximum distance from the rod is $R$, while in the box the maximum distance is $L/\sqrt{2}>R$. This means that the counterions in the simulation can reach $r$ values which are forbidden in the cell model and hence $P(r)$ for the simulation gets flattened for large $r$. The fact that $P(r)$ from the simulations is slightly larger then the analytical result and does not go to zero for $r=1.0$ (see \autoref{fig:counter5} and \autoref{fig:counter6}) may be explained by the fact that the counterions in the simulation can (partially) overlap with the stationary ions of the rod.
+
+\begin{figure}[ht]
+\begin{subfigure}{.5\textwidth}
+  \centering
+  % include first image
+  \includegraphics[width=\linewidth]{lambda_1.pdf}  
+  \caption{Integrated counterion density for $\lambda=1.0$.}
+  \label{fig:counter1}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  % include second image
+  \includegraphics[width=\linewidth]{lambda_2.pdf}  
+  \caption{Integrated counterion density for $\lambda=2.0$.}
+  \label{fig:counter2}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  % include first image
+  \includegraphics[width=\linewidth]{lambda_1_detail_1.pdf}  
+  \caption{Detail of the integrated counterion density for large values of $r$ and $\lambda=1.0$.}
+  \label{fig:counter3}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  % include second image
+  \includegraphics[width=\linewidth]{lambda_2_detail_2.pdf}  
+  \caption{Detail of the integrated counterion density for large values of $r$ and $\lambda=2.0$.}
+  \label{fig:counter4}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  % include first image
+  \includegraphics[width=\linewidth]{lambda_1_detail.pdf}  
+  \caption{Detail of the integrated counterion density for small values of $r$ and $\lambda=1.0$.}
+  \label{fig:counter5}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  % include second image
+  \includegraphics[width=\linewidth]{lambda_2_detail.pdf}  
+  \caption{Detail of the integrated counterion density for small values of $r$ and $\lambda=2.0$.}
+  \label{fig:counter6}
+\end{subfigure}
+\caption{Integrated counterion densities from the simulations and Poisson-Boltzmann theory.}
+\label{fig:fig}
 \end{figure}
 
 \end{document}

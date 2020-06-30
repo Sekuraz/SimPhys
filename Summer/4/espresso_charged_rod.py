@@ -35,7 +35,7 @@ system = espressomd.System(box_l=[1,1,1])
 #############################################################
 
 # line charge density of the rod 
-line_dens =  2
+line_dens =  1.0
 
 # Output parameters
 energy_filename = "rod-energy_" + str(line_dens) + ".dat"
@@ -272,7 +272,7 @@ for t in range(max_frames):
     # for later analysis
     for p in system.part:
         if p.type==ci_type:
-            positions_file.write("{}  \t {} \n".format(p.pos[0], p.pos[1]))
+            positions_file.write("{}  \t {} \n".format(p.pos_folded[0], p.pos_folded[1]))
 
 vcf_file.close()
 energy_file.close()

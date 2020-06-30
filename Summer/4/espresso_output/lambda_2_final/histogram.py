@@ -18,7 +18,7 @@ plt.rc('font',**{'family':'serif','serif':['Computer Modern']})
 plt.rc('text', usetex=True)
 
 r = np.linalg.norm(data, axis=1)
-hist, bin_edges = np.histogram(data[20000:], bins = np.linspace(1.0, 28.2, endpoint=True, num=1000))
+hist, bin_edges = np.histogram(r[20000:], bins = np.linspace(1.0, 35.3435, endpoint=True, num=1000))
 
 real_hist = np.cumsum(hist)
 real_hist = real_hist / np.amax(real_hist)
@@ -54,10 +54,10 @@ for i in lambdas:
     #Plot charge distribution
     plt.plot(r, charge_distribution(r, xi, gamma, R_M), label=r'Poisson-Boltzmann')
 
-plt.xlim(1.0, R)
+plt.xlim(1.0, 35.3435)
 plt.ylim(0.0, 1.0)
 
-plt.plot(bin_edges[:-1], real_hist, label=r'Simulation')
+plt.plot(bin_edges[:-1], real_hist, label=r'Simulation', linestyle='dashed')
 plt.xscale('log')
 plt.xlabel(r'$r/l_\mathrm{B}$')
 plt.ylabel(r'$P(r)$')

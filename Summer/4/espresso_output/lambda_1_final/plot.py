@@ -16,7 +16,7 @@ plt.rc('font',**{'family':'serif','serif':['Computer Modern']})
 plt.rc('text', usetex=True)
 
 plt.plot(data[:,0], data[:,1])
-plt.xlim((0.0, 500.0))
+plt.xlim((0.0, 2000.0))
 plt.xlabel(r'Time $t$')
 plt.ylabel(r'Coulomb energy')
 plt.tight_layout()
