@@ -4,6 +4,7 @@ from espressomd import lb
 from espressomd import lbboundaries
 
 import numpy as np
+import argparse
 
 
 print( " " )
@@ -15,6 +16,11 @@ print( " " )
 print( "Program Information: \n" )
 print( espressomd.code_info.features() )
 
+parser = argparse.ArgumentParser(description='Simulation parameters')
+parser.add_argument('-force', type=float, help='Applied force density in the x-direction.', default=0.01)
+parser.add_argument('-time', type=int, help='Time for which the simulation is run', default=500)
+args = parser.parse_args()
+
 # geometry
 box_l = 32.
 padding = 1.
@@ -24,14 +30,12 @@ LB_params = {'agrid':1.,
              'dens':1.,
              'visc':1.,
              'tau':0.01,
-             'ext_force_density':[0.01, 0., 0.],
+             'ext_force_density':[args.force, 0., 0.],
              'kT':0.}
             
 system = espressomd.System(box_l = 3*[box_l])
 system.time_step = LB_params['tau']
 system.cell_system.skin = 0.2
-
-
 
 # choose between these two: GPU or CPU (depending on compilation features)
 if espressomd.espressomd.cuda_init.gpu_available():
@@ -57,7 +61,7 @@ system.lbboundaries.add(lower_bound)
 
 probe_ys = np.linspace(padding, box_l-padding, num = 200)
 
-max_time=500
+max_time=args.time
 for t in range(max_time):
     system.integrator.run(int(1./system.time_step))
     
@@ -67,5 +71,5 @@ for t in range(max_time):
     print("time: {} velocity:{}".format(system.time, vel))
 
 outdir = ("./")
-#lbf.print_vtk_velocity("{}/velocity.vtk".format(outdir))
+lbf.print_vtk_velocity("{}/velocity.vtk".format(outdir))
 print("**Simulation Completed** ")
