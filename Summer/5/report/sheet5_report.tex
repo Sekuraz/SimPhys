@@ -1,0 +1,269 @@
+% TEMPLATE.TEX
+%
+% Time-stamp: <2013-03-26 11:09 olenz>
+%
+% This is an extensively documented LaTeX file that shows how to
+% produce a good-looking document with current LaTeX (11/2012).
+%
+% IMPORTANT!
+%
+%   Some obsolete commands and packages
+% ----------|-------------------------------
+% obsolete  |     Replacement in LATEX 2ε
+% ----------|-------------------------------
+%           | local            global/switch
+% ----------|-------------------------------
+% {\bf ...} | \textbf{...}     \bfseries
+%     -     | \emph{...}       \em
+% {\it ...} | \textit{...}     \itshape
+%     -     | \textmd{...}     \mdseries
+% {\rm ...} | \textrm{...}     \rmfamily
+% {\sc ...} | \textsc{...}     \scshape
+% {\sf ...} | \textsf{...}     \sffamily
+% {\sl ...} | \textsl{...}     \slshape
+% {\tt ...} | \texttt{...}     \ttfamily
+%     -     | \textup{...}     \upshape
+%
+% DON'T USE \\ TO MAKE LINEBREAKS, INSTEAD JUST LEAVE A BLANK LINE!
+%
+\RequirePackage[l2tabu,orthodox]{nag} % turn on warnings because of bad style
+\documentclass[a4paper,10pt,bibtotoc]{scrartcl}
+%
+\usepackage[bottom=3.5cm, top=2cm, left=20mm,right=20mm]{geometry}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% KOMA CLASSES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% The class "scrartcl" is one of the so-called KOMA-classes, a set of
+% very well done LaTeX-classes that produce a very European layout
+% (e.g. titles with a sans-serif font).
+%
+% The KOMA classes have extensive documentation that you can access
+% via the commands:
+%   texdoc scrguide # in German
+%   texdoc scrguien # in English
+%
+%
+% The available classes are:
+%
+% scrartcl - for "articles", typically for up to ~20 pages, the
+%            highest level sectioning command is \section
+%
+% scrreprt - for "reports", typically for up to ~200 pages, the
+%            highest level sectioning command is \chapter
+%
+% scrbook  - for "books", for more than 200 pages, the highest level
+%            sectioning command is \part.
+%
+% USEFUL OPTIONS
+%
+% a4paper  - Use a4 paper instead of the default american letter
+%            format.
+%
+% 11pt, 12pt, 10pt
+%          - Use a font with the given size.
+%
+% bibtotoc - Add the bibliography to the table of contents
+%
+% The KOMA-script classes have plenty of options to modify
+
+% This allows to type UTF-8 characters like ä,ö,ü,ß
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}        % Tries to use Postscript Type 1 Fonts for better rendering
+\usepackage{lmodern}            % Provides the Latin Modern Font which offers more glyphs than the default Computer Modern
+\usepackage[intlimits]{amsmath} % Provides all mathematical commands
+
+\usepackage{hyperref}           % Provides clickable links in the PDF-document for \ref
+\usepackage{graphicx}            % Allow you to include images (like graphicx). Usage: \includegraphics{path/to/file}
+
+% Allows to set units
+\usepackage[ugly]{units}        % Allows you to type units with correct spacing and font style. Usage: $\unit[100]{m}$ or $\unitfrac[100]{m}{s}$
+
+% Additional packages
+\usepackage{url}                % Lets you typeset urls. Usage: \url{http://...}
+\usepackage{breakurl}           % Enables linebreaks for urls
+\usepackage{xspace}             % Use \xpsace in macros to automatically insert space based on context. Usage: \newcommand{\es}{ESPResSo\xspace}
+\usepackage{xcolor}             % Obviously colors. Usage: \color{red} Red text
+\usepackage{booktabs}           % Nice rules for tables. Usage \begin{tabular}\toprule ... \midrule ... \bottomrule
+
+% Source code listings
+\usepackage{listings}           % Source Code Listings. Usage: \begin{lstlisting}...\end{lstlisting}
+\lstloadlanguages{python}
+\definecolor{lightpurple}{rgb}{0.8,0.8,1}
+
+\lstset{
+stepnumber=1,
+numbersep=5pt,
+numberstyle=\small\color{black},
+basicstyle=\ttfamily,
+%keywordstyle=\color{black},
+%commentstyle=\color{black},
+%stringstyle=\color{black},
+frame=single,
+tabsize=4,
+language = python,
+backgroundcolor=\color{black!5}}
+
+\usepackage{float}
+\usepackage{subcaption}
+
+\begin{document}
+
+\titlehead{Simulation Methods in Physics II \hfill SS 2020}
+\title{Report for Worksheet 5: Fluid Dynamics}
+\author{Markus Baur and David Beyer}
+\date{\today}
+\maketitle
+
+\tableofcontents
+
+\section{The Navier Stokes Equation}
+This section follows the textbook by Landau and Lifshitz. The change of momentum in a fluid is described by the tensor $\Pi_{ij}$ of momentum flux:
+\begin{align}
+ \partial_t\left(\rho u_i\right) = -\partial_j \Pi_{ij}.
+ \label{eqmom}
+\end{align}
+\begin{align}
+ \Pi_{ij} = p\delta_{ij}  + \rho u_i u_j - \sigma_{ij} \
+\end{align}
+$\sigma_{ij}$ is the viscous stress tensor which describes the drag force due to the viscosity of the fluid. To arrive at the incompressible Navier Stokes equation, we have to make several assumptions about $\sigma_{ij}$:
+\begin{itemize}
+ \item $\sigma_{ij}$ depends only on the derivates of the velocity, because a viscous drag force appears only when different parts of the fluid move at different velocities
+ \item For a velocity field that does not change too rapidly in space we can approximate $\sigma_{ij}$ as being dependent only on the first derivatives $\partial_j u_i$
+ \item We approximate the dependence of $\sigma_{ij}$ on the first derivatives $\partial_j u_i$ as linear
+ \item $\sigma_{ij}$ does not contain terms which are independent of the first derivatives $\partial_j u_i$
+ \item $\sigma_{ij}$ vanishes for a uniform rotation of the whole fluid
+\end{itemize}
+One can then show that the most general form of the viscuous stress tensor which fulfills all of the assumptions is
+\begin{align}
+\sigma_{ij} = \eta\left(\partial_j u_i + \partial_i u_j - \frac{2}{3}\delta_{ij} \partial_k u_k\right) + \zeta \delta_{ij} \partial_j u_j
+\label{eqst}
+\end{align}
+where $\eta$ is called the dynamic viscosity and $\zeta$ is called the second viscosity. This relation is also known as the linear stress constitutive equation for fluids.
+
+The Navier Stokes equatino can be obtained by plugging \autoref{eqst} into \autoref{eqmom}. 
+
+
+To show that the equation
+\begin{align}
+ \nabla\cdot \mathbf{u} = 0
+\end{align}
+is equivalent to incompressibility, we note that the mass of the fluid is conserved. This means that there is a continuity equation\footnote{The total mass in any volume $V$ can only change by a flux of mass $\mathbf{j}$ into or out of the volume through the boundary $\partial V$:  
+\begin{align*}
+\frac{\mathrm{d}}{\mathrm{d}t}\int_{V}\rho\,\mathrm{d}V = -\int_{\partial V} \mathbf{j}\,\mathrm{d}\mathbf{A}.
+\end{align*}
+The right hand side can be rewritten using the divergence theorem, so we get:
+\begin{align*}
+\int_{V}\left(\partial_t\rho+\nabla\cdot\mathbf{j}\right)\,\mathrm{d}V = 0.
+\end{align*}
+Because we did not specify the volume $V$, the integrand has to be zero and we get the (local) continuity equation.
+} associated with the mass density $\rho$ and the mass flux $\mathbf{j} = \rho\mathbf{u}$:
+\begin{align}
+ \partial_t\rho + \nabla\cdot \mathbf{j} = \partial_t \rho + \nabla\cdot\left(\rho\mathbf{u}\right)= 0.
+\end{align}
+For an incompressible flow, the mass density $\rho$ is constant in space and time and this continuity equation reduces to
+\begin{align}
+ \nabla\cdot\mathbf{u} = 0.
+\end{align}
+
+
+\section{Flow Between Two Plates: Analytical Solution}
+First, to determine which components of $\mathbf{u}$ are nonzero and on which variables they depend, we use the symmetries and incompressibility. Because the two parallel plates are inifinitely extended in the $x$- and $z$-directions, the system is translationally invariant in these directions. Hence, the velocity field $\mathbf{u}$ should only depend on $y$:
+\begin{align*}
+\mathbf{u} = \mathbf{u}(y).
+\end{align*}
+Furthermore, there is no pressure drop, confinement or force in the $z$-direction, hence the velocity in the $z$-direction should be constant. By using a Galilei transformation, we can thus always find an inertial systems for which $u_z=0$. Using the incompressibility condition 
+\begin{align}
+ \partial_y u_y(y) &= 0
+\end{align}
+we get a linear velocity profile for $u_y$ in the $y$-direction:
+\begin{align}
+u_y(y) &= a + b \cdot y.
+\end{align}
+Because of the no-slip boundary conditions at the walls, both $a$ and $b$ have to be zero, i.e. $u_y$ also vanishes. We have now determined that the velocity field is of the form
+\begin{align}
+ \mathbf{u} = u_x(y)\mathbf{e}_x.
+\end{align}
+For a steady state (i.e. time-independence) in the absence of external forces, the Navier Stokes equation
+\begin{align}
+ \rho\left(\partial_t + \mathbf{u}\cdot \nabla\right)\mathbf{u} = -\nabla p + \eta \nabla ^2 \mathbf{u} + \mathbf{f}
+\end{align} reduces to 
+\begin{align}
+ \rho \left(\mathbf{u}\cdot \nabla\right)\mathbf{u} = -\nabla p + \eta \nabla ^2 \mathbf{u}
+\end{align}
+which for the given geometry further simplifies to (the pressure only depends on $x$):
+\begin{align}
+ \rho u_x(y)\underbrace{\partial_x \mathbf{u}(y)}_{=0} = \begin{pmatrix} -\partial_x p(x) + \eta\partial_y^2 u_x(y)\\ 0 \\ 0 \end{pmatrix}.
+\end{align}
+So we have reduced the problem to
+\begin{align}
+ \partial_x p(x) = \eta\partial_y^2 u_x(y).
+\end{align}
+Because the left hand side does not depend on $y$ and the right hand side does not depend on $x$, both have to be constant. This means that the pressure profile is given by
+\begin{align}
+ p(x) = p_0 - \Delta p\cdot x
+\end{align}
+where $\Delta p$ is the pressure drop (the negative of the pressure difference) per length. The velocity profile is given by
+\begin{align}
+ u_x(y) = -\frac{\Delta p}{2\eta} y^2 + c_1 y + c_2
+\end{align}
+with integration constants $c_i$. To determine the $c_i$, we use the no-slip boundary conditions:
+\begin{align}
+ c_2 &= 0\\
+ -\frac{\Delta p}{2\eta} d_y^2 + c_1 d_y &= 0\quad\Rightarrow\quad c_1 =\frac{d_y\Delta p}{2\eta}.
+\end{align}
+This results in the velocity profile 
+\begin{align}
+ u_x(y) = \frac{\Delta p}{2\eta}y\left(d_y - y\right).
+\end{align}
+To find the maximum velocity in the channel, we set the derivative with respect to $y$ equal to zero:
+\begin{align}
+ 0 &= \partial_y u_x(y)\bigg\vert_{y = y_\mathrm{max}} = \frac{\Delta p}{2\eta}\left(d_y - 2y_\mathrm{max}\right)\\
+ \Rightarrow y_\mathrm{max} &= \frac{d_y}{2}
+\end{align}
+This means that the maximum velocity is exactly in the middle between the two plates. The maximum velocity has a value of
+\begin{align}
+ u_x(y_\mathrm{max}) =-\frac{d_y^2\Delta p}{8\eta}
+\end{align}
+and depends linearly on the pressure drop. 
+
+
+
+
+
+\section{Nondimensionalization and Reynolds Number}
+To bring the Navier Stokes equation to a dimensionless form, we rescale $\mathbf{r}$, $t$ and $\mathbf{u}$:
+\begin{align}
+ \mathbf{r}^* & \equiv \frac{\mathbf{r}}{L}\\
+ t^* &\equiv \frac{t}{T}\\
+ \mathbf{u}^* &\equiv \frac{\mathbf{u}}{U}
+\end{align}
+where $L$ is a typical length scale, $U$ is a typical velocity scale and $T=L/U$ is the corresponding time scale. Using the chain rule, the derivatives transform in the following way:
+\begin{align}
+ \partial_t &= \frac{\partial}{\partial t} = \underbrace{\frac{\partial t^*}{\partial t}}_{=\frac{1}{T}} \frac{\partial}{\partial t^*}= \frac{1}{T}\partial_{t^*}\\
+ \nabla &= \mathbf{e}_i\frac{\partial}{\partial x_i} = \mathbf{e}_i\underbrace{\frac{\partial x_j^*}{\partial x_i}}_{=\frac{\delta_{ij}}{L}} \frac{\partial}{\partial x_j^*} = \frac{1}{L}\mathbf{e}_i\frac{\partial}{\partial x_i^*} = \frac{1}{L}\nabla^*.
+\end{align}
+Plugging these substitutions into the Navier Stokes equation
+\begin{align}
+ \rho\left(\partial_t + \mathbf{u}\cdot \nabla\right)\mathbf{u} = -\nabla p + \eta \nabla ^2 \mathbf{u} + \mathbf{f},
+\end{align}
+we arrive at
+\begin{align}
+ \rho U\left(\underbrace{\frac{1}{T}}_{=\frac{U}{L}}\partial_{t^*} + \frac{U}{L}\mathbf{u}^*\cdot \nabla^*\right)\mathbf{u}^* = -\frac{1}{L}\nabla^* p + \frac{\eta U}{L^2} \nabla^{*2} \mathbf{u}^* + \mathbf{f}.
+\end{align}
+Multiplying by $L^2 / U\eta$ and defining the scaled force density $\mathbf{f}^*$ and pressure $p^*$
+\begin{align}
+\mathbf{f}^* &\equiv \frac{L^2 }{U \eta}\mathbf{f}\\
+p ^* &\equiv \frac{L }{U\eta}p
+\end{align}
+we get dimensionless Navier Stokes equation
+\begin{align}
+ \underbrace{\frac{\rho U L}{\eta}}_{\equiv \mathrm{Re}}\left(\partial_{t^*} + \mathbf{u}^*\cdot \nabla^*\right)\mathbf{u}^* = -\nabla^* p^* + \ \nabla^{*2} \mathbf{u}^* + \mathbf{f}^*.
+\end{align}
+The dimensionless Reynolds number Re characterizes the fluid flow and can be interpreted as the ratio of inertial forces and friction forces (due to viscosity). The low Reynolds number regime ($\mathrm{Re}\rightarrow 0$) is dominated by friction forces and corresponds to laminar flow. By setting $\mathrm{Re}= 0$ we get the steady-state Stokes equation which is linear and can be used to describe systems in the low Reynolds number regime like colloidal particles which are immersed in a fluid.
+
+
+\section{The Lattice Boltzmann Method}
+\section{Flow Between Two Plates: Numerical Solution}
+\end{document}
