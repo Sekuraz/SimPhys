@@ -4,6 +4,7 @@ from espressomd import lb
 from espressomd import lbboundaries
 
 import numpy as np
+import os
 import argparse
 
 
@@ -20,6 +21,8 @@ parser = argparse.ArgumentParser(description='Simulation parameters')
 parser.add_argument('-force', type=float, help='Applied force density in the x-direction.', default=0.01)
 parser.add_argument('-time', type=int, help='Time for which the simulation is run', default=500)
 args = parser.parse_args()
+
+dir_path = os.path.dirname(os.path.realpath(__file__)) + '/velocity_' + str(args.force) + '.dat'
 
 # geometry
 box_l = 32.
@@ -61,6 +64,8 @@ system.lbboundaries.add(lower_bound)
 
 probe_ys = np.linspace(padding, box_l-padding, num = 200)
 
+velocity_file = open("{}_velocity.dat".format(dir_path), "w")
+
 max_time=args.time
 for t in range(max_time):
     system.integrator.run(int(1./system.time_step))
@@ -69,7 +74,9 @@ for t in range(max_time):
     vel = lbf.get_interpolated_velocity(pos)
 
     print("time: {} velocity:{}".format(system.time, vel))
+    velocity_file.write("{} \t {} \n".format(system.time, vel[0]))
 
+velocity_file.close()
 outdir = ("./")
 lbf.print_vtk_velocity("{}/velocity.vtk".format(outdir))
 print("**Simulation Completed** ")
