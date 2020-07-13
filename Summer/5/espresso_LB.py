@@ -64,7 +64,7 @@ system.lbboundaries.add(lower_bound)
 
 probe_ys = np.linspace(padding, box_l-padding, num = 200)
 
-velocity_file = open("{}_velocity.dat".format(dir_path), "w")
+velocity_file = open("{}".format(dir_path), "w")
 
 max_time=args.time
 for t in range(max_time):

@@ -73,7 +73,7 @@
 \usepackage[T1]{fontenc}        % Tries to use Postscript Type 1 Fonts for better rendering
 \usepackage{lmodern}            % Provides the Latin Modern Font which offers more glyphs than the default Computer Modern
 \usepackage[intlimits]{amsmath} % Provides all mathematical commands
-
+\usepackage{amssymb}
 \usepackage{hyperref}           % Provides clickable links in the PDF-document for \ref
 \usepackage{graphicx}            % Allow you to include images (like graphicx). Usage: \includegraphics{path/to/file}
 
@@ -124,10 +124,11 @@ This section follows the textbook by Landau and Lifshitz. The change of momentum
  \partial_t\left(\rho u_i\right) = -\partial_j \Pi_{ij}.
  \label{eqmom}
 \end{align}
+$\Pi_{ij}$ can be written as
 \begin{align}
- \Pi_{ij} = p\delta_{ij}  + \rho u_i u_j - \sigma_{ij} \
+ \Pi_{ij} = p\delta_{ij}  + \rho u_i u_j - \sigma_{ij}
 \end{align}
-$\sigma_{ij}$ is the viscous stress tensor which describes the drag force due to the viscosity of the fluid. To arrive at the incompressible Navier Stokes equation, we have to make several assumptions about $\sigma_{ij}$:
+where $\sigma_{ij}$ is the viscous stress tensor which describes the drag force due to the viscosity of the fluid. To arrive at the incompressible Navier Stokes equation, we have to make several assumptions about $\sigma_{ij}$:
 \begin{itemize}
  \item $\sigma_{ij}$ depends only on the derivates of the velocity, because a viscous drag force appears only when different parts of the fluid move at different velocities
  \item For a velocity field that does not change too rapidly in space we can approximate $\sigma_{ij}$ as being dependent only on the first derivatives $\partial_j u_i$
@@ -142,7 +143,12 @@ One can then show that the most general form of the viscuous stress tensor which
 \end{align}
 where $\eta$ is called the dynamic viscosity and $\zeta$ is called the second viscosity. This relation is also known as the linear stress constitutive equation for fluids.
 
-The Navier Stokes equatino can be obtained by plugging \autoref{eqst} into \autoref{eqmom}. 
+\noindent The Navier Stokes equation can be obtained by plugging \autoref{eqst} into \autoref{eqmom}. 
+\begin{align}
+ \rho\left(\partial_t + \mathbf{u}\cdot \nabla\right)\mathbf{u} = -\nabla p + \nabla\cdot\left(\eta\left(\nabla\mathbf{u}+\left(\nabla\mathbf{u}\right)^\mathrm{T} - \frac{2}{3}\left(\nabla\cdot\mathbf{u}\right)\mathbb{I}\right) + \zeta \left(\nabla\cdot\mathbf{u}\right)\mathbb{I}\right) + \mathbf{f}
+\end{align}
+The macroscopic variables that does not appear in the incompressible Navier Stokes equation is the second viscosity $\zeta$ which describes the dissipation of energy due to compression or expansion. It is easy to see that the term containing $\zeta$ vanishes when the incompressibility condition is assumed to be true. Furthermore, this form of the Navier Stokes equation does not assume that the viscosities $\eta$ and $\zeta$ are constant in space. 
+
 
 
 To show that the equation
@@ -236,7 +242,10 @@ and the velocity profile is
 \begin{align}
  u_x(y) = \frac{f}{2\eta}y\left(d_y - y\right).
 \end{align}
-The flow profile is still parabolic in this case.
+The flow profile is still parabolic in this case and the maximum velocity is given by
+\begin{align}
+ u_x(y_\mathrm{max}) =\frac{d_y^2 f}{8\eta}.
+\end{align}
 
 
 
@@ -270,7 +279,7 @@ we get dimensionless Navier Stokes equation
 \begin{align}
  \underbrace{\frac{\rho U L}{\eta}}_{\equiv \mathrm{Re}}\left(\partial_{t^*} + \mathbf{u}^*\cdot \nabla^*\right)\mathbf{u}^* = -\nabla^* p^* + \ \nabla^{*2} \mathbf{u}^* + \mathbf{f}^*.
 \end{align}
-The dimensionless Reynolds number Re characterizes the fluid flow and can be interpreted as the ratio of inertial forces and friction forces (due to viscosity). The low Reynolds number regime ($\mathrm{Re}\rightarrow 0$) is dominated by friction forces and corresponds to laminar flow. By setting $\mathrm{Re}= 0$ we get the steady-state Stokes equation which is linear and can be used to describe systems in the low Reynolds number regime like colloidal particles which are immersed in a fluid. The high Reynolds number regime ($\mathrm{Re}\rightarrow \infty$) is dominated by the nonlinear inertial term and corresponds to turbulent flow, which is an example of deterministic chaos. It is relevant for macroscopic objects like planes or cars.
+The Reynolds number Re is dimensionless and characterizes the fluid flow, it can be interpreted as the ratio of inertial forces and friction forces (due to viscosity). The low Reynolds number regime ($\mathrm{Re}\rightarrow 0$) is dominated by friction forces and corresponds to laminar flow. By setting $\mathrm{Re}= 0$ we get the steady-state Stokes equation which is linear and can be used to describe systems in the low Reynolds number regime like colloidal particles which are immersed in a fluid. The high Reynolds number regime ($\mathrm{Re}\rightarrow \infty$) is dominated by the nonlinear inertial term and corresponds to turbulent flow, which is an example of deterministic chaos. It is relevant for macroscopic objects like planes or cars.
 
 
 \section{The Lattice Boltzmann Method}
@@ -289,9 +298,29 @@ where $f^{(1)}_\mathrm{eq}$ is the equilibrium distribution and $\tau$ the chara
     \partial_t f^{(1)} + \mathbf{v}\cdot\nabla_\mathbf{r}f^{(1)} + \mathbf{F}\cdot\nabla_\mathbf{p}f^{(1)} =
   -\frac{1}{\tau}\left(f^{(1)} - f^{(1)}_\mathrm{eq}\right).
 \end{align}
+In the Lattice Boltzmann method, space and time are discretized with step sizes $\Delta x$ and $\Delta t$ and velocities are chosen from a finite set $\left\{\mathbf{c}_i\right\}$, so the single particle distribution function becomes
+\begin{align}
+ f^{(1)}(\mathbf{r},\mathbf{p},t) \rightarrow f_i(\mathbf{r},t).
+\end{align}
+The discretized Boltzmann equation/ lattice Boltzmann equation can then be written as
+\begin{align}
+ f_i(\mathbf{r}+\mathbf{c}_i\Delta t,t+\Delta t) = f_i(\mathbf{r},t) + \Omega\left(f_i(\mathbf{r},t)\right) = f_i(\mathbf{r},t) - \frac{\Delta t}{\tau}\left(f_i(\mathbf{r},t) - f_i^\mathrm{eq}(\mathbf{r},t)\right)
+\end{align}
+where the second equality holds in the BGK approximation. The lattice Boltzmann equation can be split into two parts: the collision is given by
+\begin{align}
+ f_i^*(\mathbf{r},t) = f_i(\mathbf{r},t) + \Omega\left(f_i(\mathbf{r},t)\right) = f_i(\mathbf{r},t) - \frac{\Delta t}{\tau}\left(f_i(\mathbf{r},t) - f_i^\mathrm{eq}(\mathbf{r},t)\right)
+\end{align}
+and the streaming is given by
+\begin{align}
+ f_i(\mathbf{r}+\mathbf{c}_i\Delta t,t+\Delta t) =f_i^*(\mathbf{r},t).
+\end{align}
+
+\noindent The single particle distribution function $f^{(1)}(\mathbf{r},\mathbf{p},t)$ describes the number of particles in the infinitesimal volume $\left[\mathbf{r},\mathbf{r}+\mathrm{d}\mathbf{r}\right]\times \left[\mathbf{p},\mathbf{p}+\mathrm{d}\mathbf{p}\right]$ at a given time $t$. The assumption that a fluid can be described by a single particle distribution function is already an approximation, the exact dynamics of a fluid consisting of $N$ particles is described by the Lioville equation for the $N$-particle distribution function. A description using the single particle distribution function assumes that the fluid is dilute, such that interactions can be neglected except for collisions, which are described by the collision operator in the Boltzmann transport equation. For the Lattice Boltzmann method, space, time and velocities are discretized, this means that the distribution function is only defined at discrete values. 
+\text{ }\\
+\text{ }
 
 
-Advantages of LBM:
+\noindent Advantages of LBM:
 \begin{itemize}
  \item Well suited for parallel implementation
  \item Well suited for simulations in complex geometries, for example porous materials
@@ -300,7 +329,7 @@ Advantages of LBM:
  \item LB fluid can bea easily coupled to MD simulations
 \end{itemize}
 
-Disadvantages of LBM:
+\noindent Disadvantages of LBM:
 \begin{itemize}
  \item LBM is always time-dependent and thus not very efficient to calculate steady states
  \item The method is memory intensive
@@ -308,7 +337,193 @@ Disadvantages of LBM:
 
 
 \section{Flow Between Two Plates: Numerical Solution}
+We ran Lattice Boltzmann simulations using ESPResSo for the force densities $f=0.1,\, 0.01,\, 0.001$. The python script can be found in the appendix.
 
+\autoref{fig:time_1}-\autoref{fig:time_3} show the time evolution of the velocity component $u_x$ at the center of the plates for the different force densities. In all cases, the convergence to the steady state takes a time of about $t=700$, this correponds to a total of about $70000$ time steps. The python script which was used to produce the plots can be found in the appendix.
+
+\autoref{fig:profile_1}-\autoref{fig:profile_3} compare the steady state velocity profile obtained from the different simulations to the analytical prediction (in the Lattice Boltzmann simulation, the walls are located between the two outermost nodes). The python script which was used to produce the plots can be found in the appendix. As the plots show, the results match quite well. The following table compares the maximum velocity which was obtained from the simulation and the analytical prediction:
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccc@{}}
+\toprule
+force density $f$        & max. vel. $u_x(d_y/2)$ (analytical) & max. vel. $u_x(d_y/2)$ (LBM) & error $\frac{u_{x,\mathrm{analy.}}(d_y/2) - u_{x,\mathrm{LBM}}(d_y/2)}{u_{x,\mathrm{analy.}}(d_y/2)}$ \\ \midrule
+ 0.001 & 0.1125 & 0.11220280098995868 & 0.264$\%$\\
+ 0.01 & 1.125 & 1.1220672418639193 & 0.261$\%$\\
+ 0.1 & 11.25 & 11.218233657290794 & 0.282$\%$\\ \bottomrule
+\end{tabular}
+\end{table}
+\noindent In all cases, the simulation result deviates less than $0.3\%$ from the analytical result.
+
+
+\begin{figure}[H]
+\begin{subfigure}{.45\textwidth}
+  \centering
+  % include first image
+  \includegraphics[width=\linewidth]{time_0001.pdf}  
+  \caption{Time evolution of the $x$-component $u_x$ of the velocity in the middle between the plates for a force density of $f=0.001$.}
+  \label{fig:time_1}
+\end{subfigure}
+\begin{subfigure}{.45\textwidth}
+  \centering
+  % include first image
+  \includegraphics[width=\linewidth]{time_001.pdf}  
+  \caption{Time evolution of the $x$-component $u_x$ of the velocity in the middle between the plates for a force density of $f=0.01$.}
+  \label{fig:time_2}
+\end{subfigure}
+\begin{subfigure}{.45\textwidth}
+  \centering
+  % include first image
+  \includegraphics[width=\linewidth]{time_01.pdf}  
+  \caption{Time evolution of the $x$-component $u_x$ of the velocity in the middle between the plates for a force density of $f=0.1$.}
+  \label{fig:time_3}
+\end{subfigure}
+\begin{subfigure}{.45\textwidth}
+  \centering
+  % include first image
+  \includegraphics[width=\linewidth]{profile_0001.pdf}  
+  \caption{Steady state velocity profile $u_x(y)$ for a force density of $f=0.001$. Both the analytical result and the lattice Boltzmann result are shown.}
+  \label{fig:profile_1}
+\end{subfigure}
+\begin{subfigure}{.45\textwidth}
+  \centering
+  % include first image
+  \includegraphics[width=\linewidth]{profile_001.pdf}  
+  \caption{Steady state velocity profile $u_x(y)$ for a force density of $f=0.01$. Both the analytical result and the lattice Boltzmann result are shown.}
+  \label{fig:profile_2}
+\end{subfigure}
+\hfill
+\begin{subfigure}{.45\textwidth}
+  \centering
+  % include first image
+  \includegraphics[width=\linewidth]{profile_01.pdf}  
+  \caption{Steady state velocity profile $u_x(y)$ for a force density of $f=0.1$. Both the analytical result and the lattice Boltzmann result are shown.}
+  \label{fig:profile_3}
+\end{subfigure}
+\caption{}
+\label{fig:fig}
+\end{figure}
+
+\section{Appendix: Python Code}
+Python code for the Lattice Boltzmann simulation with ESPResSo (script name espresso\_LB.py):
+\begin{lstlisting}
+import espressomd
+from espressomd import shapes
+from espressomd import lb
+from espressomd import lbboundaries
+
+import numpy as np
+import os
+import argparse
+
+
+print( " " )
+print( "===================================================" )
+print( "=            Lattice-Boltzmann Fluid              =" )
+print( "===================================================" )
+print( " " )
+
+print( "Program Information: \n" )
+print( espressomd.code_info.features() )
+
+parser = argparse.ArgumentParser(description='Simulation parameters')
+parser.add_argument('-force', type=float,\\
+help='Applied force density in the x-direction.', default=0.01)
+parser.add_argument('-time', type=int,\\
+help='Time for which the simulation is run', default=500)
+args = parser.parse_args()
+
+dir_path = os.path.dirname(os.path.realpath(__file__)) + '/velocity_'\\
++ str(args.force) + '.dat'
+
+# geometry
+box_l = 32.
+padding = 1.
+
+# fluid parameters
+LB_params = {'agrid':1.,
+             'dens':1.,
+             'visc':1.,
+             'tau':0.01,
+             'ext_force_density':[args.force, 0., 0.],
+             'kT':0.}
+            
+system = espressomd.System(box_l = 3*[box_l])
+system.time_step = LB_params['tau']
+system.cell_system.skin = 0.2
+
+# choose between these two: GPU or CPU (depending on compilation features)
+if espressomd.espressomd.cuda_init.gpu_available():
+    lbf = lb.LBFluidGPU(**LB_params)
+else:
+    lbf = lb.LBFluid(**LB_params)
+
+
+system.actors.add(lbf)
+
+# create the boundary "shape"
+upper_wall=shapes.Wall(normal=[0,1,0], dist=padding)
+lower_wall=shapes.Wall(normal=[0,-1,0], dist=-(box_l-padding))
+
+# from these shapes, define the LB boundary
+upper_bound=lbboundaries.LBBoundary(shape=upper_wall)
+lower_bound=lbboundaries.LBBoundary(shape=lower_wall)
+
+system.lbboundaries.add(upper_bound)
+system.lbboundaries.add(lower_bound)
+
+#system.part.add(pos=0.5*system.box_l, type=0)
+
+probe_ys = np.linspace(padding, box_l-padding, num = 200)
+
+velocity_file = open("{}".format(dir_path), "w")
+
+max_time=args.time
+for t in range(max_time):
+    system.integrator.run(int(1./system.time_step))
+    
+    pos = [0,system.box_l[1]/2.,0]
+    vel = lbf.get_interpolated_velocity(pos)
+
+    print("time: {} velocity:{}".format(system.time, vel))
+    velocity_file.write("{} \t {} \n".format(system.time, vel[0]))
+
+velocity_file.close()
+outdir = ("./")
+lbf.print_vtk_velocity("{}/velocity.vtk".format(outdir))
+print("**Simulation Completed** ")
+\end{lstlisting}
+
+Python code for plotting the time evolution of the velocity (script plot\_time\_evolution.py):
+\begin{lstlisting}
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+
+#Set plot size
+width = 5.787
+height = width*0.6
+plt.rc('figure', figsize=(width,height))
+
+#Use LaTeX for fonts
+plt.rc('font',**{'family':'serif','serif':['Computer Modern']})
+plt.rc('text', usetex=True)
+
+for f in [0.001, 0.01, 0.1]:
+
+    dir_file = os.path.dirname(os.path.realpath(__file__)) + '/velocity_'\\
+    + str(f).replace('.','') + '.dat'
+
+    data = np.loadtxt(dir_file,unpack=False)
+
+    plt.plot(data[:,0], data[:,1])
+    plt.xlim((0.0, 1000.0))
+    plt.ylim((0.0, f * 120))
+    plt.xlabel(r'$t$')
+    plt.ylabel(r'$u_x\left(y = d_y/2,t\right)$')
+    plt.tight_layout()
+    plt.show()
+\end{lstlisting}
+Python code for plotting the velocity profile (script name plot\_profile.py):
 \begin{lstlisting}
 import numpy as np
 import matplotlib.pyplot as plt
@@ -356,30 +571,4 @@ for f in [0.001, 0.01, 0.1]:
     plt.show()
 \end{lstlisting}
 
-
-\begin{figure}[ht]
-\begin{subfigure}{.5\textwidth}
-  \centering
-  % include first image
-  \includegraphics[width=\linewidth]{profile_0001.pdf}  
-  \caption{Velocity profile for a force density of $f=0.001$.}
-  \label{fig:profile_1}
-\end{subfigure}
-\begin{subfigure}{.5\textwidth}
-  \centering
-  % include first image
-  \includegraphics[width=\linewidth]{profile_001.pdf}  
-  \caption{Velocity profile for a force density of $f=0.01$.}
-  \label{fig:profile_2}
-\end{subfigure}
-\begin{subfigure}{.5\textwidth}
-  \centering
-  % include first image
-  \includegraphics[width=\linewidth]{profile_01.pdf}  
-  \caption{Velocity profile for a force density of $f=0.1$.}
-  \label{fig:profile_3}
-\end{subfigure}
-\caption{...}
-\label{fig:fig}
-\end{figure}
 \end{document}
